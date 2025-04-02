@@ -1,10 +1,12 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { GamepadIcon, UsersIcon, MessageSquareIcon, TrophyIcon } from "lucide-react";
+import { GamepadIcon, UsersIcon, MessageSquareIcon, TrophyIcon, CodeIcon, FootballIcon, RadioIcon, WrenchIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { NavigationBar } from "@/components/NavigationBar";
 import { Footer } from "@/components/Footer";
 import { DiscordWidget } from "@/components/DiscordWidget";
+import { Badge } from "@/components/ui/badge";
 
 const Index = () => {
   return (
@@ -131,22 +133,89 @@ const Index = () => {
       <section className="py-16 px-4 md:px-8 bg-white dark:bg-gray-800">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Communities</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Communities</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Check out some of our most active gaming communities and find your new home.
+              Check out our organizations and find your perfect gaming home.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {['FPS Legends', 'RPG Adventurers', 'Strategy Masters'].map((community) => (
-              <div key={community} className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-2">{community}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {Math.floor(Math.random() * 5000) + 1000} members
-                </p>
-                <Button variant="outline" size="sm">Join</Button>
+          <div className="space-y-10">
+            {/* Gaming Organizations */}
+            <div>
+              <h3 className="text-2xl font-bold mb-6 flex items-center">
+                <GamepadIcon className="mr-2 h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+                Gaming Organizations
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
+                  <h3 className="text-xl font-semibold mb-2">Squadron of Gamers</h3>
+                  <Badge className="mb-3">FPS Gaming Org</Badge>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Competitive FPS gaming focused on teamwork and strategy.
+                  </p>
+                  <Button variant="outline" size="sm">Learn More</Button>
+                </div>
               </div>
-            ))}
+            </div>
+
+            {/* Sports Clubs */}
+            <div>
+              <h3 className="text-2xl font-bold mb-6 flex items-center">
+                <FootballIcon className="mr-2 h-6 w-6 text-green-600 dark:text-green-400" />
+                Sports Clubs
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
+                  <h3 className="text-xl font-semibold mb-2">Johnstown Chiefs</h3>
+                  <Badge className="mb-3">EASHL Hockey Club</Badge>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Competitive NHL gaming club focused on teamwork and strategy.
+                  </p>
+                  <Button variant="outline" size="sm">Learn More</Button>
+                </div>
+                <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
+                  <h3 className="text-xl font-semibold mb-2">Horny Ponies</h3>
+                  <Badge className="mb-3">EASHL Hockey Club</Badge>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Recreational NHL gaming club focused on fun and camaraderie.
+                  </p>
+                  <Button variant="outline" size="sm">Learn More</Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Technology & Engineering */}
+            <div>
+              <h3 className="text-2xl font-bold mb-6 flex items-center">
+                <WrenchIcon className="mr-2 h-6 w-6 text-amber-600 dark:text-amber-400" />
+                Technology & Engineering
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
+                  <h3 className="text-xl font-semibold mb-2">The Angry Gamer Show Developers</h3>
+                  <Badge className="mb-3">Educational & Team Learning</Badge>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Learning and developing skills in game development and programming.
+                  </p>
+                  <Button variant="outline" size="sm">Learn More</Button>
+                </div>
+                <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
+                  <h3 className="text-xl font-semibold mb-2">Ham Shack, Cigars, Bourbon, Scotch</h3>
+                  <Badge className="mb-3">Ham Radio Org</Badge>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Amateur radio enthusiasts who enjoy fine spirits and cigars.
+                  </p>
+                  <Button variant="outline" size="sm">Learn More</Button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center mt-12">
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Don't see what you're looking for? New organizations are always being added!
+            </p>
+            <Button variant="outline">Contact Us to Create a New Organization</Button>
           </div>
         </div>
       </section>
