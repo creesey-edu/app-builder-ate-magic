@@ -1,10 +1,10 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { GamepadIcon, UsersIcon, MessageSquareIcon, TrophyIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { NavigationBar } from "@/components/NavigationBar";
 import { Footer } from "@/components/Footer";
+import { DiscordWidget } from "@/components/DiscordWidget";
 
 const Index = () => {
   return (
@@ -107,6 +107,22 @@ const Index = () => {
                 <Button variant="ghost" className="w-full">Explore Forums</Button>
               </CardFooter>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Discord Widget Section */}
+      <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Join Our Discord Community</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Connect with other gamers in real-time. See who's online and join the conversation!
+            </p>
+          </div>
+          
+          <div className="flex justify-center">
+            <DiscordWidget />
           </div>
         </div>
       </section>
