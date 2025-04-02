@@ -1,6 +1,7 @@
 
 import { Link } from "react-router-dom";
-import { GamepadIcon, Github, Twitter, Discord, Youtube } from "lucide-react";
+import { GamepadIcon, Github, Twitter, Youtube } from "lucide-react";
+import { MessageSquare } from "lucide-react"; // Using MessageSquare as a replacement for Discord
 
 export const Footer = () => {
   return (
@@ -21,7 +22,7 @@ export const Footer = () => {
                 <Twitter className="h-5 w-5" />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Discord className="h-5 w-5" />
+                <MessageSquare className="h-5 w-5" />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
                 <Github className="h-5 w-5" />
