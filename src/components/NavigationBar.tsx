@@ -12,6 +12,7 @@ import {
   navigationMenuTriggerStyle 
 } from "@/components/ui/navigation-menu";
 import { GamepadIcon, Menu, X } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const NavigationBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -100,8 +101,9 @@ export const NavigationBar = () => {
           </Button>
         </div>
 
-        {/* Auth buttons */}
+        {/* Theme toggle and auth buttons */}
         <div className="hidden md:flex items-center gap-4 ml-auto">
+          <ThemeToggle />
           <Button variant="ghost">Sign In</Button>
           <Button>Sign Up</Button>
         </div>
@@ -123,6 +125,9 @@ export const NavigationBar = () => {
             <Link to="#" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
               News
             </Link>
+            <div className="flex items-center px-4 py-2">
+              <ThemeToggle />
+            </div>
             <div className="pt-2 flex flex-col space-y-2">
               <Button variant="outline" className="w-full">Sign In</Button>
               <Button className="w-full">Sign Up</Button>
@@ -132,4 +137,4 @@ export const NavigationBar = () => {
       )}
     </header>
   );
-};
+}
