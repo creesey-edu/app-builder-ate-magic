@@ -22,7 +22,7 @@ export const NavigationBar = () => {
         <div className="mr-4 flex items-center gap-2">
           <Link to="/" className="flex items-center gap-2">
             <GamepadIcon className="h-6 w-6 text-primary" />
-            <span className="font-bold text-xl hidden sm:inline-block">Eriod</span>
+            <span className="font-bold text-xl hidden sm:inline-block">The Angry Gamer Show</span>
           </Link>
         </div>
 

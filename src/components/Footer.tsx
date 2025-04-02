@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { GamepadIcon, Github, Twitter, Youtube } from "lucide-react";
 import { MessageSquare } from "lucide-react"; // Using MessageSquare as a replacement for Discord
@@ -12,7 +11,7 @@ export const Footer = () => {
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <GamepadIcon className="h-8 w-8 text-cyan-400" />
-              <span className="font-bold text-2xl">Eriod</span>
+              <span className="font-bold text-2xl">The Angry Gamer Show</span>
             </Link>
             <p className="text-gray-400 mb-6">
               Your ultimate gaming community platform. Connect, compete, and level up your gaming experience.
@@ -75,7 +74,7 @@ export const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
-          <p>© {new Date().getFullYear()} Eriod Gaming Community. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} The Angry Gamer Show Productions. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -17,7 +17,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-green-400">Eriod</span>
+                Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-green-400">The Angry Gamer Show</span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-200">
                 Join our thriving gaming community where players connect, share, and compete.
@@ -47,7 +47,7 @@ const Index = () => {
       <section className="py-16 px-4 md:px-8 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Join Eriod?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Join The Angry Gamer Show?</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Our community offers everything gamers need to connect, compete, and share their passion.
             </p>
@@ -140,7 +140,7 @@ const Index = () => {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Level Up Your Gaming Experience?</h2>
           <p className="text-xl mb-8">
-            Join thousands of gamers already on Eriod and take your gaming to the next level.
+            Join thousands of gamers already on The Angry Gamer Show and take your gaming to the next level.
           </p>
           <Button size="lg" className="bg-white text-blue-700 hover:bg-gray-100">
             Create Your Account
