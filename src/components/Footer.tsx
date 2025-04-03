@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { GamepadIcon, Github, Twitter, Youtube } from "lucide-react";
 import { MessageSquare } from "lucide-react"; // Using MessageSquare as a replacement for Discord
@@ -36,39 +37,93 @@ export const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4 text-white">Platform</h3>
             <ul className="space-y-2">
-              {["Games", "Communities", "Tournaments", "News", "Premium"].map((item) => (
-                <li key={item}>
-                  <Link to="#" className="text-gray-400 hover:text-white transition-colors">
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link to="/games" className="text-gray-400 hover:text-white transition-colors">
+                  Games
+                </Link>
+              </li>
+              <li>
+                <Link to="/communities" className="text-gray-400 hover:text-white transition-colors">
+                  Communities
+                </Link>
+              </li>
+              <li>
+                <Link to="/tournaments" className="text-gray-400 hover:text-white transition-colors">
+                  Tournaments
+                </Link>
+              </li>
+              <li>
+                <Link to="/news" className="text-gray-400 hover:text-white transition-colors">
+                  News
+                </Link>
+              </li>
+              <li>
+                <Link to="/premium" className="text-gray-400 hover:text-white transition-colors">
+                  Premium
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
             <h3 className="font-semibold text-lg mb-4 text-white">Company</h3>
             <ul className="space-y-2">
-              {["About", "Careers", "Blog", "Press", "Contact"].map((item) => (
-                <li key={item}>
-                  <Link to="#" className="text-gray-400 hover:text-white transition-colors">
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/careers" className="text-gray-400 hover:text-white transition-colors">
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" className="text-gray-400 hover:text-white transition-colors">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link to="/press" className="text-gray-400 hover:text-white transition-colors">
+                  Press
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
             <h3 className="font-semibold text-lg mb-4 text-white">Support</h3>
             <ul className="space-y-2">
-              {["Help Center", "Safety Center", "Community Guidelines", "Terms of Service", "Privacy Policy"].map((item) => (
-                <li key={item}>
-                  <Link to="#" className="text-gray-400 hover:text-white transition-colors">
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link to="/help-center" className="text-gray-400 hover:text-white transition-colors">
+                  Help Center
+                </Link>
+              </li>
+              <li>
+                <Link to="/safety-center" className="text-gray-400 hover:text-white transition-colors">
+                  Safety Center
+                </Link>
+              </li>
+              <li>
+                <Link to="/community-guidelines" className="text-gray-400 hover:text-white transition-colors">
+                  Community Guidelines
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms-of-service" className="text-gray-400 hover:text-white transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

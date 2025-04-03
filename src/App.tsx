@@ -9,6 +9,21 @@ import Index from "./pages/Index";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import NotFound from "./pages/NotFound";
+import Games from "./pages/Games";
+import Communities from "./pages/Communities";
+import Tournaments from "./pages/Tournaments";
+import News from "./pages/News";
+import Premium from "./pages/Premium";
+import About from "./pages/About";
+import Careers from "./pages/Careers";
+import Blog from "./pages/Blog";
+import Press from "./pages/Press";
+import Contact from "./pages/Contact";
+import HelpCenter from "./pages/HelpCenter";
+import SafetyCenter from "./pages/SafetyCenter";
+import CommunityGuidelines from "./pages/CommunityGuidelines";
+import TermsOfService from "./pages/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +38,21 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignIn />} />
+            <Route path="/games" element={<Games />} />
+            <Route path="/communities" element={<Communities />} />
+            <Route path="/tournaments" element={<Tournaments />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/premium" element={<Premium />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/press" element={<Press />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/help-center" element={<HelpCenter />} />
+            <Route path="/safety-center" element={<SafetyCenter />} />
+            <Route path="/community-guidelines" element={<CommunityGuidelines />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

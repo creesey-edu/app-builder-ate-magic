@@ -38,15 +38,15 @@ export const NavigationBar = () => {
                     {["Action", "Adventure", "RPG", "Strategy", "Simulation", "Sports"].map((category) => (
                       <li key={category}>
                         <NavigationMenuLink asChild>
-                          <a
-                            href="#"
+                          <Link
+                            to="/games"
                             className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                           >
                             <div className="text-sm font-medium leading-none">{category}</div>
                             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                               Explore {category.toLowerCase()} games and communities
                             </p>
-                          </a>
+                          </Link>
                         </NavigationMenuLink>
                       </li>
                     ))}
@@ -60,8 +60,8 @@ export const NavigationBar = () => {
                     {["Featured", "New", "Popular", "Tournaments", "Events", "Discussions"].map((item) => (
                       <li key={item}>
                         <NavigationMenuLink asChild>
-                          <a
-                            href="#"
+                          <Link
+                            to="/communities"
                             className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                           >
                             <div className="text-sm font-medium leading-none">{item}</div>
@@ -73,7 +73,7 @@ export const NavigationBar = () => {
                                item === "Events" ? "Upcoming community events" : 
                                "Join community discussions"}
                             </p>
-                          </a>
+                          </Link>
                         </NavigationMenuLink>
                       </li>
                     ))}
@@ -81,12 +81,12 @@ export const NavigationBar = () => {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link to="#" className={navigationMenuTriggerStyle()}>
+                <Link to="/tournaments" className={navigationMenuTriggerStyle()}>
                   Tournaments
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link to="#" className={navigationMenuTriggerStyle()}>
+                <Link to="/news" className={navigationMenuTriggerStyle()}>
                   News
                 </Link>
               </NavigationMenuItem>
@@ -117,16 +117,16 @@ export const NavigationBar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden py-4 px-4 bg-background border-t">
           <nav className="flex flex-col space-y-4">
-            <Link to="#" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+            <Link to="/games" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
               Games
             </Link>
-            <Link to="#" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+            <Link to="/communities" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
               Communities
             </Link>
-            <Link to="#" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+            <Link to="/tournaments" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
               Tournaments
             </Link>
-            <Link to="#" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+            <Link to="/news" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
               News
             </Link>
             <div className="flex items-center px-4 py-2">
