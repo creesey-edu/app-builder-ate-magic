@@ -104,8 +104,12 @@ export const NavigationBar = () => {
         {/* Theme toggle and auth buttons */}
         <div className="hidden md:flex items-center gap-4 ml-auto">
           <ThemeToggle />
-          <Button variant="ghost">Sign In</Button>
-          <Button>Sign Up</Button>
+          <Button variant="ghost" asChild>
+            <Link to="/signin">Sign In</Link>
+          </Button>
+          <Button asChild>
+            <Link to="/signup">Sign Up</Link>
+          </Button>
         </div>
       </div>
 
@@ -129,8 +133,12 @@ export const NavigationBar = () => {
               <ThemeToggle />
             </div>
             <div className="pt-2 flex flex-col space-y-2">
-              <Button variant="outline" className="w-full">Sign In</Button>
-              <Button className="w-full">Sign Up</Button>
+              <Button variant="outline" className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
+                <Link to="/signin">Sign In</Link>
+              </Button>
+              <Button className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
+                <Link to="/signup">Sign Up</Link>
+              </Button>
             </div>
           </nav>
         </div>

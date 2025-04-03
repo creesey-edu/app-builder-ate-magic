@@ -24,8 +24,8 @@ const Index = () => {
                 Join our thriving gaming community where players connect, share, and compete.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600">
-                  Join Now
+                <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600" asChild>
+                  <Link to="/signup">Join Now</Link>
                 </Button>
                 <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
                   Explore Games
@@ -226,8 +226,8 @@ const Index = () => {
           <p className="text-xl mb-8">
             Join thousands of gamers already on The Angry Gamer Show and take your gaming to the next level.
           </p>
-          <Button size="lg" className="bg-white text-blue-700 hover:bg-gray-100">
-            Create Your Account
+          <Button size="lg" className="bg-white text-blue-700 hover:bg-gray-100" asChild>
+            <Link to="/signup">Create Your Account</Link>
           </Button>
         </div>
       </section>
