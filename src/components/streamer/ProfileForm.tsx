@@ -1,0 +1,107 @@
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast";
+import { Loader2, AlertCircle } from "lucide-react";
+import { BasicInfoSection } from "./BasicInfoSection";
+import { PlatformsSection } from "./PlatformsSection";
+import { DiscordSection } from "./DiscordSection";
+import { streamerProfileSchema, StreamerProfileFormValues } from "@/types/streamer";
+
+// Mock function for validation (in a real app, this would call your backend)
+const validateSocialLinks = async (formData: StreamerProfileFormValues) => {
+  // Simulate API validation
+  await new Promise(resolve => setTimeout(resolve, 1500));
+  // Dummy validation - in reality you'd check if the accounts exist
+  return {
+    valid: true,
+    accounts: {
+      twitch: !!formData.twitchUsername,
+      youtube: !!formData.youtubeChannelId,
+      kick: !!formData.kickUsername,
+    }
+  };
+};
+
+export const ProfileForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  // Initialize form with react-hook-form and zod validation
+  const form = useForm<StreamerProfileFormValues>({
+    resolver: zodResolver(streamerProfileSchema),
+    defaultValues: {
+      displayName: "",
+      bio: "",
+      twitchUsername: "",
+      youtubeChannelId: "",
+      kickUsername: "",
+      discordUsername: "",
+    },
+  });
+
+  // Submit handler
+  const onSubmit = async (data: StreamerProfileFormValues) => {
+    setIsSubmitting(true);
+    
+    try {
+      // Validate all social links
+      const validation = await validateSocialLinks(data);
+      
+      if (validation.valid) {
+        // In a real app, you would save the profile to your backend here
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        toast({
+          title: "Profile saved!",
+          description: "Your streamer profile has been created successfully.",
+        });
+        
+        // You could redirect to the user's new profile page
+        // navigate(`/streamers/${userId}`);
+      } else {
+        toast({
+          title: "Validation error",
+          description: "Some of your account details couldn't be verified. Please check and try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error saving profile",
+        description: "There was a problem saving your profile. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <BasicInfoSection control={form.control} />
+          <PlatformsSection control={form.control} />
+          <DiscordSection control={form.control} />
+        </div>
+
+        <div className="flex justify-end mt-6">
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Saving Profile...
+              </>
+            ) : (
+              "Save Profile"
+            )}
+          </Button>
+        </div>
+      </form>
+    </Form>
+  );
+};
