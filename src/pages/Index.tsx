@@ -1,7 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { GamepadIcon, UsersIcon, MessageSquareIcon, TrophyIcon, CodeIcon, FootballIcon, RadioIcon, WrenchIcon } from "lucide-react";
+import { GamepadIcon, UsersIcon, MessageSquareIcon, TrophyIcon, CodeIcon, BallIcon, RadioIcon, WrenchIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { NavigationBar } from "@/components/NavigationBar";
 import { Footer } from "@/components/Footer";
@@ -161,7 +160,7 @@ const Index = () => {
             {/* Sports Clubs */}
             <div>
               <h3 className="text-2xl font-bold mb-6 flex items-center">
-                <FootballIcon className="mr-2 h-6 w-6 text-green-600 dark:text-green-400" />
+                <BallIcon className="mr-2 h-6 w-6 text-green-600 dark:text-green-400" />
                 Sports Clubs
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
