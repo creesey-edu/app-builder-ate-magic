@@ -19,12 +19,12 @@ import {
   TwitchIcon, 
   YoutubeIcon, 
   MonitorPlay, 
-  DiscordLogo, 
   Upload, 
   CheckCircle,
   AlertCircle,
   Loader2
 } from "lucide-react";
+import DiscordLogo from "@/components/ui/icons/DiscordLogo";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
