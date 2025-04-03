@@ -11,7 +11,7 @@ import {
   NavigationMenuTrigger, 
   navigationMenuTriggerStyle 
 } from "@/components/ui/navigation-menu";
-import { GamepadIcon, Menu, X } from "lucide-react";
+import { GamepadIcon, Menu, Video, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
 export const NavigationBar = () => {
@@ -90,6 +90,14 @@ export const NavigationBar = () => {
                   News
                 </Link>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to="/streamers" className={navigationMenuTriggerStyle()}>
+                  <span className="flex items-center gap-1">
+                    <Video className="h-4 w-4" />
+                    Streamers
+                  </span>
+                </Link>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -128,6 +136,12 @@ export const NavigationBar = () => {
             </Link>
             <Link to="/news" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
               News
+            </Link>
+            <Link to="/streamers" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+              <span className="flex items-center gap-1">
+                <Video className="h-4 w-4" />
+                Streamers
+              </span>
             </Link>
             <div className="flex items-center px-4 py-2">
               <ThemeToggle />

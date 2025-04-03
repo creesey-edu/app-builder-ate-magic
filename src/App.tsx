@@ -24,6 +24,8 @@ import SafetyCenter from "./pages/SafetyCenter";
 import CommunityGuidelines from "./pages/CommunityGuidelines";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Streamers from "./pages/Streamers";
+import StreamerProfile from "./pages/StreamerProfile";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +45,8 @@ const App = () => (
             <Route path="/tournaments" element={<Tournaments />} />
             <Route path="/news" element={<News />} />
             <Route path="/premium" element={<Premium />} />
+            <Route path="/streamers" element={<Streamers />} />
+            <Route path="/streamer-profile" element={<StreamerProfile />} />
             <Route path="/about" element={<About />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/blog" element={<Blog />} />
