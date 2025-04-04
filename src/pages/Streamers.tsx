@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { PageLayout } from "@/components/PageLayout";
 import { 
@@ -7,7 +6,7 @@ import {
   MonitorPlay, 
   Users, 
   Search, 
-  Filter,
+  Bell,
   BarChart 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,6 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
+import { NotificationDemo } from "@/components/NotificationDemo";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Mock data for streamers (in a real app, this would come from your backend)
 const MOCK_STREAMERS = [
@@ -138,157 +139,175 @@ const Streamers = () => {
       description="Meet our community of official streamers"
     >
       <div className="flex flex-col gap-8">
-        {/* Featured streamers section */}
-        <section>
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">Featured Streamers</h2>
-            <Button variant="outline" asChild>
-              <Link to="/streamer-analytics" className="flex items-center gap-2">
-                <BarChart className="h-4 w-4" />
-                Analytics Dashboard
-              </Link>
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {MOCK_STREAMERS.filter(s => s.featured).slice(0, 3).map(streamer => (
-              <Card key={streamer.id} className="overflow-hidden">
-                <div className="w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
-                <CardHeader className="flex flex-row items-center gap-4 pb-2">
-                  <img 
-                    src={streamer.avatar} 
-                    alt={streamer.displayName} 
-                    className="rounded-full w-16 h-16 border-2 border-primary" 
+        <Tabs defaultValue="streamers">
+          <TabsList className="w-full max-w-md mx-auto mb-4">
+            <TabsTrigger value="streamers" className="flex-1">Streamers</TabsTrigger>
+            <TabsTrigger value="notifications" className="flex-1">
+              <span className="flex items-center gap-2">
+                <Bell className="h-4 w-4" />
+                Notifications Demo
+              </span>
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="streamers">
+            {/* Featured streamers section */}
+            <section>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold">Featured Streamers</h2>
+                <Button variant="outline" asChild>
+                  <Link to="/streamer-analytics" className="flex items-center gap-2">
+                    <BarChart className="h-4 w-4" />
+                    Analytics Dashboard
+                  </Link>
+                </Button>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {MOCK_STREAMERS.filter(s => s.featured).slice(0, 3).map(streamer => (
+                  <Card key={streamer.id} className="overflow-hidden">
+                    <div className="w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+                    <CardHeader className="flex flex-row items-center gap-4 pb-2">
+                      <img 
+                        src={streamer.avatar} 
+                        alt={streamer.displayName} 
+                        className="rounded-full w-16 h-16 border-2 border-primary" 
+                      />
+                      <div className="flex flex-col">
+                        <h3 className="text-xl font-bold flex items-center gap-2">
+                          {streamer.displayName}
+                          {streamer.liveStatus && (
+                            <Badge variant="destructive" className="px-2 py-1 ml-2">LIVE</Badge>
+                          )}
+                        </h3>
+                        <p className="text-muted-foreground text-sm">{streamer.game}</p>
+                        {renderPlatformIcons(streamer.platforms)}
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-2">
+                      <p className="line-clamp-2 text-sm mb-2">{streamer.bio}</p>
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <Users className="h-4 w-4 mr-1" /> {streamer.followers.toLocaleString()} followers
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button variant="outline" asChild className="w-full">
+                        <Link to={`/streamers/${streamer.id}`}>View Profile</Link>
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            </section>
+            
+            {/* Search and filters */}
+            <section className="my-6">
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="relative flex-grow">
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search streamers or games"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
                   />
-                  <div className="flex flex-col">
-                    <h3 className="text-xl font-bold flex items-center gap-2">
-                      {streamer.displayName}
-                      {streamer.liveStatus && (
-                        <Badge variant="destructive" className="px-2 py-1 ml-2">LIVE</Badge>
-                      )}
-                    </h3>
-                    <p className="text-muted-foreground text-sm">{streamer.game}</p>
-                    {renderPlatformIcons(streamer.platforms)}
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-2">
-                  <p className="line-clamp-2 text-sm mb-2">{streamer.bio}</p>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Users className="h-4 w-4 mr-1" /> {streamer.followers.toLocaleString()} followers
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" asChild className="w-full">
-                    <Link to={`/streamers/${streamer.id}`}>View Profile</Link>
+                </div>
+                <div className="flex gap-2">
+                  <Button 
+                    variant={filter === "all" ? "default" : "outline"}
+                    onClick={() => setFilter("all")}
+                  >
+                    All
                   </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        </section>
-        
-        {/* Search and filters */}
-        <section className="my-6">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="relative flex-grow">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search streamers or games"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <div className="flex gap-2">
-              <Button 
-                variant={filter === "all" ? "default" : "outline"}
-                onClick={() => setFilter("all")}
-              >
-                All
-              </Button>
-              <Button 
-                variant={filter === "live" ? "default" : "outline"}
-                onClick={() => setFilter("live")}
-                className={filter === "live" ? "bg-destructive hover:bg-destructive/90" : ""}
-              >
-                Live Now
-              </Button>
-              <Button 
-                variant={filter === "featured" ? "default" : "outline"}
-                onClick={() => setFilter("featured")}
-              >
-                Featured
-              </Button>
-            </div>
-          </div>
-        </section>
-        
-        {/* All streamers section */}
-        <section>
-          <h2 className="text-2xl font-bold mb-6">All Streamers</h2>
-          {filteredStreamers.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {filteredStreamers.map(streamer => (
-                <Card key={streamer.id}>
-                  <CardHeader className="flex flex-row items-center gap-3 pb-2">
-                    <img 
-                      src={streamer.avatar} 
-                      alt={streamer.displayName} 
-                      className="rounded-full w-14 h-14 border-2 border-muted" 
-                    />
-                    <div>
-                      <h3 className="font-semibold flex items-center">
-                        {streamer.displayName}
-                        {streamer.liveStatus && (
-                          <Badge variant="destructive" className="ml-2 px-1.5 py-0.5 text-xs">LIVE</Badge>
-                        )}
-                      </h3>
-                      <p className="text-muted-foreground text-sm">{streamer.game}</p>
-                      {renderPlatformIcons(streamer.platforms)}
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <p className="line-clamp-2 text-sm text-muted-foreground">{streamer.bio}</p>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="ghost" size="sm" asChild className="w-full">
-                      <Link to={`/streamers/${streamer.id}`}>View Profile</Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8">
-              <p className="text-lg text-muted-foreground">No streamers found matching your criteria</p>
-              <Button 
-                variant="outline" 
-                className="mt-4"
-                onClick={() => {
-                  setSearchTerm("");
-                  setFilter("all");
-                }}
-              >
-                Clear filters
-              </Button>
-            </div>
-          )}
-        </section>
-        
-        {/* Call to action for new streamers */}
-        <section className="mt-10 bg-primary/5 p-8 rounded-lg">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Want to become an official streamer?</h2>
-            <p className="mb-6 max-w-2xl mx-auto">Join our Elite Streamer program to get featured on this page, receive special Discord roles, and gain more visibility in our community.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild className="bg-indigo-600 hover:bg-indigo-700">
-                <Link to="/premium">Join Elite Streamer Program</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link to="/streamer-analytics">View Analytics Dashboard</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+                  <Button 
+                    variant={filter === "live" ? "default" : "outline"}
+                    onClick={() => setFilter("live")}
+                    className={filter === "live" ? "bg-destructive hover:bg-destructive/90" : ""}
+                  >
+                    Live Now
+                  </Button>
+                  <Button 
+                    variant={filter === "featured" ? "default" : "outline"}
+                    onClick={() => setFilter("featured")}
+                  >
+                    Featured
+                  </Button>
+                </div>
+              </div>
+            </section>
+            
+            {/* All streamers section */}
+            <section>
+              <h2 className="text-2xl font-bold mb-6">All Streamers</h2>
+              {filteredStreamers.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {filteredStreamers.map(streamer => (
+                    <Card key={streamer.id}>
+                      <CardHeader className="flex flex-row items-center gap-3 pb-2">
+                        <img 
+                          src={streamer.avatar} 
+                          alt={streamer.displayName} 
+                          className="rounded-full w-14 h-14 border-2 border-muted" 
+                        />
+                        <div>
+                          <h3 className="font-semibold flex items-center">
+                            {streamer.displayName}
+                            {streamer.liveStatus && (
+                              <Badge variant="destructive" className="ml-2 px-1.5 py-0.5 text-xs">LIVE</Badge>
+                            )}
+                          </h3>
+                          <p className="text-muted-foreground text-sm">{streamer.game}</p>
+                          {renderPlatformIcons(streamer.platforms)}
+                        </div>
+                      </CardHeader>
+                      <CardContent className="pt-0">
+                        <p className="line-clamp-2 text-sm text-muted-foreground">{streamer.bio}</p>
+                      </CardContent>
+                      <CardFooter>
+                        <Button variant="ghost" size="sm" asChild className="w-full">
+                          <Link to={`/streamers/${streamer.id}`}>View Profile</Link>
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-lg text-muted-foreground">No streamers found matching your criteria</p>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4"
+                    onClick={() => {
+                      setSearchTerm("");
+                      setFilter("all");
+                    }}
+                  >
+                    Clear filters
+                  </Button>
+                </div>
+              )}
+            </section>
+            
+            {/* Call to action for new streamers */}
+            <section className="mt-10 bg-primary/5 p-8 rounded-lg">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold mb-4">Want to become an official streamer?</h2>
+                <p className="mb-6 max-w-2xl mx-auto">Join our Elite Streamer program to get featured on this page, receive special Discord roles, and gain more visibility in our community.</p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button size="lg" asChild className="bg-indigo-600 hover:bg-indigo-700">
+                    <Link to="/premium">Join Elite Streamer Program</Link>
+                  </Button>
+                  <Button size="lg" variant="outline" asChild>
+                    <Link to="/streamer-analytics">View Analytics Dashboard</Link>
+                  </Button>
+                </div>
+              </div>
+            </section>
+          </TabsContent>
+          
+          <TabsContent value="notifications">
+            <NotificationDemo />
+          </TabsContent>
+        </Tabs>
       </div>
     </PageLayout>
   );

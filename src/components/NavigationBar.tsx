@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { GamepadIcon, Menu, Video, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { NotificationBell } from "./NotificationBell";
 
 export const NavigationBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -109,8 +109,9 @@ export const NavigationBar = () => {
           </Button>
         </div>
 
-        {/* Theme toggle and auth buttons */}
+        {/* Theme toggle, notification bell, and auth buttons */}
         <div className="hidden md:flex items-center gap-4 ml-auto">
+          <NotificationBell />
           <ThemeToggle />
           <Button variant="ghost" asChild>
             <Link to="/signin">Sign In</Link>
@@ -143,7 +144,8 @@ export const NavigationBar = () => {
                 Streamers
               </span>
             </Link>
-            <div className="flex items-center px-4 py-2">
+            <div className="flex items-center justify-between px-4 py-2">
+              <NotificationBell />
               <ThemeToggle />
             </div>
             <div className="pt-2 flex flex-col space-y-2">
