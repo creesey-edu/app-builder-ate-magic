@@ -7,7 +7,8 @@ import {
   MonitorPlay, 
   Users, 
   Search, 
-  Filter 
+  Filter,
+  BarChart 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -139,7 +140,15 @@ const Streamers = () => {
       <div className="flex flex-col gap-8">
         {/* Featured streamers section */}
         <section>
-          <h2 className="text-2xl font-bold mb-6">Featured Streamers</h2>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold">Featured Streamers</h2>
+            <Button variant="outline" asChild>
+              <Link to="/streamer-analytics" className="flex items-center gap-2">
+                <BarChart className="h-4 w-4" />
+                Analytics Dashboard
+              </Link>
+            </Button>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {MOCK_STREAMERS.filter(s => s.featured).slice(0, 3).map(streamer => (
               <Card key={streamer.id} className="overflow-hidden">
@@ -270,9 +279,14 @@ const Streamers = () => {
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-4">Want to become an official streamer?</h2>
             <p className="mb-6 max-w-2xl mx-auto">Join our Elite Streamer program to get featured on this page, receive special Discord roles, and gain more visibility in our community.</p>
-            <Button size="lg" asChild className="bg-indigo-600 hover:bg-indigo-700">
-              <Link to="/premium">Join Elite Streamer Program</Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" asChild className="bg-indigo-600 hover:bg-indigo-700">
+                <Link to="/premium">Join Elite Streamer Program</Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link to="/streamer-analytics">View Analytics Dashboard</Link>
+              </Button>
+            </div>
           </div>
         </section>
       </div>

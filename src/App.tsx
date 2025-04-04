@@ -27,6 +27,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Streamers from "./pages/Streamers";
 import StreamerProfile from "./pages/StreamerProfile";
 import StreamerVerification from "./pages/StreamerVerification";
+import StreamerAnalytics from "./pages/StreamerAnalytics";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/streamers" element={<Streamers />} />
             <Route path="/streamer-profile" element={<StreamerProfile />} />
             <Route path="/streamer-verification" element={<StreamerVerification />} />
+            <Route path="/streamer-analytics" element={<StreamerAnalytics />} />
             <Route path="/about" element={<About />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/blog" element={<Blog />} />
