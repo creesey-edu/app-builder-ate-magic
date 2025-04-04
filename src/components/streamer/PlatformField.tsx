@@ -15,6 +15,7 @@ interface PlatformFieldProps {
   icon: React.ReactNode;
   placeholder: string;
   description?: string;
+  disabled?: boolean;
 }
 
 export const PlatformField = ({ 
@@ -23,7 +24,8 @@ export const PlatformField = ({
   label, 
   icon, 
   placeholder, 
-  description 
+  description,
+  disabled
 }: PlatformFieldProps) => {
   const [isValidating, setIsValidating] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
@@ -64,13 +66,13 @@ export const PlatformField = ({
           </FormLabel>
           <div className="flex gap-2">
             <FormControl>
-              <Input placeholder={placeholder} {...field} />
+              <Input placeholder={placeholder} {...field} disabled={disabled} />
             </FormControl>
             <Button 
               type="button" 
               variant="outline" 
               size="sm"
-              disabled={!field.value || isValidating}
+              disabled={!field.value || isValidating || disabled}
               onClick={() => validatePlatform(field.value)}
               className="whitespace-nowrap"
             >

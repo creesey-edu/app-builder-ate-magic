@@ -6,9 +6,10 @@ import { StreamerProfileFormValues } from "@/types/streamer";
 
 interface PlatformsSectionProps {
   control: Control<StreamerProfileFormValues>;
+  disabled?: boolean;
 }
 
-export const PlatformsSection = ({ control }: PlatformsSectionProps) => {
+export const PlatformsSection = ({ control, disabled }: PlatformsSectionProps) => {
   return (
     <div className="space-y-4 md:col-span-2">
       <h3 className="text-lg font-medium">Streaming Platforms</h3>
@@ -23,6 +24,7 @@ export const PlatformsSection = ({ control }: PlatformsSectionProps) => {
             label="Twitch Username"
             icon={<TwitchIcon className="h-4 w-4 text-purple-600" />}
             placeholder="yourusername"
+            disabled={disabled}
           />
         </div>
         
@@ -35,6 +37,7 @@ export const PlatformsSection = ({ control }: PlatformsSectionProps) => {
             icon={<YoutubeIcon className="h-4 w-4 text-red-600" />}
             placeholder="Your channel ID"
             description="Found in your YouTube channel URL"
+            disabled={disabled}
           />
         </div>
 
@@ -46,6 +49,7 @@ export const PlatformsSection = ({ control }: PlatformsSectionProps) => {
             label="Kick Username"
             icon={<MonitorPlay className="h-4 w-4 text-green-600" />}
             placeholder="yourusername"
+            disabled={disabled}
           />
         </div>
       </div>

@@ -9,9 +9,10 @@ import { Info } from "lucide-react";
 
 interface DiscordSectionProps {
   control: Control<StreamerProfileFormValues>;
+  disabled?: boolean;
 }
 
-export const DiscordSection = ({ control }: DiscordSectionProps) => {
+export const DiscordSection = ({ control, disabled }: DiscordSectionProps) => {
   return (
     <div className="space-y-4 md:col-span-2">
       <h3 className="text-lg font-medium">Discord Integration</h3>
@@ -33,7 +34,7 @@ export const DiscordSection = ({ control }: DiscordSectionProps) => {
               Discord Username
             </FormLabel>
             <FormControl>
-              <Input placeholder="username (e.g. username#1234)" {...field} />
+              <Input placeholder="username (e.g. username#1234)" {...field} disabled={disabled} />
             </FormControl>
             <FormDescription>
               Required to assign your Discord Streamer role
