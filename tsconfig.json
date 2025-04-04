@@ -5,6 +5,7 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "jsx": "react", // or "react-jsx" for React 17+
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
