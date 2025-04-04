@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
 import { BasicInfoSection } from "./BasicInfoSection";
 import { PlatformsSection } from "./PlatformsSection";
@@ -28,6 +28,15 @@ const validateSocialLinks = async (formData: StreamerProfileFormValues) => {
   };
 };
 
+// Mock function to handle image upload (in a real app, this would upload to your storage)
+const uploadImage = async (file: File): Promise<string> => {
+  // Simulate API upload
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  // Return a fake URL for demo purposes
+  const randomId = Math.floor(Math.random() * 70);
+  return `https://i.pravatar.cc/300?img=${randomId}`;
+};
+
 export const ProfileForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -43,6 +52,7 @@ export const ProfileForm = () => {
       youtubeChannelId: "",
       kickUsername: "",
       discordUsername: "",
+      profileImage: null,
     },
   });
 
@@ -55,6 +65,12 @@ export const ProfileForm = () => {
       const validation = await validateSocialLinks(data);
       
       if (validation.valid) {
+        // Handle image upload if a file was provided
+        let profileImageUrl: string | undefined;
+        if (data.profileImage instanceof File) {
+          profileImageUrl = await uploadImage(data.profileImage);
+        }
+        
         // In a real app, you would save the profile to your backend here
         await new Promise(resolve => setTimeout(resolve, 1500));
         
@@ -133,9 +149,9 @@ export const ProfileForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <BasicInfoSection control={form.control} />
-          <PlatformsSection control={form.control} />
-          <DiscordSection control={form.control} />
+          <BasicInfoSection control={form.control} disabled={isSubmitting} />
+          <PlatformsSection control={form.control} disabled={isSubmitting} />
+          <DiscordSection control={form.control} disabled={isSubmitting} />
         </div>
 
         <div className="flex justify-end mt-6">

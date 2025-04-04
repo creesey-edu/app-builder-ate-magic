@@ -9,8 +9,12 @@ export const streamerProfileSchema = z.object({
   youtubeChannelId: z.string().optional(),
   kickUsername: z.string().optional(),
   discordUsername: z.string().min(2, { message: "Discord username is required" }),
-  // In a real app you'd handle image upload differently
-  profileImage: z.any().optional(),
+  // Handle the profile image - can be a File object, string URL, or null
+  profileImage: z.union([
+    z.instanceof(File),
+    z.string(),
+    z.null()
+  ]).optional().nullable(),
 });
 
 export type StreamerProfileFormValues = z.infer<typeof streamerProfileSchema>;
@@ -29,6 +33,7 @@ export const streamerProfileWithVerificationSchema = streamerProfileSchema.exten
   verificationStatus: z.nativeEnum(VerificationStatus).default(VerificationStatus.PENDING),
   verifiedAt: z.date().optional(),
   rejectionReason: z.string().optional(),
+  profileImageUrl: z.string().optional(),
 });
 
 export type StreamerProfileWithVerification = z.infer<typeof streamerProfileWithVerificationSchema>;
@@ -43,6 +48,7 @@ export const mockPendingStreamers: StreamerProfileWithVerification[] = [
     discordUsername: "gamemaster64#1234",
     createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
     verificationStatus: VerificationStatus.PENDING,
+    profileImageUrl: "https://i.pravatar.cc/300?img=12",
   },
   {
     id: "streamer-2",
@@ -52,6 +58,7 @@ export const mockPendingStreamers: StreamerProfileWithVerification[] = [
     discordUsername: "rpgqueen#4567",
     createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
     verificationStatus: VerificationStatus.PENDING,
+    profileImageUrl: "https://i.pravatar.cc/300?img=31",
   },
   {
     id: "streamer-3",
@@ -62,5 +69,6 @@ export const mockPendingStreamers: StreamerProfileWithVerification[] = [
     discordUsername: "speedrun#9999",
     createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
     verificationStatus: VerificationStatus.PENDING,
+    profileImageUrl: "https://i.pravatar.cc/300?img=42",
   },
 ];
