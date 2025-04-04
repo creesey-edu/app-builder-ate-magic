@@ -5,11 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { Loader2, AlertCircle } from "lucide-react";
+import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
 import { BasicInfoSection } from "./BasicInfoSection";
 import { PlatformsSection } from "./PlatformsSection";
 import { DiscordSection } from "./DiscordSection";
-import { streamerProfileSchema, StreamerProfileFormValues } from "@/types/streamer";
+import { streamerProfileSchema, StreamerProfileFormValues, VerificationStatus } from "@/types/streamer";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { VerificationBadge } from "./VerificationBadge";
 
 // Mock function for validation (in a real app, this would call your backend)
 const validateSocialLinks = async (formData: StreamerProfileFormValues) => {
@@ -28,6 +30,7 @@ const validateSocialLinks = async (formData: StreamerProfileFormValues) => {
 
 export const ProfileForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
   // Initialize form with react-hook-form and zod validation
@@ -56,10 +59,11 @@ export const ProfileForm = () => {
         await new Promise(resolve => setTimeout(resolve, 1500));
         
         toast({
-          title: "Profile saved!",
-          description: "Your streamer profile has been created successfully.",
+          title: "Profile submitted for verification!",
+          description: "Your streamer profile has been created and is awaiting approval from our team.",
         });
         
+        setIsSubmitted(true);
         // You could redirect to the user's new profile page
         // navigate(`/streamers/${userId}`);
       } else {
@@ -80,6 +84,51 @@ export const ProfileForm = () => {
     }
   };
 
+  if (isSubmitted) {
+    return (
+      <div className="space-y-6">
+        <Alert className="bg-amber-50 border-amber-200">
+          <AlertCircle className="h-5 w-5 text-amber-600" />
+          <AlertTitle className="text-amber-800">Verification Pending</AlertTitle>
+          <AlertDescription className="text-amber-700">
+            Your streamer profile has been submitted and is currently under review. 
+            You'll receive notification once our team has approved your profile.
+          </AlertDescription>
+        </Alert>
+        
+        <div className="bg-muted/50 p-4 rounded-lg border">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-medium">Application Status</h3>
+            <VerificationBadge status={VerificationStatus.PENDING} />
+          </div>
+          
+          <div className="space-y-2 text-sm">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-green-500" />
+              <span>Profile information submitted</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Loader2 className="h-4 w-4 text-amber-500 animate-spin" />
+              <span>Verification by moderator team (typically within 24 hours)</span>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="h-4 w-4 rounded-full border border-muted-foreground flex items-center justify-center">
+                <span className="text-[10px]">3</span>
+              </div>
+              <span>Discord role assignment (after verification)</span>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="h-4 w-4 rounded-full border border-muted-foreground flex items-center justify-center">
+                <span className="text-[10px]">4</span>
+              </div>
+              <span>Profile appears on Streamers page (after verification)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -94,10 +143,10 @@ export const ProfileForm = () => {
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving Profile...
+                Submitting Profile...
               </>
             ) : (
-              "Save Profile"
+              "Submit Profile for Verification"
             )}
           </Button>
         </div>
