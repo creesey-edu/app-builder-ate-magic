@@ -33,18 +33,26 @@ export const DiscordWidget = ({
   const fetchDiscordData = useCallback(async () => {
     try {
       setLoading(true);
+      console.log("Fetching Discord data from:", `https://discord.com/api/guilds/${serverId}/widget.json`);
       const response = await fetch(`https://discord.com/api/guilds/${serverId}/widget.json`);
-      
+      console.log("Response status:", response.status);
+      const responseBody = await response.text();
+      console.log("Response body:", responseBody);
       if (!response.ok) {
-        throw new Error("Failed to fetch Discord data. Make sure the server has widgets enabled.");
+        throw new Error("Failed to fetch Discord data.");
       }
-      
-      const data: DiscordWidgetData = await response.json();
+      const data: DiscordWidgetData = JSON.parse(responseBody);
       setWidgetData(data);
       setError(null);
     } catch (err) {
       console.error("Error fetching Discord data:", err);
-      setError("Could not load Discord data. The server may not have widgets enabled.");
+        let userFriendlyError =
+            "Could not load Discord data. This may be due to a browser extension or network restrictions.";
+        
+          if (err instanceof TypeError && err.message === "Failed to fetch") {
+            userFriendlyError += " Try disabling privacy blockers like Privacy Badger or uBlock";
+          }
+          setError(userFriendlyError);
     } finally {
       setLoading(false);
     }
