@@ -9,6 +9,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Separator } from "@/components/ui/separator";
 import {
   Form,
   FormControl,
@@ -20,6 +21,7 @@ import {
 } from "@/components/ui/form";
 import { toast } from "@/hooks/use-toast";
 import { GamepadIcon, KeyIcon, MailIcon, UserPlus } from "lucide-react";
+import DiscordLoginButton from "@/components/auth/DiscordLoginButton";
 
 // Form schema
 const signUpSchema = z.object({
@@ -111,6 +113,17 @@ const SignUp = () => {
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               Join The Angry Gamer Show community
             </p>
+          </div>
+          
+          <DiscordLoginButton disabled={isLoading} />
+          
+          <div className="relative my-6">
+            <Separator className="absolute inset-0" />
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                or continue with email
+              </span>
+            </div>
           </div>
           
           <Form {...form}>

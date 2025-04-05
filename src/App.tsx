@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -28,6 +29,8 @@ import Streamers from "./pages/Streamers";
 import StreamerProfile from "./pages/StreamerProfile";
 import StreamerVerification from "./pages/StreamerVerification";
 import StreamerAnalytics from "./pages/StreamerAnalytics";
+import Admin from "./pages/Admin";
+import DiscordCallback from "./components/auth/DiscordCallback";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +55,8 @@ const App = () => (
               <Route path="/streamer-profile" element={<StreamerProfile />} />
               <Route path="/streamer-verification" element={<StreamerVerification />} />
               <Route path="/streamer-analytics" element={<StreamerAnalytics />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/auth/discord/callback" element={<DiscordCallback />} />
               <Route path="/about" element={<About />} />
               <Route path="/careers" element={<Careers />} />
               <Route path="/blog" element={<Blog />} />
