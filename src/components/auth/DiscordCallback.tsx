@@ -22,7 +22,7 @@ const DiscordCallback = () => {
           return;
         }
         
-        // Process the authentication
+        // Process the authentication with enhanced scopes for admin verification
         const user = await handleDiscordCallback(code);
         
         if (!user) {
