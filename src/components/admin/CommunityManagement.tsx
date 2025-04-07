@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   Table, 
@@ -25,8 +24,10 @@ import {
   UserCheck, 
   Eye, 
   Crown,
-  Plus
+  Plus,
+  ExternalLink
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // Mock data for communities
 const MOCK_COMMUNITIES = [
@@ -95,6 +96,7 @@ const MOCK_COMMUNITIES = [
 const CommunityManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [communities, setCommunities] = useState(MOCK_COMMUNITIES);
+  const navigate = useNavigate();
 
   const filteredCommunities = communities.filter(community => 
     community.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -113,11 +115,15 @@ const CommunityManagement = () => {
     ));
   };
 
+  const handleCreateCommunity = () => {
+    navigate("/community-store");
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Community Management</h2>
-        <Button>
+        <Button onClick={handleCreateCommunity}>
           <Plus className="mr-2 h-4 w-4" />
           Create Community
         </Button>
@@ -222,6 +228,17 @@ const CommunityManagement = () => {
             )}
           </TableBody>
         </Table>
+      </div>
+      
+      <div className="bg-muted/30 rounded-lg p-4 flex items-center justify-between">
+        <div>
+          <h3 className="font-medium">Need specialized community tools?</h3>
+          <p className="text-sm text-muted-foreground">Check out our developer services for custom solutions</p>
+        </div>
+        <Button variant="outline" size="sm" onClick={() => navigate("/community-store")}>
+          <ExternalLink className="mr-2 h-4 w-4" />
+          Community Store
+        </Button>
       </div>
     </div>
   );

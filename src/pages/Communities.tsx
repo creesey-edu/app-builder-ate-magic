@@ -18,6 +18,10 @@ const Communities = () => {
   const handleNavigateToPremium = () => {
     navigate("/premium");
   };
+  
+  const handleCreateCommunity = () => {
+    navigate("/community-store");
+  };
 
   return (
     <PageLayout 
@@ -44,7 +48,7 @@ const Communities = () => {
               <Users className="mr-2 h-4 w-4" />
               Manage
             </Button>
-            <Button className="flex-1 md:flex-initial">
+            <Button className="flex-1 md:flex-initial" onClick={handleCreateCommunity}>
               <UserPlus className="mr-2 h-4 w-4" />
               Create Community
             </Button>

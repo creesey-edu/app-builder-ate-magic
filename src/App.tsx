@@ -30,6 +30,7 @@ import StreamerProfile from "./pages/StreamerProfile";
 import StreamerVerification from "./pages/StreamerVerification";
 import StreamerAnalytics from "./pages/StreamerAnalytics";
 import Admin from "./pages/Admin";
+import CommunityStore from "./pages/CommunityStore";
 import DiscordCallback from "./components/auth/DiscordCallback";
 
 const queryClient = new QueryClient();
@@ -48,6 +49,7 @@ const App = () => (
               <Route path="/signin" element={<SignIn />} />
               <Route path="/games" element={<Games />} />
               <Route path="/communities" element={<Communities />} />
+              <Route path="/community-store" element={<CommunityStore />} />
               <Route path="/tournaments" element={<Tournaments />} />
               <Route path="/news" element={<News />} />
               <Route path="/premium" element={<Premium />} />
