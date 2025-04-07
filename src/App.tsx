@@ -12,6 +12,7 @@ import SignIn from "./pages/SignIn";
 import NotFound from "./pages/NotFound";
 import Games from "./pages/Games";
 import Communities from "./pages/Communities";
+import FeaturedCommunities from "./pages/FeaturedCommunities";
 import Tournaments from "./pages/Tournaments";
 import News from "./pages/News";
 import Premium from "./pages/Premium";
@@ -49,6 +50,7 @@ const App = () => (
               <Route path="/signin" element={<SignIn />} />
               <Route path="/games" element={<Games />} />
               <Route path="/communities" element={<Communities />} />
+              <Route path="/featured-communities" element={<FeaturedCommunities />} />
               <Route path="/community-store" element={<CommunityStore />} />
               <Route path="/tournaments" element={<Tournaments />} />
               <Route path="/news" element={<News />} />
