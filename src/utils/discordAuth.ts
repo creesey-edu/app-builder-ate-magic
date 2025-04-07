@@ -1,4 +1,3 @@
-
 import { toast } from "@/hooks/use-toast";
 
 // Discord application credentials
@@ -20,6 +19,9 @@ export enum VerificationType {
   EDUCATION = "education"
 }
 
+/**
+ * Discord OAuth URL used for login
+ */
 export const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(
   REDIRECT_URI
 )}&response_type=code&scope=identify%20email%20guilds%20guilds.members.read`;
@@ -35,6 +37,9 @@ export const initiateDiscordAuth = (verificationType?: VerificationType) => {
   window.location.href = discordAuthUrl;
 };
 
+/**
+ * Handle the OAuth2 callback code and fetch user data from the backend
+ */
 export const handleDiscordCallback = async (code: string) => {
   try {
     // In a real implementation, this would send the code to your backend
@@ -94,17 +99,15 @@ export const handleDiscordCallback = async (code: string) => {
     // Show success toast
     toast({
       title: "Successfully authenticated with Discord!",
-      description: `Welcome, ${mockUser.username}!${isUserAdmin ? " (Admin access granted)" : ""}`,
+      description: `Welcome, ${user.username}!${user.isAdmin ? " (Admin access granted)" : ""}`,
     });
-    
-    // Get the redirect URL or default to home
+
     const redirectUrl = localStorage.getItem("authRedirect") || "/";
     localStorage.removeItem("authRedirect");
-    
-    // Redirect user
+
     window.location.href = redirectUrl;
-    
-    return mockUser;
+
+    return user;
   } catch (error) {
     console.error("Discord authentication error:", error);
     toast({
@@ -112,20 +115,20 @@ export const handleDiscordCallback = async (code: string) => {
       description: "Could not authenticate with Discord. Please try again.",
       variant: "destructive",
     });
-    
+
     return null;
   }
 };
 
-// Check if the user is an admin based on server membership and role
+/**
+ * Check if the user has the admin role in the configured Discord guild
+ */
 export const checkUserAdminStatus = (user: any): boolean => {
   if (!user || !user.guilds) return false;
-  
-  // Check if user is in the admin server
+
   const adminGuild = user.guilds.find((guild: any) => guild.id === ADMIN_SERVER_GUILD_ID);
   if (!adminGuild) return false;
-  
-  // Check if user has the admin role
+
   return adminGuild.roles.includes(ADMIN_ROLE_ID);
 };
 
@@ -157,12 +160,14 @@ export const checkUserVerificationStatus = (user: any): { isVerified: boolean, t
   return { isVerified: false, type: null };
 };
 
-// Function to verify admin status before accessing admin routes
+/**
+ * Verify admin access using stored user data
+ */
 export const verifyAdminAccess = (): boolean => {
   try {
     const userJson = localStorage.getItem("user");
     if (!userJson) return false;
-    
+
     const user = JSON.parse(userJson);
     return !!user.isAdmin;
   } catch (error) {

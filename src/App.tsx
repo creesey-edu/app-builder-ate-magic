@@ -1,4 +1,5 @@
-
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import { rolePermissions } from "@/utils/permissions";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -45,6 +46,7 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <Routes>
+              <Route path="/auth/discord/callback" element={<DiscordCallback />} />
               <Route path="/" element={<Index />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signin" element={<SignIn />} />
@@ -59,7 +61,13 @@ const App = () => (
               <Route path="/streamer-profile" element={<StreamerProfile />} />
               <Route path="/streamer-verification" element={<StreamerVerification />} />
               <Route path="/streamer-analytics" element={<StreamerAnalytics />} />
-              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin"
+              element={
+                <ProtectedRoute requiredRoleId={rolePermissions.admin}>
+                  <Admin />
+              </ProtectedRoute>
+              }
+              />
               <Route path="/auth/discord/callback" element={<DiscordCallback />} />
               <Route path="/about" element={<About />} />
               <Route path="/careers" element={<Careers />} />
@@ -71,6 +79,7 @@ const App = () => (
               <Route path="/community-guidelines" element={<CommunityGuidelines />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/unauthorized" element={<Unauthorized />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

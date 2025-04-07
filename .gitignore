@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Project
+frontend
+auth
+.env
+.vscode
+docs.code-workspace

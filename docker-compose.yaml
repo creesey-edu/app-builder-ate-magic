@@ -1,0 +1,29 @@
+services:
+  frontend:
+    container_name: tag-frontend
+    image: tag-frontend:latest
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    ports:
+      - "5173:8080"
+
+    environment:
+      - VITE_HOST
+      - VITE_PORT
+      - VITE_ALLOWED_HOSTS
+
+    volumes:
+      - .:/app
+      - /app/dev/node_modules
+      # - /app/prod/node_modules
+    networks:
+      - dev_network
+
+    command: npm run dev
+
+networks:
+  dev_network:
+    driver: bridge
