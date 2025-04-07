@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,7 @@ import {
   NavigationMenuTrigger, 
   navigationMenuTriggerStyle 
 } from "@/components/ui/navigation-menu";
-import { GamepadIcon, Menu, Video, X } from "lucide-react";
+import { GamepadIcon, Menu, Video, X, Star } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { NotificationBell } from "./NotificationBell";
 
@@ -57,7 +58,23 @@ export const NavigationBar = () => {
                 <NavigationMenuTrigger>Communities</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    {["Featured", "New", "Popular", "Tournaments", "Events", "Discussions"].map((item) => (
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          to="/featured-communities"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none flex items-center gap-1">
+                            <Star className="h-3.5 w-3.5 text-amber-500" />
+                            Featured
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Check out our featured communities
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    {["New", "Popular", "Tournaments", "Events", "Discussions"].map((item) => (
                       <li key={item}>
                         <NavigationMenuLink asChild>
                           <Link
@@ -66,8 +83,7 @@ export const NavigationBar = () => {
                           >
                             <div className="text-sm font-medium leading-none">{item}</div>
                             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              {item === "Featured" ? "Check out our featured communities" : 
-                               item === "New" ? "Discover newly created communities" :
+                              {item === "New" ? "Discover newly created communities" :
                                item === "Popular" ? "Join our most active communities" :
                                item === "Tournaments" ? "Competitive gaming events" :
                                item === "Events" ? "Upcoming community events" : 
@@ -131,6 +147,10 @@ export const NavigationBar = () => {
             </Link>
             <Link to="/communities" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
               Communities
+            </Link>
+            <Link to="/featured-communities" className="px-4 py-2 text-sm font-medium flex items-center gap-1" onClick={() => setMobileMenuOpen(false)}>
+              <Star className="h-3.5 w-3.5 text-amber-500" />
+              Featured Communities
             </Link>
             <Link to="/tournaments" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
               Tournaments
