@@ -1,13 +1,15 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, Users, Shield, BarChart, Settings, Bell, AlertTriangle } from "lucide-react";
+import { ChevronLeft, Users, Shield, BarChart, Settings, Bell, AlertTriangle, UsersRound } from "lucide-react";
 import UserManagement from "@/components/admin/UserManagement";
 import ContentModeration from "@/components/admin/ContentModeration";
 import SystemAnalytics from "@/components/admin/SystemAnalytics";
 import SiteSettings from "@/components/admin/SiteSettings";
 import NotificationManagement from "@/components/admin/NotificationManagement";
+import CommunityManagement from "@/components/admin/CommunityManagement";
 import { verifyAdminAccess } from "@/utils/discordAuth";
 import { toast } from "@/hooks/use-toast";
 
@@ -87,7 +89,7 @@ const AdminPage = () => {
           onValueChange={setActiveTab}
           className="space-y-4"
         >
-          <TabsList className="grid grid-cols-5 w-full max-w-4xl">
+          <TabsList className="grid grid-cols-6 w-full max-w-5xl">
             <TabsTrigger value="users" className="flex gap-2 items-center">
               <Users className="h-4 w-4" />
               <span className="hidden sm:inline">User Management</span>
@@ -95,6 +97,10 @@ const AdminPage = () => {
             <TabsTrigger value="content" className="flex gap-2 items-center">
               <Shield className="h-4 w-4" />
               <span className="hidden sm:inline">Content Moderation</span>
+            </TabsTrigger>
+            <TabsTrigger value="communities" className="flex gap-2 items-center">
+              <UsersRound className="h-4 w-4" />
+              <span className="hidden sm:inline">Communities</span>
             </TabsTrigger>
             <TabsTrigger value="analytics" className="flex gap-2 items-center">
               <BarChart className="h-4 w-4" />
@@ -116,6 +122,10 @@ const AdminPage = () => {
           
           <TabsContent value="content" className="space-y-4">
             <ContentModeration />
+          </TabsContent>
+          
+          <TabsContent value="communities" className="space-y-4">
+            <CommunityManagement />
           </TabsContent>
           
           <TabsContent value="analytics" className="space-y-4">
