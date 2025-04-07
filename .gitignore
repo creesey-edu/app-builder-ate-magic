@@ -30,3 +30,4 @@ auth
 .env
 .vscode
 docs.code-workspace
+frontend.code-workspace
