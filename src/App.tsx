@@ -1,3 +1,4 @@
+
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import { rolePermissions } from "@/utils/permissions";
 import { Toaster } from "@/components/ui/toaster";
@@ -34,6 +35,7 @@ import StreamerAnalytics from "./pages/StreamerAnalytics";
 import Admin from "./pages/Admin";
 import CommunityStore from "./pages/CommunityStore";
 import DiscordCallback from "./components/auth/DiscordCallback";
+import Unauthorized from "./pages/Unauthorized";
 
 const queryClient = new QueryClient();
 
@@ -62,13 +64,12 @@ const App = () => (
               <Route path="/streamer-verification" element={<StreamerVerification />} />
               <Route path="/streamer-analytics" element={<StreamerAnalytics />} />
               <Route path="/admin"
-              element={
-                <ProtectedRoute requiredRoleId={rolePermissions.admin}>
-                  <Admin />
-              </ProtectedRoute>
-              }
+                element={
+                  <ProtectedRoute requiredRoleId={rolePermissions.admin}>
+                    <Admin />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/auth/discord/callback" element={<DiscordCallback />} />
               <Route path="/about" element={<About />} />
               <Route path="/careers" element={<Careers />} />
               <Route path="/blog" element={<Blog />} />
