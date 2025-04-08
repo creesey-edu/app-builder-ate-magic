@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 export interface DiscordGuild {
@@ -19,6 +20,7 @@ interface UserContextValue {
   user: DiscordUser | null;
   setUser: (user: DiscordUser | null) => void;
   isAuthenticated: boolean;
+  isLoading: boolean;
   logout: () => void;
 }
 
@@ -26,6 +28,7 @@ const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<DiscordUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -36,6 +39,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         localStorage.removeItem("user");
       }
     }
+    setIsLoading(false);
   }, []);
 
   const logout = () => {
@@ -44,7 +48,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, isAuthenticated: !!user, logout }}>
+    <UserContext.Provider value={{ 
+      user, 
+      setUser, 
+      isAuthenticated: !!user, 
+      isLoading,
+      logout 
+    }}>
       {children}
     </UserContext.Provider>
   );
