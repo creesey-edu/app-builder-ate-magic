@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { NotificationProvider } from "@/providers/NotificationProvider";
+import { UserProvider } from "@/context/UserContext";
 import Index from "./pages/Index";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
@@ -16,6 +17,7 @@ import Games from "./pages/Games";
 import Communities from "./pages/Communities";
 import FeaturedCommunities from "./pages/FeaturedCommunities";
 import Tournaments from "./pages/Tournaments";
+import TournamentDetails from "./pages/TournamentDetails";
 import News from "./pages/News";
 import Premium from "./pages/Premium";
 import About from "./pages/About";
@@ -43,48 +45,51 @@ const App = () => (
   <ThemeProvider defaultTheme="system" storageKey="angry-gamer-theme">
     <QueryClientProvider client={queryClient}>
       <NotificationProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/auth/discord/callback" element={<DiscordCallback />} />
-              <Route path="/" element={<Index />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/games" element={<Games />} />
-              <Route path="/communities" element={<Communities />} />
-              <Route path="/featured-communities" element={<FeaturedCommunities />} />
-              <Route path="/community-store" element={<CommunityStore />} />
-              <Route path="/tournaments" element={<Tournaments />} />
-              <Route path="/news" element={<News />} />
-              <Route path="/premium" element={<Premium />} />
-              <Route path="/streamers" element={<Streamers />} />
-              <Route path="/streamer-profile" element={<StreamerProfile />} />
-              <Route path="/streamer-verification" element={<StreamerVerification />} />
-              <Route path="/streamer-analytics" element={<StreamerAnalytics />} />
-              <Route path="/admin"
-                element={
-                  <ProtectedRoute requiredRoleId={rolePermissions.admin}>
-                    <Admin />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/about" element={<About />} />
-              <Route path="/careers" element={<Careers />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/press" element={<Press />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/help-center" element={<HelpCenter />} />
-              <Route path="/safety-center" element={<SafetyCenter />} />
-              <Route path="/community-guidelines" element={<CommunityGuidelines />} />
-              <Route path="/terms-of-service" element={<TermsOfService />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/unauthorized" element={<Unauthorized />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
+        <UserProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/auth/discord/callback" element={<DiscordCallback />} />
+                <Route path="/" element={<Index />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/games" element={<Games />} />
+                <Route path="/communities" element={<Communities />} />
+                <Route path="/featured-communities" element={<FeaturedCommunities />} />
+                <Route path="/community-store" element={<CommunityStore />} />
+                <Route path="/tournaments" element={<Tournaments />} />
+                <Route path="/tournaments/:slug" element={<TournamentDetails />} />
+                <Route path="/news" element={<News />} />
+                <Route path="/premium" element={<Premium />} />
+                <Route path="/streamers" element={<Streamers />} />
+                <Route path="/streamer-profile" element={<StreamerProfile />} />
+                <Route path="/streamer-verification" element={<StreamerVerification />} />
+                <Route path="/streamer-analytics" element={<StreamerAnalytics />} />
+                <Route path="/admin"
+                  element={
+                    <ProtectedRoute requiredRoleId={rolePermissions.admin}>
+                      <Admin />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/about" element={<About />} />
+                <Route path="/careers" element={<Careers />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/press" element={<Press />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/help-center" element={<HelpCenter />} />
+                <Route path="/safety-center" element={<SafetyCenter />} />
+                <Route path="/community-guidelines" element={<CommunityGuidelines />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/unauthorized" element={<Unauthorized />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </UserProvider>
       </NotificationProvider>
     </QueryClientProvider>
   </ThemeProvider>
