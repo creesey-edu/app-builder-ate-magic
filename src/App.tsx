@@ -36,6 +36,7 @@ import StreamerVerification from "./pages/StreamerVerification";
 import StreamerAnalytics from "./pages/StreamerAnalytics";
 import Admin from "./pages/Admin";
 import CommunityStore from "./pages/CommunityStore";
+import Events from "./pages/Events";
 import DiscordCallback from "./components/auth/DiscordCallback";
 import Unauthorized from "./pages/Unauthorized";
 
@@ -61,6 +62,7 @@ const App = () => (
                 <Route path="/community-store" element={<CommunityStore />} />
                 <Route path="/tournaments" element={<Tournaments />} />
                 <Route path="/tournaments/:slug" element={<TournamentDetails />} />
+                <Route path="/events" element={<Events />} />
                 <Route path="/news" element={<News />} />
                 <Route path="/premium" element={<Premium />} />
                 <Route path="/streamers" element={<Streamers />} />

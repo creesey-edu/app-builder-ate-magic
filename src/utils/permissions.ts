@@ -1,14 +1,18 @@
-// src/utils/permissions.ts
 
-const rolePermissions = {
-  admin: import.meta.env.VITE_ADMIN_ROLE_ID,
-  contentManager: "123456789000000002",
-  subscriber: "123456789000000003",
-  // Add more as needed
+// Role permissions mapping
+export const rolePermissions = {
+  admin: "admin",
+  moderator: "moderator",
+  user: "user"
 };
 
-export const hasRole = (user: any, roleId: string): boolean => {
-  return user?.guilds?.some((guild: any) => guild.roles?.includes(roleId));
-};
+// Check if a user has a specific role
+export const hasRole = (user: any, requiredRoleId: string): boolean => {
+  // Check if user has the role property
+  if (!user || !user.role) {
+    return false;
+  }
 
-export { rolePermissions };
+  // Check if the user's role matches the required role
+  return user.role === requiredRoleId;
+};
