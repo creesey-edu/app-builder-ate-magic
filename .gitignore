@@ -25,4 +25,8 @@ dist-ssr
 *.sw?
 
 
+# Configuration files
 .env
+.env.dev
+.env.prod
+.env.test

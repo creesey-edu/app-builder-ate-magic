@@ -1,7 +1,8 @@
 
 import { Button } from "@/components/ui/button";
 import DiscordLogo from "@/components/ui/icons/DiscordLogo";
-import { initiateDiscordAuth, VerificationType } from "@/utils/discordAuth";
+import { initiateDiscordAuth } from "@/lib/auth";
+import { VerificationType } from "@/types/discord";
 import { MouseEvent } from "react";
 
 interface DiscordLoginButtonProps {

@@ -33,7 +33,7 @@ export default defineConfig(({ mode }) => {
       hmr: {
         protocol: "wss",
         host: hmrHost,
-        port,
+        // port,
       },
     },
     plugins: [react()] as PluginOption[],

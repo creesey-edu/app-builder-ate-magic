@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleDiscordCallback } from "@/utils/discordAuth";
+import { handleDiscordCallback } from "@/lib/auth";
 import { Loader2 } from "lucide-react";
 
 const DiscordCallback = () => {

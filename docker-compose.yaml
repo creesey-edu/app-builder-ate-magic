@@ -8,12 +8,15 @@ services:
       dockerfile: Dockerfile
 
     ports:
-      - "5173:8080"
+      - "192.168.0.199:5173:5173"
+    
+    env_file:
+      - .env.dev
 
-    environment:
-      - VITE_HOST
-      - VITE_PORT
-      - VITE_ALLOWED_HOSTS
+    # environment:
+    #   - VITE_HOST
+    #   - VITE_PORT
+    #   - VITE_ALLOWED_HOSTS
 
     volumes:
       - .:/app

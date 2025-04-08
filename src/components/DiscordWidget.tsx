@@ -24,7 +24,7 @@ interface DiscordWidgetData {
 }
 
 export const DiscordWidget = ({
-  serverId = import.meta.env.VITE_DISCORD_SERVER_ID || "997603496637513928"
+  serverId = import.meta.env.VITE_ADMIN_SERVER_GUILD_ID || "997603496637513928"
 }: { serverId?: string }) => {
   const [widgetData, setWidgetData] = useState<DiscordWidgetData | null>(null);
   const [loading, setLoading] = useState(true);

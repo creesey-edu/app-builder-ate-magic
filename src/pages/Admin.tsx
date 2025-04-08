@@ -10,7 +10,7 @@ import SystemAnalytics from "@/components/admin/SystemAnalytics";
 import SiteSettings from "@/components/admin/SiteSettings";
 import NotificationManagement from "@/components/admin/NotificationManagement";
 import CommunityManagement from "@/components/admin/CommunityManagement";
-import { verifyAdminAccess } from "@/utils/discordAuth";
+import { verifyAdminAccess } from "@/lib/auth";
 import { toast } from "@/hooks/use-toast";
 
 const AdminPage = () => {
