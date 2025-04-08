@@ -1,3 +1,4 @@
+
 import { toast } from "@/hooks/use-toast";
 
 // Discord application credentials
@@ -99,7 +100,7 @@ export const handleDiscordCallback = async (code: string) => {
     // Show success toast
     toast({
       title: "Successfully authenticated with Discord!",
-      description: `Welcome, ${user.username}!${user.isAdmin ? " (Admin access granted)" : ""}`,
+      description: `Welcome, ${mockUser.username}!${mockUser.isAdmin ? " (Admin access granted)" : ""}`,
     });
 
     const redirectUrl = localStorage.getItem("authRedirect") || "/";
@@ -107,7 +108,7 @@ export const handleDiscordCallback = async (code: string) => {
 
     window.location.href = redirectUrl;
 
-    return user;
+    return mockUser;
   } catch (error) {
     console.error("Discord authentication error:", error);
     toast({
@@ -195,3 +196,4 @@ export const checkVerificationStatus = async (userId: string): Promise<string> =
     }, 500);
   });
 };
+
