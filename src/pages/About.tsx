@@ -19,6 +19,16 @@ const About = () => {
 
           <h2 className="text-2xl font-semibold text-primary border-b border-muted pb-1">Our Story</h2>
           <div className="bg-muted p-6 md:p-8 rounded-xl border-l-4 border-primary shadow-sm space-y-4">
+            <div className="flex flex-col md:flex-row items-start gap-6">
+              <img
+                src="images/chad.jpg" // update this path to match your static asset location
+                alt="Chad Reesey"
+                className="w-40 h-40 rounded-xl object-cover shadow-lg border border-muted"
+              />
+              <div className="space-y-4">
+                {/* Existing paragraphs go here */}
+              </div>
+            </div>
             <p>
               Chad Reesey didn’t stumble into tech — he earned his way into it, one system, one lesson, and one mission-critical decision at a time.
             </p>
