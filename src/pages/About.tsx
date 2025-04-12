@@ -60,7 +60,7 @@ const About = () => {
             </div>
           </section>
 
-          {/* Founder and Team Section */}
+          {/* Founder Section */}
           <section>
             <h2 className="text-2xl font-semibold text-primary border-b border-muted pb-1">Meet Our Founder</h2>
             <div className="bg-muted p-6 md:p-8 rounded-xl border-l-4 border-primary shadow-sm space-y-4">
@@ -133,12 +133,25 @@ const About = () => {
                 </div>
               </div>
             </div>
+          </section>
 
-            <h2 className="text-2xl font-semibold text-primary border-b border-muted pb-1 mt-12">Our Team</h2>
+          {/* Team Section */}
+          <section>
+            <h2 className="text-2xl font-semibold text-primary border-b border-muted pb-1">Our Team</h2>
             <p>
               Our passionate team includes gaming industry veterans, content creators, and community leaders who are dedicated to improving the gaming experience for everyone.
             </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <div key={index} className="bg-card rounded-xl shadow p-4">
+                  <div className="h-32 bg-muted rounded-md mb-4"></div>
+                  <h3 className="text-lg font-semibold">Team Member {index + 1}</h3>
+                  <p className="text-sm text-muted-foreground">Role / Position</p>
+                </div>
+              ))}
+            </div>
           </section>
+
         </article>
       </div>
     </PageLayout>
