@@ -46,7 +46,14 @@ export const handleDiscordCallback = async (code: string) => {
       throw new Error(`OAuth exchange failed: ${res.statusText}`);
     }
 
-    const user = await res.json();
+    const { user, token } = await res.json(); // ✅ Correct destructuring
+
+    if (!token) {
+      throw new Error("JWT token is missing from backend response");
+    }
+
+    localStorage.setItem("auth_token", token); // ✅ Store securely
+    localStorage.setItem("user", JSON.stringify(user));
 
     if (verificationType) {
       toast({
@@ -55,8 +62,6 @@ export const handleDiscordCallback = async (code: string) => {
       });
       localStorage.removeItem("verificationType");
     }
-
-    localStorage.setItem("user", JSON.stringify(user));
 
     toast({
       title: "Successfully authenticated with Discord!",
@@ -78,6 +83,7 @@ export const handleDiscordCallback = async (code: string) => {
     return null;
   }
 };
+
 
 // ✅ Utility: Admin role check
 export const checkUserAdminStatus = (user: any): boolean => {

@@ -33,6 +33,8 @@ import StreamerAnalytics from "./pages/StreamerAnalytics";
 import Admin from "./pages/Admin";
 import CommunityStore from "./pages/CommunityStore";
 import DiscordCallback from "./components/auth/DiscordCallback";
+import Debug from "@/pages/Debug";
+
 
 const queryClient = new QueryClient();
 
@@ -71,6 +73,7 @@ const App = () => (
               <Route path="/community-guidelines" element={<CommunityGuidelines />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/debug" element={<Debug />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

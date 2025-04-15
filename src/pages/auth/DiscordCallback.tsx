@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleDiscordCallback } from "@/utils/discordAuth";
+import { handleDiscordCallback } from "@/lib/auth/discord";
 
 const DiscordCallback = () => {
   const navigate = useNavigate();
