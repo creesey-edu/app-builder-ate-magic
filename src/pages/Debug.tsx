@@ -9,7 +9,7 @@ const Debug = () => {
   useEffect(() => {
     const fetchDebugUser = async () => {
       try {
-        const res = await api.get("/api/debug/user");
+        const res = await api.get("/debug/user");
         setUserInfo(res.data.user);
       } catch (err: any) {
         console.error("Error fetching debug user:", err);
