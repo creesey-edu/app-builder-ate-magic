@@ -1,3 +1,4 @@
+// src/pages/StreamerProfile.tsx
 
 import { PageLayout } from "@/components/PageLayout";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";

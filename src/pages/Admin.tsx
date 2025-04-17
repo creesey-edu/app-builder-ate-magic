@@ -1,41 +1,45 @@
-
+// src/pages/Admin.tsx
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, Users, Shield, BarChart, Settings, Bell, AlertTriangle, UsersRound } from "lucide-react";
+import {
+  ChevronLeft,
+  Users,
+  Shield,
+  BarChart,
+  Settings,
+  Bell,
+  AlertTriangle,
+  UsersRound,
+} from "lucide-react";
 import UserManagement from "@/components/admin/UserManagement";
 import ContentModeration from "@/components/admin/ContentModeration";
 import SystemAnalytics from "@/components/admin/SystemAnalytics";
 import SiteSettings from "@/components/admin/SiteSettings";
 import NotificationManagement from "@/components/admin/NotificationManagement";
 import CommunityManagement from "@/components/admin/CommunityManagement";
-import { verifyAdminAccess } from "@/lib/auth";
+import { useSession } from "@/hooks/useSession";
 import { toast } from "@/hooks/use-toast";
 
 const AdminPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("users");
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const { isAdmin, isLoading } = useSession();
 
   useEffect(() => {
-    const hasAdminAccess = verifyAdminAccess();
-    setIsAuthorized(hasAdminAccess);
-    setIsLoading(false);
-
-    if (!hasAdminAccess) {
+    if (!isLoading && !isAdmin) {
       toast({
         title: "Access Denied",
         description: "You don't have permission to access the admin dashboard.",
         variant: "destructive",
       });
-      
+
       setTimeout(() => {
-        navigate('/');
+        navigate("/");
       }, 2000);
     }
-  }, [navigate]);
+  }, [isAdmin, isLoading, navigate]);
 
   if (isLoading) {
     return (
@@ -48,7 +52,7 @@ const AdminPage = () => {
     );
   }
 
-  if (!isAuthorized) {
+  if (!isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center max-w-md p-6 border rounded-lg shadow-lg">
@@ -57,9 +61,7 @@ const AdminPage = () => {
           <p className="mb-6 text-muted-foreground">
             You must be a member of the Angry Gamer Admin Server with the Owner role to access this area.
           </p>
-          <Button onClick={() => navigate('/')}>
-            Return to Home
-          </Button>
+          <Button onClick={() => navigate("/")}>Return to Home</Button>
         </div>
       </div>
     );
@@ -69,12 +71,7 @@ const AdminPage = () => {
     <div className="min-h-screen bg-background">
       <div className="border-b">
         <div className="container mx-auto py-4 px-4 flex items-center gap-4">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => navigate('/')}
-            className="gap-1"
-          >
+          <Button variant="ghost" size="sm" onClick={() => navigate("/")} className="gap-1">
             <ChevronLeft className="h-4 w-4" />
             Back to Site
           </Button>
@@ -83,12 +80,7 @@ const AdminPage = () => {
       </div>
 
       <div className="container mx-auto p-4">
-        <Tabs
-          defaultValue="users"
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="space-y-4"
-        >
+        <Tabs defaultValue="users" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
           <TabsList className="grid grid-cols-6 w-full max-w-5xl">
             <TabsTrigger value="users" className="flex gap-2 items-center">
               <Users className="h-4 w-4" />
@@ -119,23 +111,23 @@ const AdminPage = () => {
           <TabsContent value="users" className="space-y-4">
             <UserManagement />
           </TabsContent>
-          
+
           <TabsContent value="content" className="space-y-4">
             <ContentModeration />
           </TabsContent>
-          
+
           <TabsContent value="communities" className="space-y-4">
             <CommunityManagement />
           </TabsContent>
-          
+
           <TabsContent value="analytics" className="space-y-4">
             <SystemAnalytics />
           </TabsContent>
-          
+
           <TabsContent value="settings" className="space-y-4">
             <SiteSettings />
           </TabsContent>
-          
+
           <TabsContent value="notifications" className="space-y-4">
             <NotificationManagement />
           </TabsContent>

@@ -1,3 +1,4 @@
+// src/pages/StreamerAnalytics.tsx
 
 import { useState } from "react";
 import { PageLayout } from "@/components/PageLayout";

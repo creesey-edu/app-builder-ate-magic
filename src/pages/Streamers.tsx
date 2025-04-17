@@ -1,3 +1,4 @@
+// src/pages/Streamers.tsx
 
 import { PageLayout } from "@/components/PageLayout";
 import { Bell } from "lucide-react";

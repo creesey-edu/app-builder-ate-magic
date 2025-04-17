@@ -1,25 +1,19 @@
 // src/lib/axios.ts
 import axios from "axios";
+import { toast } from "@/components/ui/use-toast"; // or "@/lib/toast" or wherever your toast lives
 
-// Read your auth token from localStorage
 const getAuthToken = () => localStorage.getItem("auth_token");
 
-// Create Axios instance
 const api = axios.create({
-  baseURL: `${import.meta.env.VITE_AUTH_API_BASE_URL}${import.meta.env.VITE_API_VERSION_PREFIX}`, // or your general backend URL
+  baseURL: `${import.meta.env.VITE_AUTH_API_BASE_URL}${import.meta.env.VITE_API_VERSION_PREFIX}`,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Automatically attach JWT token to each request
 api.interceptors.request.use(
   (config) => {
     const token = getAuthToken();
-    console.log("🔐 Attaching token:", token);
-    console.log("📡 Base URL:", config.baseURL);
-    console.log("➡️ Request URL:", config.url);
-
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -29,16 +23,30 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Optional: handle 401 responses
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       console.warn("Unauthorized — logging out.");
+
+      // 🔔 Show toast before logout
+      toast({
+        title: "Session Expired",
+        description: "Your session has timed out. Please sign in again.",
+        variant: "destructive", // You can also use "warning" or custom
+        duration: 5000,
+      });
+
+      // 💾 Clear session data
       localStorage.removeItem("auth_token");
       localStorage.removeItem("user");
-      window.location.href = "/login";
+
+      // ⏳ Wait a moment before redirecting to show toast
+      setTimeout(() => {
+        window.location.href = "/signin";
+      }, 1500);
     }
+
     return Promise.reject(error);
   }
 );

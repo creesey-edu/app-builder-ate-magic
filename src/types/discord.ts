@@ -1,3 +1,5 @@
+// src/types/discord.ts
+
 export enum VerificationType {
   GOVERNMENT = "government",
   MILITARY = "military",

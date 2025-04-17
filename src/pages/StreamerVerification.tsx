@@ -1,3 +1,4 @@
+// src/pages/StreamerVerification.tsx
 
 import { useState } from "react";
 import { PageLayout } from "@/components/PageLayout";
