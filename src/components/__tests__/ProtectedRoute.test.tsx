@@ -1,12 +1,12 @@
 // src/components/__tests__/ProtectedRoute.test.tsx
+
 import React, { ReactElement } from "react";
 import { describe, it, expect, vi, beforeEach, beforeAll } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route, useLocation } from "react-router-dom";
-import { VerificationType } from "@/types/discord";
+import { VerificationType } from "../../types/discord";
 import "@testing-library/jest-dom";
 
-// Dynamically imported later
 let ProtectedRoute: typeof import("../auth/ProtectedRoute").default;
 
 // 🔐 ENV Setup FIRST
@@ -28,6 +28,7 @@ vi.mock("../../hooks/useSession", () => ({
 }));
 import { useSession } from "../../hooks/useSession";
 
+// Mock components
 const MockComponent = () => <div>Protected Content</div>;
 const Signin = () => <div>Signin Page</div>;
 const Unauthorized = () => <div>Unauthorized Page</div>;
@@ -81,7 +82,7 @@ describe("ProtectedRoute", () => {
         username: "TestUser",
         isAdmin: false,
         isVerified: true,
-        verificationType: "verifiedMember",
+        verificationType: VerificationType.EDUCATION,
         guilds: [{ id: "guild123", name: "Test Guild", roles: ["basicRole"] }],
       },
     });
@@ -115,7 +116,7 @@ describe("ProtectedRoute", () => {
         username: "TestUser",
         isAdmin: true,
         isVerified: true,
-        verificationType: "verifiedMember" as VerificationType,
+        verificationType: VerificationType.GOVERNMENT,
         guilds: [{ id: "guild123", name: "Test Guild", roles: ["adminRole"] }],
       },
     });
@@ -124,23 +125,38 @@ describe("ProtectedRoute", () => {
     expect(screen.getByText("Unauthorized Page")).toBeInTheDocument();
   });
 
-  it("TC-005 - renders children when all checks pass", () => {
+  it("TC-005 - renders children when all checks pass", async () => {
+    vi.resetModules();
+    vi.stubGlobal("import.meta", {
+      env: {
+        VITE_ADMIN_SERVER_GUILD_ID: "guild123",
+        VITE_ADMIN_ROLE_ID: "adminRole",
+        VITE_VERIFIED_USER_ROLE_ID: "verifiedRole",
+      },
+    });
+
+    const { default: ProtectedRoute } = await import("../auth/ProtectedRoute");
+
+    const mockUser = {
+      id: "user123",
+      username: "TestUser",
+      isAdmin: true,
+      isVerified: true,
+      verificationType: VerificationType.EDUCATION,
+      guilds: [
+        {
+          id: "guild123",
+          name: "Admin Guild",
+          roles: ["adminRole", "verifiedRole"],
+        },
+      ],
+    };
+
     mockUseSession({
       isAuthenticated: true,
-      user: {
-        id: "u1",
-        username: "TestUser",
-        isAdmin: true,
-        isVerified: true,
-        verificationType: "verifiedMember" as VerificationType,
-        guilds: [
-          {
-            id: "guild123",
-            name: "Admin Guild",
-            roles: ["adminRole", "verifiedRole"],
-          },
-        ],
-      },
+      isAdmin: true,
+      isVerified: true,
+      user: mockUser,
     });
 
     renderWithRoutes(

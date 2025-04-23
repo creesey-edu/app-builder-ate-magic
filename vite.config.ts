@@ -1,5 +1,3 @@
-// vite.config.ts
-
 import { defineConfig, loadEnv, type PluginOption } from "vite";
 import { configDefaults } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
@@ -17,6 +15,10 @@ export default defineConfig(({ mode }) => {
   const host = env.VITE_HOST || "0.0.0.0";
   const port = Number(env.VITE_PORT) || 8080;
   const hmrHost = env.VITE_HMR_HOST || host;
+
+  const alias = {
+    "@": path.resolve(__dirname, "./src"), // 👈 define it once here
+  };
 
   return {
     server: {
@@ -38,18 +40,16 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [react()] as PluginOption[],
     resolve: {
-      alias: {
-        "@": path.resolve(__dirname, "./src"), // already exists ✅
-      },
+      alias,
     },
     test: {
       globals: true,
       environment: "jsdom",
       setupFiles: "./src/test/setup.ts",
-      alias: {
-        "@": path.resolve(__dirname, "./src"), // ✅ ADD THIS LINE
-      },
       exclude: [...configDefaults.exclude, "node_modules/**"],
+      resolve: {
+        alias, // ✅ pass alias here too!
+      },
     },
   };
 });
