@@ -1,0 +1,22 @@
+services:
+  frontend:
+    container_name: tag-frontend-prod
+    hostname: tag-frontend-prod
+    restart: always
+
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+
+    networks:
+      - dev_network
+
+    expose:
+      - 80  # NGINX will serve from port 80 inside the container
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`test.thenagrygamershow.com`)"
+      - "traefik.http.routers.frontend.entrypoints=web,websecure,tunnel"
+      - "traefik.http.routers.frontend.tls.certresolver=devresolver"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"

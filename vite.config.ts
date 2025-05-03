@@ -1,3 +1,5 @@
+// vite.config.ts v1.0.0
+
 import { defineConfig, loadEnv, type PluginOption } from "vite";
 import { configDefaults } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
@@ -15,6 +17,8 @@ export default defineConfig(({ mode }) => {
   const host = env.VITE_HOST || "0.0.0.0";
   const port = Number(env.VITE_PORT) || 8080;
   const hmrHost = env.VITE_HMR_HOST || host;
+
+  console.log("VITE_ALLOWED_HOSTS =", allowedHosts);
 
   const alias = {
     "@": path.resolve(__dirname, "./src"), // 👈 define it once here
