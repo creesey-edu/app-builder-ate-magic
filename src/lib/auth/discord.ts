@@ -1,10 +1,10 @@
-// PATCHED v0.0.6 src/lib/auth/discord.ts — Full OAuth flow with isOwner support, verificationType, toasts, and admin utilities
+// PATCHED v0.0.6 src/lib/auth/discord.ts — alias deprecated isOwner to isAdminGuildOwner, fix admin toast and local admin check
 
 import { toast } from "@/hooks/use-toast";
 import { VerificationType } from "@/types/discord";
 import type { SessionUser } from "@/types/session";
 
-// ✅ Environment config
+// Environment config
 const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID;
 const REDIRECT_URI = import.meta.env.VITE_DISCORD_REDIRECT_URI;
 const AUTH_API_BASE_URL = import.meta.env.VITE_AUTH_API_BASE_URL;
@@ -16,52 +16,66 @@ const GOVERNMENT_ROLE_ID = import.meta.env.VITE_GOVERNMENT_ROLE_ID;
 const MILITARY_ROLE_ID = import.meta.env.VITE_MILITARY_ROLE_ID;
 const EDUCATION_ROLE_ID = import.meta.env.VITE_EDUCATION_ROLE_ID;
 
-// ✅ Correct scope string (space-separated using +)
+// Correct scope string (space-separated using +)
 const scopes = ["identify", "email", "guilds", "guilds.members.read"].join("+");
 
-// ✅ Discord OAuth2 URL
-export const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(
-  REDIRECT_URI
-)}&response_type=code&scope=${scopes}`;
+// Discord OAuth2 URL
+export const discordAuthUrl =
+  `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}` +
+  `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}` +
+  `&response_type=code&scope=${scopes}`;
 
-// ✅ Start OAuth flow
+// Start OAuth flow
 export const initiateDiscordAuth = (verificationType?: VerificationType) => {
   localStorage.setItem("authRedirect", window.location.pathname);
   if (verificationType) {
     localStorage.setItem("verificationType", verificationType);
   }
-
   window.location.href = discordAuthUrl;
 };
 
-// ✅ Handle Discord OAuth callback
-export const handleDiscordCallback = async (code: string) => {
+// Handle Discord OAuth callback
+export const handleDiscordCallback = async (
+  code: string
+): Promise<SessionUser | null> => {
   try {
     const verificationType = localStorage.getItem("verificationType");
 
-    const res = await fetch(`${AUTH_API_BASE_URL}/api/discord/exchange`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code, verificationType }),
-    });
+    const res = await fetch(
+      `${AUTH_API_BASE_URL}/api/discord/exchange`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, verificationType }),
+      }
+    );
 
     if (!res.ok) {
       throw new Error(`OAuth exchange failed: ${res.statusText}`);
     }
 
-    const { user, token } = await res.json();
+    const { user, token } = (await res.json()) as {
+      user: SessionUser;
+      token: string;
+    };
+
+    // build a new SessionUser to include deprecated isOwner alias
+    const sessionUser: SessionUser = {
+      ...user,
+      isOwner: user.isAdminGuildOwner,
+    };
 
     if (!token) {
       throw new Error("JWT token is missing from backend response");
     }
 
     localStorage.setItem("auth_token", token);
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(sessionUser));
 
     if (import.meta.env.VITE_DEBUG === "true") {
-      console.debug("🔐 User authenticated:", user);
+      console.debug("🔐 User authenticated:", sessionUser);
       console.debug("🔐 Token:", token);
-      console.debug("👑 isOwner status:", user.isOwner); // ✅ PATCHED: Debug log for isOwner
+      console.debug("👑 isOwner status:", sessionUser.isOwner);
     }
 
     if (verificationType) {
@@ -72,16 +86,22 @@ export const handleDiscordCallback = async (code: string) => {
       localStorage.removeItem("verificationType");
     }
 
+    // compute admin access based on new flags
+    const hasAdminAccess =
+      sessionUser.isAdminGuildOwner ||
+      sessionUser.isAdminGuildAdministrator ||
+      sessionUser.isAdminGuildModerator;
+
     toast({
       title: "Successfully authenticated with Discord!",
-      description: `Welcome, ${user.username}!${user.isAdmin ? " (Admin access granted)" : ""}`,
+      description: `Welcome, ${sessionUser.username}!${hasAdminAccess ? " (Admin access granted)" : ""}`,
     });
 
     const redirectUrl = localStorage.getItem("authRedirect") || "/";
     localStorage.removeItem("authRedirect");
     window.location.href = redirectUrl;
 
-    return user;
+    return sessionUser;
   } catch (error) {
     console.error("Discord authentication error:", error);
     toast({
@@ -93,43 +113,63 @@ export const handleDiscordCallback = async (code: string) => {
   }
 };
 
-// ✅ Utility: Admin role check
+// Utility: Admin role check
 export const checkUserAdminStatus = (user: SessionUser): boolean => {
-  const adminGuild = user.guilds?.find((g) => g.id === ADMIN_SERVER_GUILD_ID);
+  const adminGuild = user.guilds?.find(
+    (g) => g.id === ADMIN_SERVER_GUILD_ID
+  );
   return adminGuild?.roles.includes(ADMIN_ROLE_ID) ?? false;
 };
 
-// ✅ Utility: Verified role check
+// Utility: Verified role check
 export const checkUserVerificationStatus = (
   user: SessionUser
 ): { isVerified: boolean; type: VerificationType | null } => {
-  const adminGuild = user.guilds?.find((g) => g.id === ADMIN_SERVER_GUILD_ID);
-  if (!adminGuild || !adminGuild.roles.includes(VERIFIED_ROLE_ID)) return { isVerified: false, type: null };
+  const adminGuild = user.guilds?.find(
+    (g) => g.id === ADMIN_SERVER_GUILD_ID
+  );
+  if (!adminGuild || !adminGuild.roles.includes(VERIFIED_ROLE_ID))
+    return { isVerified: false, type: null };
 
-  if (adminGuild.roles.includes(GOVERNMENT_ROLE_ID)) return { isVerified: true, type: VerificationType.GOVERNMENT };
-  if (adminGuild.roles.includes(MILITARY_ROLE_ID)) return { isVerified: true, type: VerificationType.MILITARY };
-  if (adminGuild.roles.includes(EDUCATION_ROLE_ID)) return { isVerified: true, type: VerificationType.EDUCATION };
+  if (adminGuild.roles.includes(GOVERNMENT_ROLE_ID))
+    return { isVerified: true, type: VerificationType.GOVERNMENT };
+  if (adminGuild.roles.includes(MILITARY_ROLE_ID))
+    return { isVerified: true, type: VerificationType.MILITARY };
+  if (adminGuild.roles.includes(EDUCATION_ROLE_ID))
+    return { isVerified: true, type: VerificationType.EDUCATION };
 
   return { isVerified: true, type: null };
 };
 
-// ✅ Local-only admin check
+// Local-only admin check
 export const verifyAdminAccess = (): boolean => {
   try {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    return !!user?.isAdmin;
+    const stored = localStorage.getItem("user") || "{}";
+    const user = JSON.parse(stored) as SessionUser;
+    return (
+      user.isAdminGuildOwner ||
+      user.isAdminGuildAdministrator ||
+      user.isAdminGuildModerator
+    );
   } catch {
     return false;
   }
 };
 
-// ✅ Trigger verification flow
+// Trigger verification flow
 export const initiateVerification = (type: VerificationType) => {
   initiateDiscordAuth(type);
 };
 
-// ✅ Stub for future backend polling
-export const checkVerificationStatus = async (userId: string): Promise<string> => {
+// Stub for future backend polling
+export const checkVerificationStatus = async (
+  userId: string
+): Promise<string> => {
   const statuses = ["pending", "approved", "rejected"];
-  return new Promise((resolve) => setTimeout(() => resolve(statuses[Math.floor(Math.random() * statuses.length)]), 500));
+  return new Promise((resolve) =>
+    setTimeout(
+      () => resolve(statuses[Math.floor(Math.random() * statuses.length)]),
+      500
+    )
+  );
 };

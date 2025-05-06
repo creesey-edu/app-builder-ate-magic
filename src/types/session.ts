@@ -1,4 +1,4 @@
-// PATCHED v0.0.6 src/types/session.ts — Aligns SessionUser with backend payload and isOwner field
+// PATCHED v0.0.6 src/types/session.ts — added granular admin-guild flags + alias for isOwner (deprecated)
 
 import { VerificationType } from "./discord";
 
@@ -13,19 +13,56 @@ export interface SessionUser {
   username: string;
   email?: string;
   avatar?: string | null;
-  isAdmin: boolean;
-  isVerified: boolean;
+
+  // legacy/simple alias (will be removed in a future bump)
+  /** @deprecated use isAdminGuildOwner */
+  isOwner?: boolean;
+  
+  // TAG C2C (Admin Guild) flags
+  isAdminGuildOwner: boolean;
+  isAdminGuildAdministrator: boolean;
+  isAdminGuildModerator: boolean;
+  isAdminGuildVerifiedMember: boolean;
+  isAdminGuildMember: boolean;
+  
+  // Community Guilds flags
+  isCommunityGuild: boolean;
+  isCommunityGuildOwner: boolean;
+  isCommunityGuildManager: boolean;
+  isCommunityGuildAdministrator: boolean;
+  isCommunityGuildModerator: boolean;
+  isCommunityGuildVerifiedMember: boolean;
+  isCommunityGuildMember: boolean;
+
   verificationType: VerificationType | null;
   verificationStatus?: string;
   guilds?: GuildMembership[];
-  isOwner?: boolean; // ✅ PATCHED: reflects ownership of Admin Guild
 }
 
 export interface SessionPayload {
   sub: string;
   username: string;
+
+  // legacy/simple flags
   isAdmin: boolean;
   isVerified: boolean;
+
   verificationType: VerificationType | null;
   verificationStatus?: string;
+
+  // TAG C2C (Admin Guild) flags
+  isAdminGuildOwner: boolean;
+  isAdminGuildAdministrator: boolean;
+  isAdminGuildModerator: boolean;
+  isAdminGuildVerifiedMember: boolean;
+  isAdminGuildMember: boolean;
+
+  // Community Guilds flags
+  isCommunityGuild: boolean;
+  isCommunityGuildOwner: boolean;
+  isCommunityGuildManager: boolean;
+  isCommunityGuildAdministrator: boolean;
+  isCommunityGuildModerator: boolean;
+  isCommunityGuildVerifiedMember: boolean;
+  isCommunityGuildMember: boolean;
 }
