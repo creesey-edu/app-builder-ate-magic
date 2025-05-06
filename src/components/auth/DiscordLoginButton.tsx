@@ -1,3 +1,4 @@
+// PATCHED v0.0.6 src/components/auth/DiscordLoginButton.tsx — Adds debug logging for login button click
 
 import { Button } from "@/components/ui/button";
 import DiscordLogo from "@/components/ui/icons/DiscordLogo";
@@ -14,6 +15,9 @@ interface DiscordLoginButtonProps {
 const DiscordLoginButton = ({ className, disabled, verificationType }: DiscordLoginButtonProps) => {
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (import.meta.env.VITE_DEBUG === "true") {
+      console.debug("[DiscordLoginButton] Clicking login with verificationType:", verificationType);
+    }
     initiateDiscordAuth(verificationType);
   };
 

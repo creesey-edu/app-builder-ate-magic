@@ -1,3 +1,5 @@
+// PATCHED v0.0.6 src/App.tsx — Adds debug logging and conditional debug route display
+
 // src/App.tsx
 
 import { Toaster } from "@/components/ui/toaster";
@@ -56,6 +58,10 @@ const DONOR_ROLE_ID = import.meta.env.VITE_DONOR_ROLE_ID;
 const SUBSCRIBER_ROLE_ID = import.meta.env.VITE_SUBSCRIBER_ROLE_ID;
 const VERIFIED_USER_ROLE_ID = import.meta.env.VITE_VERIFIED_USER_ROLE_ID;
 const VERIFIED_MEMBER_ROLE_ID = import.meta.env.VITE_VERIFIED_MEMBER_ROLE_ID;
+
+if (import.meta.env.VITE_DEBUG === "true") {
+  console.debug("TAG Frontend App loaded in debug mode.");
+}
 
 const queryClient = new QueryClient();
 
@@ -119,7 +125,9 @@ const App = () => (
                 path="/admin"
                 element={<ProtectedRoute requireAdmin><Admin /></ProtectedRoute>}
               />
-              <Route path="/debug" element={<Debug />} />
+              {import.meta.env.VITE_DEBUG === "true" && (
+                <Route path="/debug" element={<Debug />} />
+              )}
 
               {/* ⚙️ System / Auth */}
               <Route path="/auth/discord/callback" element={<DiscordCallback />} />

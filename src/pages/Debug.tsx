@@ -1,5 +1,4 @@
-// WebApp v0.0.4 Auth v1.1.2
-// src/pages/Debug.tsx
+// PATCHED v0.0.6 src/pages/Debug.tsx — Aligns with session and debug data display conventions
 
 import { useEffect, useState } from "react";
 import { useSession } from "@/hooks/useSession";
@@ -27,9 +26,23 @@ const Debug = () => {
   const { user, token, isAuthenticated, isAdmin, isVerified, verificationType } = useSession();
 
   useEffect(() => {
+    if (import.meta.env.VITE_DEBUG === "true") {
+      console.debug("[Debug Page] useSession():", {
+        user,
+        token,
+        isAuthenticated,
+        isAdmin,
+        isVerified,
+        verificationType,
+      });
+    }
+
     const fetchDebugUser = async () => {
       try {
         const res = await api.get("/debug/user");
+        if (import.meta.env.VITE_DEBUG === "true") {
+          console.debug("[Debug Page] /debug/user response:", res.data);
+        }
         setUserInfo(res.data.user);
       } catch (err: any) {
         console.error("Error fetching debug user:", err);

@@ -1,5 +1,8 @@
+// PATCHED v0.0.6 src/lib/auth/discord.ts — Full OAuth flow with isOwner support, verificationType, toasts, and admin utilities
+
 import { toast } from "@/hooks/use-toast";
 import { VerificationType } from "@/types/discord";
+import type { SessionUser } from "@/types/session";
 
 // ✅ Environment config
 const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID;
@@ -46,14 +49,20 @@ export const handleDiscordCallback = async (code: string) => {
       throw new Error(`OAuth exchange failed: ${res.statusText}`);
     }
 
-    const { user, token } = await res.json(); // ✅ Correct destructuring
+    const { user, token } = await res.json();
 
     if (!token) {
       throw new Error("JWT token is missing from backend response");
     }
 
-    localStorage.setItem("auth_token", token); // ✅ Store securely
+    localStorage.setItem("auth_token", token);
     localStorage.setItem("user", JSON.stringify(user));
+
+    if (import.meta.env.VITE_DEBUG === "true") {
+      console.debug("🔐 User authenticated:", user);
+      console.debug("🔐 Token:", token);
+      console.debug("👑 isOwner status:", user.isOwner); // ✅ PATCHED: Debug log for isOwner
+    }
 
     if (verificationType) {
       toast({
@@ -84,18 +93,17 @@ export const handleDiscordCallback = async (code: string) => {
   }
 };
 
-
 // ✅ Utility: Admin role check
-export const checkUserAdminStatus = (user: any): boolean => {
-  const adminGuild = user.guilds?.find((g: any) => g.id === ADMIN_SERVER_GUILD_ID);
+export const checkUserAdminStatus = (user: SessionUser): boolean => {
+  const adminGuild = user.guilds?.find((g) => g.id === ADMIN_SERVER_GUILD_ID);
   return adminGuild?.roles.includes(ADMIN_ROLE_ID) ?? false;
 };
 
 // ✅ Utility: Verified role check
 export const checkUserVerificationStatus = (
-  user: any
+  user: SessionUser
 ): { isVerified: boolean; type: VerificationType | null } => {
-  const adminGuild = user.guilds?.find((g: any) => g.id === ADMIN_SERVER_GUILD_ID);
+  const adminGuild = user.guilds?.find((g) => g.id === ADMIN_SERVER_GUILD_ID);
   if (!adminGuild || !adminGuild.roles.includes(VERIFIED_ROLE_ID)) return { isVerified: false, type: null };
 
   if (adminGuild.roles.includes(GOVERNMENT_ROLE_ID)) return { isVerified: true, type: VerificationType.GOVERNMENT };
@@ -105,7 +113,7 @@ export const checkUserVerificationStatus = (
   return { isVerified: true, type: null };
 };
 
-// ✅ Utility: Local-only admin check (used for protected routes)
+// ✅ Local-only admin check
 export const verifyAdminAccess = (): boolean => {
   try {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -115,12 +123,12 @@ export const verifyAdminAccess = (): boolean => {
   }
 };
 
-// ✅ Kick off verification flow
+// ✅ Trigger verification flow
 export const initiateVerification = (type: VerificationType) => {
   initiateDiscordAuth(type);
 };
 
-// ✅ Stub for verification polling/fetching (to be replaced with backend call)
+// ✅ Stub for future backend polling
 export const checkVerificationStatus = async (userId: string): Promise<string> => {
   const statuses = ["pending", "approved", "rejected"];
   return new Promise((resolve) => setTimeout(() => resolve(statuses[Math.floor(Math.random() * statuses.length)]), 500));
