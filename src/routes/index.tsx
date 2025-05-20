@@ -1,9 +1,9 @@
 
 /**
  * @file src/routes/index.tsx
- * @version 0.0.7
- * @patch  add requireAuthenticated flag to public routes, align fallback paths
- * @date 2025-05-07
+ * @version 0.0.8
+ * @patch Fixed import path for OwnerRoute component
+ * @date 2025-05-20
  */
 
 import React from "react";
@@ -47,7 +47,7 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import OwnerRoute from "@/components/auth/OwnerRoute";
 import Admin from "@/pages/Admin";
 import Debug from "@/pages/Debug";
-import DiscordCallback from "@/components/auth/DiscordCallback";
+import DiscordCallback from "@/pages/auth/DiscordCallback";
 import Unauthorized from "@/pages/Unauthorized";
 import NotFound from "@/pages/NotFound";
 import Events from "@/pages/Events";
