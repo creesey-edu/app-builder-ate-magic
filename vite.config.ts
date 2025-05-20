@@ -1,3 +1,4 @@
+
 // vite.config.ts v1.0.0
 
 import { defineConfig, loadEnv, type PluginOption } from "vite";
@@ -15,7 +16,7 @@ export default defineConfig(({ mode }) => {
     .filter(Boolean);
 
   const host = env.VITE_HOST || "0.0.0.0";
-  const port = Number(env.VITE_PORT) || 8080;
+  const port = Number(env.VITE_PORT) || 8080; // Ensure port 8080 is used
   const hmrHost = env.VITE_HMR_HOST || host;
 
   console.log("VITE_ALLOWED_HOSTS =", allowedHosts);
@@ -27,7 +28,7 @@ export default defineConfig(({ mode }) => {
   return {
     server: {
       host,
-      port,
+      port, // This ensures port 8080 is used
       ...(allowedHosts.length ? { allowedHosts } : {}),
       cors: {
         origin: "*",
