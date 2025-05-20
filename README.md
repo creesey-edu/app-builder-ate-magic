@@ -3,6 +3,23 @@
 
 This is a modern web application for The Angry Gamer Show, a gaming community platform built with React, TypeScript, and Tailwind CSS.
 
+## Boards
+
+| ![Stories](https://img.shields.io/badge/Board-Stories-blue?style=for-the-badge) |![Features](https://img.shields.io/badge/Board-Features-orange?style=for-the-badge) | ![Epics](https://img.shields.io/badge/Board-Epics-purple?style=for-the-badge) |
+|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| [![Stories Status](https://dev.azure.com/theangrygamer/54711ea8-2db5-4719-b8bb-cb9e5c5ecc48/f542accb-d587-4b96-a891-49bb04524365/_apis/work/boardbadge/068b0873-41d0-480a-8e78-24ff4d54d9c9?columnOptions=1)](https://dev.azure.com/theangrygamer/54711ea8-2db5-4719-b8bb-cb9e5c5ecc48/_boards/board/t/f542accb-d587-4b96-a891-49bb04524365/Stories/) | [![Features Status](https://dev.azure.com/theangrygamer/54711ea8-2db5-4719-b8bb-cb9e5c5ecc48/f542accb-d587-4b96-a891-49bb04524365/_apis/work/boardbadge/8ede3356-bf15-4602-8d2f-b3d25d14a6e0?columnOptions=1)](https://dev.azure.com/theangrygamer/54711ea8-2db5-4719-b8bb-cb9e5c5ecc48/_boards/board/t/f542accb-d587-4b96-a891-49bb04524365/Features/) | [![Epics Status](https://dev.azure.com/theangrygamer/54711ea8-2db5-4719-b8bb-cb9e5c5ecc48/f542accb-d587-4b96-a891-49bb04524365/_apis/work/boardbadge/96644af8-fa5d-4581-836a-240ef7d7dc57?columnOptions=1)](https://dev.azure.com/theangrygamer/54711ea8-2db5-4719-b8bb-cb9e5c5ecc48/_boards/board/t/f542accb-d587-4b96-a891-49bb04524365/Epics/) |
+
+## Join our Communities
+
+| [![TAGS Community Discord](https://img.shields.io/discord/997603496637513928?label=TAGS%20Community&logo=discord&style=for-the-badge&color=5865F2)](https://discord.gg/uqDv4RmAQ6) | [![TAGS Developer Discord](https://img.shields.io/discord/1065367728992571444?label=TAGS%20Developer&logo=discord&style=for-the-badge&color=5865F2)](https://discord.gg/dbzBzh4r3f) | [![Squadron of Gamers Discord](https://img.shields.io/discord/1334643874844643389?label=Squadron%20of%20Gamers&logo=discord&style=for-the-badge&color=5865F2)](https://discord.gg/dbzBzh4r3f) |
+|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+
+## Donations  
+
+[![Donate](https://img.shields.io/badge/paypal-donate-yellow.svg?style=for-the-badge&logo=paypal)](https://paypal.me/reesey275?country.x=US&locale.x=en_US/)
+
+---
+
 ## Features
 
 - **User Authentication**: Sign in/up with email or Discord integration
