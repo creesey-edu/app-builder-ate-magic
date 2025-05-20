@@ -1,8 +1,7 @@
-
 /**
  * @file src/routes/index.tsx
- * @version 0.0.8
- * @patch Fixed import path for OwnerRoute component
+ * @version 0.0.9
+ * @patch Fixed Dashboard import path and component reference
  * @date 2025-05-20
  */
 
@@ -36,7 +35,7 @@ import Streamers from "@/pages/Streamers";
 import StreamerProfile from "@/pages/StreamerProfile";
 
 // Dashboard pages (protected)
-import Dashboard from "@/pages/dashboard";
+import Dashboard from "@/pages/Dashboard"; // Fixed capitalization
 import StreamerVerification from "@/pages/StreamerVerification";
 import StreamerAnalytics from "@/pages/StreamerAnalytics";
 import CommunityStore from "@/pages/CommunityStore";
