@@ -1,8 +1,9 @@
-// PATCHED v0.0.6 src/auth/DiscordCallback.tsx — Aligns with backend v1.1.5 and session flow
+
+// PATCHED v0.0.7 src/auth/DiscordCallback.tsx — Aligns with backend v1.1.5 and session flow
 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleDiscordCallback } from "@/lib/auth/discord";
+import { handleDiscordCallback } from "@/lib/auth";
 import { toast } from "@/hooks/use-toast";
 
 const DiscordCallback = () => {

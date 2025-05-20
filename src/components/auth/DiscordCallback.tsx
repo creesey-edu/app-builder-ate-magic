@@ -1,4 +1,5 @@
-// PATCHED v0.0.6 src/components/auth/DiscordCallback.tsx — Adds debug logging for OAuth code handling
+
+// PATCHED v0.0.7 src/components/auth/DiscordCallback.tsx — Adds debug logging for OAuth code handling
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +39,8 @@ const DiscordCallback = () => {
           return;
         }
 
-        // Auth successful — redirect happens inside handleDiscordCallback
+        // Auth successful — redirect to dashboard
+        navigate("/dashboard");
       } catch (error) {
         console.error("Error during Discord callback:", error);
         setError("An unexpected error occurred during authentication.");

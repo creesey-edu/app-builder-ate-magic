@@ -1,3 +1,6 @@
+
+import { VerificationType } from './discord';
+
 export type IDMeVerificationResponse = {
   status: "verified" | "unverified" | "pending";
   category: VerificationType;

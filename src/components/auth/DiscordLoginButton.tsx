@@ -1,4 +1,5 @@
-// PATCHED v0.0.6 src/components/auth/DiscordLoginButton.tsx — Adds debug logging for login button click
+
+// PATCHED v0.0.7 src/components/auth/DiscordLoginButton.tsx — Uses proper auth flow
 
 import { Button } from "@/components/ui/button";
 import DiscordLogo from "@/components/ui/icons/DiscordLogo";
