@@ -1,20 +1,27 @@
-// PATCHED v0.0.6 src/lib/auth/discord.ts — alias deprecated isOwner to isAdminGuildOwner, fix admin toast and local admin check
-
+/**
+ * @file src/lib/auth/discord.ts
+ * @version 0.0.7
+ * @patch Export ADMIN_SERVER_GUILD_ID, ADMIN_OWNER_ROLE_ID, ADMIN_ADMINISTRATOR_ROLE_ID
+ * @date 2025-05-07
+ */
 import { toast } from "@/hooks/use-toast";
 import { VerificationType } from "@/types/discord";
 import type { SessionUser } from "@/types/session";
 
 // Environment config
-const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID;
-const REDIRECT_URI = import.meta.env.VITE_DISCORD_REDIRECT_URI;
-const AUTH_API_BASE_URL = import.meta.env.VITE_AUTH_API_BASE_URL;
+export const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID;
+export const REDIRECT_URI = import.meta.env.VITE_DISCORD_REDIRECT_URI;
+export const AUTH_API_BASE_URL = import.meta.env.VITE_AUTH_API_BASE_URL;
 
-const ADMIN_SERVER_GUILD_ID = import.meta.env.VITE_ADMIN_SERVER_GUILD_ID;
-const ADMIN_ROLE_ID = import.meta.env.VITE_ADMIN_ROLE_ID;
-const VERIFIED_ROLE_ID = import.meta.env.VITE_VERIFIED_ROLE_ID;
-const GOVERNMENT_ROLE_ID = import.meta.env.VITE_GOVERNMENT_ROLE_ID;
-const MILITARY_ROLE_ID = import.meta.env.VITE_MILITARY_ROLE_ID;
-const EDUCATION_ROLE_ID = import.meta.env.VITE_EDUCATION_ROLE_ID;
+// Guild & roles
+export const ADMIN_SERVER_GUILD_ID = import.meta.env.VITE_ADMIN_SERVER_GUILD_ID;
+export const ADMIN_OWNER_ROLE_ID = import.meta.env.VITE_ADMIN_OWNER_ROLE_ID;
+export const ADMIN_ADMINISTRATOR_ROLE_ID = import.meta.env.VITE_ADMIN_ADMINISTRATOR_ROLE_ID;
+export const VERIFIED_USER_ROLE_ID = import.meta.env.VITE_VERIFIED_ROLE_ID;
+export const GOVERNMENT_ROLE_ID = import.meta.env.VITE_GOVERNMENT_ROLE_ID;
+export const MILITARY_ROLE_ID = import.meta.env.VITE_MILITARY_ROLE_ID;
+export const EDUCATION_ROLE_ID = import.meta.env.VITE_EDUCATION_ROLE_ID;
+
 
 // Correct scope string (space-separated using +)
 const scopes = ["identify", "email", "guilds", "guilds.members.read"].join("+");
@@ -173,3 +180,4 @@ export const checkVerificationStatus = async (
     )
   );
 };
+

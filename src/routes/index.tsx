@@ -1,110 +1,159 @@
-// PATCHED v0.0.6 src/routes/index.tsx — Adds modular routing configuration with RootLayout and DashboardLayout, includes versioning
-
 /**
- * @version 0.0.6
- * @patch Applied changes from backend engineer’s Frontend Routing Refactor Plan.
- * Added RootLayout and DashboardLayout for route modularity.
- * Ensured routing structure adheres to versioned plan for scalability and maintainability.
- * 
- * @date 2025-05-06
- * @author Scarab of the Spud Heap
+ * @file src/routes/index.tsx
+ * @version 0.0.7
+ * @patch  add requireAuthenticated flag to public routes, align fallback paths
+ * @date 2025-05-07
  */
 
+import React from "react";
 import { createBrowserRouter } from "react-router-dom";
-import RootLayout from "@/layouts/RootLayout"; // Ensure RootLayout is defined and exported
-import DashboardLayout from "@/layouts/DashboardLayout"; // Ensure DashboardLayout is defined and exported
+import RootLayout from "@/layouts/RootLayout";
+import DashboardLayout from "@/layouts/DashboardLayout";
 
 // Pages
 import Index from "@/pages/Index";
 import SignUp from "@/pages/SignUp";
 import SignIn from "@/pages/SignIn";
-import NotFound from "@/pages/NotFound";
-import Games from "@/pages/Games";
-import Communities from "@/pages/Communities";
-import FeaturedCommunities from "@/pages/FeaturedCommunities";
-import Tournaments from "@/pages/Tournaments";
-import News from "@/pages/News";
-import Premium from "@/pages/Premium";
 import About from "@/pages/About";
 import Careers from "@/pages/Careers";
 import Blog from "@/pages/Blog";
 import Press from "@/pages/Press";
 import Contact from "@/pages/Contact";
+import Games from "@/pages/Games";
+import News from "@/pages/News";
+import Premium from "@/pages/Premium";
+import Communities from "@/pages/Communities";
+import FeaturedCommunities from "@/pages/FeaturedCommunities";
 import HelpCenter from "@/pages/HelpCenter";
 import SafetyCenter from "@/pages/SafetyCenter";
 import CommunityGuidelines from "@/pages/CommunityGuidelines";
 import TermsOfService from "@/pages/TermsOfService";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 
-// User Areas
+// Streamer pages (public)
 import Streamers from "@/pages/Streamers";
 import StreamerProfile from "@/pages/StreamerProfile";
+
+// Dashboard pages (protected)
+import Dashboard from "@/pages/dashboard";
 import StreamerVerification from "@/pages/StreamerVerification";
 import StreamerAnalytics from "@/pages/StreamerAnalytics";
 import CommunityStore from "@/pages/CommunityStore";
+import Tournaments from "@/pages/Tournaments";
 
-// Unauthorized
-import Unauthorized from "@/pages/Unauthorized"; 
-
-// Admin / Internal
+// Auth & Admin
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import Admin from "@/pages/Admin";
 import Debug from "@/pages/Debug";
-
-// Auth
 import DiscordCallback from "@/components/auth/DiscordCallback";
-import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import Unauthorized from "@/pages/Unauthorized";
+import NotFound from "@/pages/NotFound";
 
 // Role IDs from env
-const MODERATOR_ROLE_ID = import.meta.env.VITE_MODERATOR_ROLE_ID;
-const STREAMER_ROLE_ID = import.meta.env.VITE_STREAMER_ROLE_ID;
-const STREAMER_VERIFICATION_ROLE_ID = import.meta.env.VITE_STREAMER_VERIFICATION_ROLE_ID;
-const DONOR_ROLE_ID = import.meta.env.VITE_DONOR_ROLE_ID;
-const SUBSCRIBER_ROLE_ID = import.meta.env.VITE_SUBSCRIBER_ROLE_ID;
-const VERIFIED_USER_ROLE_ID = import.meta.env.VITE_VERIFIED_USER_ROLE_ID;
-const VERIFIED_MEMBER_ROLE_ID = import.meta.env.VITE_VERIFIED_MEMBER_ROLE_ID;
+const STREAMER_ROLE_ID = import.meta.env.VITE_STREAMER_ROLE_ID!;
+const STREAMER_VERIFICATION_ROLE_ID = import.meta.env.VITE_STREAMER_VERIFICATION_ROLE_ID!;
+const VERIFIED_MEMBER_ROLE_ID = import.meta.env.VITE_VERIFIED_MEMBER_ROLE_ID!;
+const VERIFIED_USER_ROLE_ID = import.meta.env.VITE_VERIFIED_USER_ROLE_ID!;
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
+    element: (
+      <ProtectedRoute requireAuthenticated={false}>
+        <RootLayout />
+      </ProtectedRoute>
+    ),
     children: [
-      // 🌐 Public Routes
-      { path: "/", element: <Index/> },
-      { path: "/signup", element: <SignUp/> },
-      { path: "/signin", element: <SignIn /> },
-      { path: "/about", element: <About /> },
-      { path: "/careers", element: <Careers /> },
-      { path: "/blog", element: <Blog /> },
-      { path: "/press", element: <Press /> },
-      { path: "/contact", element: <Contact /> },
-      { path: "/games", element: <Games /> },
-      { path: "/news", element: <News /> },
-      { path: "/premium", element: <Premium /> },
-      { path: "/communities", element: <Communities /> },
-      { path: "/featured-communities", element: <FeaturedCommunities /> },
-      { path: "/help-center", element: <HelpCenter /> },
-      { path: "/safety-center", element: <SafetyCenter /> },
-      { path: "/community-guidelines", element: <CommunityGuidelines /> },
-      { path: "/terms-of-service", element: <TermsOfService /> },
-      { path: "/privacy-policy", element: <PrivacyPolicy /> },
+      { index: true, element: <Index /> },
+      { path: "signup", element: <SignUp /> },
+      { path: "signin", element: <SignIn /> },
+      { path: "about", element: <About /> },
+      { path: "careers", element: <Careers /> },
+      { path: "blog", element: <Blog /> },
+      { path: "press", element: <Press /> },
+      { path: "contact", element: <Contact /> },
+      { path: "games", element: <Games /> },
+      { path: "news", element: <News /> },
+      { path: "premium", element: <Premium /> },
+      { path: "communities", element: <Communities /> },
+      { path: "featured-communities", element: <FeaturedCommunities /> },
+      { path: "help-center", element: <HelpCenter /> },
+      { path: "safety-center", element: <SafetyCenter /> },
+      { path: "community-guidelines", element: <CommunityGuidelines /> },
+      { path: "terms-of-service", element: <TermsOfService /> },
+      { path: "privacy-policy", element: <PrivacyPolicy /> },
+      // Public Streamer Directory (no auth required)
+      { path: "streamers", element: <Streamers /> },
+      { path: "streamer/:streamerId", element: <StreamerProfile /> },
     ],
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_ROLE_ID}>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     children: [
-      // 🔐 Protected User Routes
-      { path: "streamers", element: <ProtectedRoute requireRoleId={STREAMER_ROLE_ID}><Streamers /></ProtectedRoute> },
-      { path: "streamer-profile", element: <ProtectedRoute requireRoleId={STREAMER_ROLE_ID}><StreamerProfile /></ProtectedRoute> },
-      { path: "streamer-verification", element: <ProtectedRoute requireRoleId={STREAMER_VERIFICATION_ROLE_ID}><StreamerVerification /></ProtectedRoute> },
-      { path: "streamer-analytics", element: <ProtectedRoute requireRoleId={STREAMER_ROLE_ID}><StreamerAnalytics /></ProtectedRoute> },
-      { path: "community-store", element: <ProtectedRoute requireRoleId={VERIFIED_MEMBER_ROLE_ID}><CommunityStore /></ProtectedRoute> },
-      { path: "tournaments", element: <ProtectedRoute requireRoleId={VERIFIED_USER_ROLE_ID}><Tournaments /></ProtectedRoute> },
+      { index: true, element: <Dashboard /> },
+      // Protected Streamer Management
+      {
+        path: "streamers",
+        element: (
+          <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_ROLE_ID}>
+            <Streamers />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "streamers/:streamerId",
+        element: (
+          <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_ROLE_ID}>
+            <StreamerProfile />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "streamer-verification",
+        element: (
+          <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_VERIFICATION_ROLE_ID}>
+            <StreamerVerification />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "streamer-analytics",
+        element: (
+          <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_ROLE_ID}>
+            <StreamerAnalytics />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "community-store",
+        element: (
+          <ProtectedRoute requireAuthenticated requireRoleId={VERIFIED_MEMBER_ROLE_ID}>
+            <CommunityStore />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "tournaments",
+        element: (
+          <ProtectedRoute requireAuthenticated requireRoleId={VERIFIED_USER_ROLE_ID}>
+            <Tournaments />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
   {
     path: "/admin",
-    element: <ProtectedRoute requireAdmin><Admin /></ProtectedRoute>,
+    element: (
+      <ProtectedRoute requireAuthenticated requireAdmin fallbackPath="/unauthorized">
+        <Admin />
+      </ProtectedRoute>
+    ),
   },
   { path: "/debug", element: <Debug /> },
   { path: "/auth/discord/callback", element: <DiscordCallback /> },

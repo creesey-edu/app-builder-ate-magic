@@ -1,33 +1,27 @@
-// PATCHED v0.0.6 src/layouts/DashboardLayout.tsx — Basic layout structure
-// Provides a wrapper for protected routes like Streamers, Tournaments, etc.
-// Ensures modular routing structure for dashboard-related content.
-
- /**
-  * @version 0.0.6
-  * @patch Added basic structure for DashboardLayout to support modular routing configuration.
-  * DashboardLayout serves as a wrapper for protected routes like Streamers, Tournaments, etc.
-  * The layout includes placeholders for dashboard-specific navigation and sidebar components.
-  * 
-  * @date 2025-05-06
-  * @author Scarab of the Spud Heap
-  */
+/**
+ * @file src/layouts/DashboardLayout.tsx  
+ * @version 0.0.7
+ * @patch Enhanced structure with header, sidebar, and main content areas to support modular dashboard routing.
+ * @date 2025-05-07
+ */
 
 import React from "react";
-import { Outlet } from "react-router-dom";  // Renders child routes
+import { Outlet } from "react-router-dom";
 
-const DashboardLayout = () => {
+const DashboardLayout: React.FC = () => {
   return (
-    <div>
-      {/* Placeholder for Dashboard-specific navigation */}
-      <header>
-        <h1>Dashboard Layout</h1>
+    <div className="min-h-screen flex flex-col">
+      <header className="bg-gray-800 text-white p-4">
+        <h1 className="text-xl font-bold">Dashboard</h1>
       </header>
-      <aside>
-        {/* Placeholder for Sidebar or other dashboard components */}
-      </aside>
-      <main>
-        <Outlet />  {/* This renders the nested protected routes */}
-      </main>
+      <div className="flex flex-1">
+        <aside className="w-64 bg-gray-100 p-4">
+          {/* Sidebar navigation items go here */}
+        </aside>
+        <main className="flex-1 p-6">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };

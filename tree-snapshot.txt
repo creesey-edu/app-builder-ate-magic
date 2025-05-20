@@ -215,7 +215,6 @@
 |   |-- index.css
 |   |-- main.tsx
 |   `-- vite-env.d.ts
-|-- Dockerfile
 |-- Dockerfile.dev
 |-- Dockerfile.prod
 |-- Frontend Routing Refactor Plan.md
@@ -227,7 +226,6 @@
 |-- WorkdFlow.md
 |-- bun.lockb
 |-- components.json
-|-- dev.docker-compose.yaml
 |-- docker-compose.dev.yaml
 |-- docker-compose.prod.yaml
 |-- docker-compose.yaml
@@ -239,9 +237,7 @@
 |-- package.json
 |-- postcss.config.js
 |-- prod-package.json
-|-- project-tree.png
 |-- tailwind.config.ts
-|-- tree-output.txt
 |-- tree-snapshot.txt
 |-- tsconfig.app.json
 |-- tsconfig.json
@@ -249,4 +245,4 @@
 |-- vite.config.ts
 `-- vitest.config.ts
 
-34 directories, 216 files
+34 directories, 212 files

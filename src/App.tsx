@@ -1,37 +1,23 @@
-// PATCHED v0.0.6 src/App.tsx — wrap toasters in their providers and use RouterProvider
+/**
+ * @file src/App.tsx
+ * @version 0.0.7
+ * @patch  remove non-existent toaster providers and use RouterProvider
+ * @date 2025-05-07
+ */
 
 import React from "react";
-import {
-  Toaster,
-  ToastProvider,
-} from "@/components/ui/toaster";
-import {
-  Toaster as Sonner,
-  ToastProvider as SonnerProvider,
-} from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-import { NotificationProvider } from "@/providers/NotificationProvider";
 import { RouterProvider } from "react-router-dom";
 import { router } from "@/routes";
 
 const queryClient = new QueryClient();
 
+// PATCHED v0.0.6 src/App.tsx — move providers into layouts and use only core providers
 const App = () => (
   <ThemeProvider defaultTheme="system" storageKey="angry-gamer-theme">
     <QueryClientProvider client={queryClient}>
-      <NotificationProvider>
-        <ToastProvider>
-          <SonnerProvider>
-            <TooltipProvider>
-              <RouterProvider router={router} />
-              <Toaster />
-              <Sonner />
-            </TooltipProvider>
-          </SonnerProvider>
-        </ToastProvider>
-      </NotificationProvider>
+      <RouterProvider router={router} />
     </QueryClientProvider>
   </ThemeProvider>
 );

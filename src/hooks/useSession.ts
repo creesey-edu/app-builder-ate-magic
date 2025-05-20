@@ -1,9 +1,20 @@
-// PATCHED v0.0.6 src/hooks/useSession.ts — sync SessionUser with backend v1.1.5 fields, alias isOwner, compute convenience flags
+/**
+ * @file src/hooks/useSession.ts
+ * @version 0.0.7
+ * @patch Compute `isOwner` from guild roles rather than aliasing deprecated field
+ * @date 2025-05-07
+ */
 
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import type { SessionUser } from "@/types/session";
+import {
+  ADMIN_SERVER_GUILD_ID,
+  ADMIN_OWNER_ROLE_ID,
+  ADMIN_ADMINISTRATOR_ROLE_ID,
+  VERIFIED_USER_ROLE_ID,
+} from "@/lib/auth/discord";
 
 export const useSession = () => {
   const [user, setUser] = useState<SessionUser | null>(null);
@@ -18,8 +29,6 @@ export const useSession = () => {
       const storedToken = localStorage.getItem("auth_token");
       if (storedUser && storedToken) {
         const parsedUser: SessionUser = JSON.parse(storedUser);
-        // alias deprecated field for backward compatibility
-        parsedUser.isOwner = parsedUser.isAdminGuildOwner;
         setUser(parsedUser);
         setToken(storedToken);
         if (import.meta.env.VITE_DEBUG === "true") {
@@ -58,14 +67,21 @@ export const useSession = () => {
     navigate("/login");
   }, [navigate]);
 
-  // compute convenience flags
-  const isAdmin =
-    !!user?.isAdminGuildOwner ||
-    !!user?.isAdminGuildAdministrator ||
-    !!user?.isAdminGuildModerator;
-  const isVerified =
-    !!user?.isAdminGuildVerifiedMember ||
-    !!user?.isCommunityGuildVerifiedMember;
+  // super-admin if they own or administer the Admin Guild
+  const userGuild = user?.guilds?.find((g) => g.id === ADMIN_SERVER_GUILD_ID);
+  const userRoles = userGuild?.roles ?? [];
+
+  const isAdmin = Boolean(
+    userRoles.some(
+      (r) => r === ADMIN_OWNER_ROLE_ID || r === ADMIN_ADMINISTRATOR_ROLE_ID
+    )
+  );
+
+  // owner if they specifically have the OWNER role
+  const isOwner = Boolean(userRoles.find((r) => r === ADMIN_OWNER_ROLE_ID));
+
+  // compute verified status
+  const isVerified = userRoles.includes(VERIFIED_USER_ROLE_ID);
 
   return {
     user,
@@ -75,11 +91,11 @@ export const useSession = () => {
 
     // convenience flags
     isAdmin,
+    isOwner,
     isVerified,
 
-    // granular flags
-    isAdminGuildOwner: user?.isAdminGuildOwner ?? false,
-    isOwner: user?.isOwner ?? false, // alias for isAdminGuildOwner
+    // granular flags (legacy)
+    isAdminGuildOwner: isOwner,
     verificationType: user?.verificationType ?? null,
     verificationStatus: user?.verificationStatus,
 

@@ -1,11 +1,19 @@
-// PATCHED v0.0.6 src/components/auth/ProtectedRoute.tsx — Adds debug logging for route role/authorization flow
+/**
+ * @file src/components/auth/ProtectedRoute.tsx
+ * @version 0.0.7
+ * @patch Added requireAuthenticated flag and guard, loosened children type to ReactNode.
+ * @date 2025-05-07
+ */
+
 
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useSession } from "@/hooks/useSession";
 
 interface ProtectedRouteProps {
-  children: React.ReactElement;
+  /** if true, only authenticated users may access this route */
+  requireAuthenticated?: boolean;
+  children: ReactNode;
   requireAdmin?: boolean;
   requireVerified?: boolean;
   requireRoleId?: string;
@@ -13,6 +21,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({
+  requireAuthenticated = false,
   children,
   requireAdmin = false,
   requireVerified = false,
@@ -34,6 +43,10 @@ const ProtectedRoute = ({
   }
 
   if (!isAuthenticated || !user) {
+    // If this route does not require auth, render children anyway
+    if (!requireAuthenticated) {
+      return <>{children}</>;
+    }
     if (import.meta.env.VITE_DEBUG === "true") {
       console.debug("[ProtectedRoute] Not authenticated or user is missing.");
     }
@@ -45,6 +58,7 @@ const ProtectedRoute = ({
 
   if (import.meta.env.VITE_DEBUG === "true") {
     console.debug("[ProtectedRoute] Evaluating roles:", {
+      requireAuthenticated,
       requireAdmin,
       requireVerified,
       requireRoleId,
@@ -73,7 +87,7 @@ const ProtectedRoute = ({
     return <Navigate to={fallbackPath} replace />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;
