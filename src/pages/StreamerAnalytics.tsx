@@ -1,10 +1,11 @@
+// src/pages/StreamerAnalytics.tsx
 
 import { useState } from "react";
 import { PageLayout } from "@/components/PageLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { QuickStatsRow } from "@/components/analytics/QuickStatsRow";
-import { AnalyticsOverviewTab } from "@/components/analytics/AnalyticsOverviewTab";
+import { AnalyticsOverviewTab } from "@/components/analytics/AnalyticsOverviewTab.";
 import { PlaceholderTab } from "@/components/analytics/PlaceholderTab";
 
 const StreamerAnalytics = () => {

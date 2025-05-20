@@ -1,7 +1,8 @@
+// PATCHED v0.0.6 src/components/auth/DiscordCallback.tsx — Adds debug logging for OAuth code handling
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleDiscordCallback } from "@/utils/discordAuth";
+import { handleDiscordCallback } from "@/lib/auth";
 import { Loader2 } from "lucide-react";
 
 const DiscordCallback = () => {
@@ -12,33 +13,39 @@ const DiscordCallback = () => {
   useEffect(() => {
     const processAuth = async () => {
       try {
-        // Get the code from URL
         const params = new URLSearchParams(window.location.search);
         const code = params.get("code");
-        
+
+        if (import.meta.env.VITE_DEBUG === "true") {
+          console.debug("[DiscordCallback] URL code:", code);
+        }
+
         if (!code) {
           setError("No authorization code received from Discord.");
           setIsLoading(false);
           return;
         }
-        
-        // Process the authentication with enhanced scopes for admin verification
+
         const user = await handleDiscordCallback(code);
-        
+
+        if (import.meta.env.VITE_DEBUG === "true") {
+          console.debug("[DiscordCallback] handleDiscordCallback result:", user);
+        }
+
         if (!user) {
           setError("Failed to authenticate with Discord.");
           setIsLoading(false);
           return;
         }
-        
-        // Auth successful, navigation happens in handleDiscordCallback
+
+        // Auth successful — redirect happens inside handleDiscordCallback
       } catch (error) {
         console.error("Error during Discord callback:", error);
         setError("An unexpected error occurred during authentication.");
         setIsLoading(false);
       }
     };
-    
+
     processAuth();
   }, [navigate]);
 

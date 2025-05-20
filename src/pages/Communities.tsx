@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import { CommunityList } from "@/components/communities/CommunityList";
 import { FeaturedCommunities } from "@/components/communities/FeaturedCommunities";
 import { PremiumCommunities } from "@/components/communities/PremiumCommunities";
-import { CommunityEventsCalendar } from "@/components/communities/CommunityEventsCalendar";
-import { UserPlus, Users, Crown, Search, Calendar } from "lucide-react";
+import { UserPlus, Users, Crown, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 
@@ -66,10 +65,6 @@ const Communities = () => {
               <Crown className="mr-2 h-4 w-4" />
               Premium
             </TabsTrigger>
-            <TabsTrigger value="events" className="flex-1 md:flex-initial">
-              <Calendar className="mr-2 h-4 w-4" />
-              Events
-            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="all" className="space-y-4 py-4">
@@ -78,10 +73,6 @@ const Communities = () => {
           
           <TabsContent value="premium" className="space-y-4 py-4">
             <PremiumCommunities onUpgradeToPremium={handleNavigateToPremium} />
-          </TabsContent>
-          
-          <TabsContent value="events" className="space-y-4 py-4">
-            <CommunityEventsCalendar />
           </TabsContent>
         </Tabs>
       </div>

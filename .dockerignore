@@ -1,0 +1,10 @@
+node_modules
+dist
+.vscode
+.git
+Dockerfile
+.dockerignore
+.env
+.env.dev
+.env.prod
+.env.test

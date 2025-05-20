@@ -1,0 +1,248 @@
+.
+|-- public
+|   |-- images
+|   |   `-- chad.jpg
+|   |-- favicon.ico
+|   |-- placeholder.svg
+|   `-- robots.txt
+|-- security
+|   |-- static-analysis-configs
+|   |   |-- eslint.base.js
+|   |   `-- snyk.config.json
+|   |-- tools
+|   |   |-- README.md
+|   |   `-- run-all-scans.sh
+|   |-- JWT_Introduction_Plan.md
+|   |-- SECURITY_POLICY.md
+|   |-- Security-Baseline-Checklist.md
+|   |-- penetration-test-plan.md
+|   `-- threat-model.md
+|-- src
+|   |-- components
+|   |   |-- __tests__
+|   |   |   `-- ProtectedRoute.test.tsx
+|   |   |-- admin
+|   |   |   |-- CommunityManagement.tsx
+|   |   |   |-- ContentModeration.tsx
+|   |   |   |-- NotificationManagement.tsx
+|   |   |   |-- SiteSettings.tsx
+|   |   |   |-- SystemAnalytics.tsx
+|   |   |   `-- UserManagement.tsx
+|   |   |-- analytics
+|   |   |   |-- AnalyticsCard.tsx
+|   |   |   |-- AnalyticsOverviewTab..tsx
+|   |   |   |-- FollowerGrowthChart.tsx
+|   |   |   |-- PlaceholderTab.tsx
+|   |   |   |-- PlatformDistributionChart.tsx
+|   |   |   |-- QuickStatCard.tsx
+|   |   |   |-- QuickStatsRow.tsx
+|   |   |   |-- TopStreamsTable.tsx
+|   |   |   `-- ViewerStatsChart.tsx
+|   |   |-- auth
+|   |   |   |-- DiscordCallback.tsx
+|   |   |   |-- DiscordLoginButton.tsx
+|   |   |   |-- ProtectedRoute.tsx
+|   |   |   `-- RoleGuard.tsx
+|   |   |-- communities
+|   |   |   |-- CommunityFeatures.tsx
+|   |   |   |-- CommunityList.tsx
+|   |   |   |-- CommunityStoreHeader.tsx
+|   |   |   |-- DeveloperSupport.tsx
+|   |   |   |-- DiscordIntegration.tsx
+|   |   |   |-- FeaturedCommunities.tsx
+|   |   |   |-- FeaturedCommunity.tsx
+|   |   |   `-- PremiumCommunities.tsx
+|   |   |-- premium
+|   |   |   |-- StreamerBenefitsSection.tsx
+|   |   |   |-- SubscriptionPlanCard.tsx
+|   |   |   `-- SubscriptionPlansSection.tsx
+|   |   |-- streamer
+|   |   |   |-- AvatarUpload.tsx
+|   |   |   |-- BasicInfoSection.tsx
+|   |   |   |-- DiscordSection.tsx
+|   |   |   |-- PlatformField.tsx
+|   |   |   |-- PlatformsSection.tsx
+|   |   |   |-- ProfileForm.tsx
+|   |   |   `-- VerificationBadge.tsx
+|   |   |-- streamers
+|   |   |   |-- AllStreamers.tsx
+|   |   |   |-- FeaturedStreamers.tsx
+|   |   |   |-- StreamerCTA.tsx
+|   |   |   |-- StreamerCard.tsx
+|   |   |   |-- StreamerFilters.tsx
+|   |   |   `-- StreamersTab.tsx
+|   |   |-- ui
+|   |   |   |-- icons
+|   |   |   |   `-- DiscordLogo.tsx
+|   |   |   |-- accordion.tsx
+|   |   |   |-- alert-dialog.tsx
+|   |   |   |-- alert.tsx
+|   |   |   |-- aspect-ratio.tsx
+|   |   |   |-- avatar.tsx
+|   |   |   |-- badge.tsx
+|   |   |   |-- breadcrumb.tsx
+|   |   |   |-- button.tsx
+|   |   |   |-- calendar.tsx
+|   |   |   |-- card.tsx
+|   |   |   |-- carousel.tsx
+|   |   |   |-- chart.tsx
+|   |   |   |-- checkbox.tsx
+|   |   |   |-- collapsible.tsx
+|   |   |   |-- command.tsx
+|   |   |   |-- context-menu.tsx
+|   |   |   |-- dialog.tsx
+|   |   |   |-- drawer.tsx
+|   |   |   |-- dropdown-menu.tsx
+|   |   |   |-- form.tsx
+|   |   |   |-- hover-card.tsx
+|   |   |   |-- input-otp.tsx
+|   |   |   |-- input.tsx
+|   |   |   |-- label.tsx
+|   |   |   |-- menubar.tsx
+|   |   |   |-- navigation-menu.tsx
+|   |   |   |-- pagination.tsx
+|   |   |   |-- popover.tsx
+|   |   |   |-- progress.tsx
+|   |   |   |-- radio-group.tsx
+|   |   |   |-- resizable.tsx
+|   |   |   |-- scroll-area.tsx
+|   |   |   |-- select.tsx
+|   |   |   |-- separator.tsx
+|   |   |   |-- sheet.tsx
+|   |   |   |-- sidebar.tsx
+|   |   |   |-- skeleton.tsx
+|   |   |   |-- slider.tsx
+|   |   |   |-- sonner.tsx
+|   |   |   |-- switch.tsx
+|   |   |   |-- table.tsx
+|   |   |   |-- tabs.tsx
+|   |   |   |-- textarea.tsx
+|   |   |   |-- toast.tsx
+|   |   |   |-- toaster.tsx
+|   |   |   |-- toggle-group.tsx
+|   |   |   |-- toggle.tsx
+|   |   |   |-- tooltip.tsx
+|   |   |   `-- use-toast.ts
+|   |   |-- DashboardNavBar.tsx
+|   |   |-- DiscordWidget.tsx
+|   |   |-- DiscordWidgetGroup.tsx
+|   |   |-- Footer.tsx
+|   |   |-- NavigationBar.tsx
+|   |   |-- NotificationBell.tsx
+|   |   |-- NotificationDemo.tsx
+|   |   |-- NotificationItem.tsx
+|   |   |-- NotificationPanel.tsx
+|   |   |-- PageLayout.tsx
+|   |   `-- ThemeToggle.tsx
+|   |-- context
+|   |   |-- UserContext.tsx
+|   |   |-- UserProvider.tsx
+|   |   `-- useUser.tsx
+|   |-- data
+|   |   |-- analyticsMockData.ts
+|   |   `-- subscriptionPlans.ts
+|   |-- hooks
+|   |   |-- __tests__
+|   |   |   `-- useSession.test.tsx
+|   |   |-- use-mobile.tsx
+|   |   |-- use-toast.ts
+|   |   `-- useSession.ts
+|   |-- layouts
+|   |   |-- DashboardLayout.tsx
+|   |   `-- RootLayout.tsx
+|   |-- lib
+|   |   |-- auth
+|   |   |   |-- discord.ts
+|   |   |   `-- index.ts
+|   |   |-- axios.ts
+|   |   |-- roles.ts
+|   |   `-- utils.ts
+|   |-- pages
+|   |   |-- auth
+|   |   |   `-- DiscordCallback.tsx
+|   |   |-- dashboard
+|   |   |   `-- index.tsx
+|   |   |-- About.tsx
+|   |   |-- Admin.tsx
+|   |   |-- Blog.tsx
+|   |   |-- Careers.tsx
+|   |   |-- Communities.tsx
+|   |   |-- CommunityGuidelines.tsx
+|   |   |-- CommunityStore.tsx
+|   |   |-- Contact.tsx
+|   |   |-- Debug.tsx
+|   |   |-- FeaturedCommunities.tsx
+|   |   |-- Games.tsx
+|   |   |-- HelpCenter.tsx
+|   |   |-- Index.tsx
+|   |   |-- Moderator.tsx
+|   |   |-- News.tsx
+|   |   |-- NotFound.tsx
+|   |   |-- Premium.tsx
+|   |   |-- Press.tsx
+|   |   |-- PrivacyPolicy.tsx
+|   |   |-- SafetyCenter.tsx
+|   |   |-- SignIn.tsx
+|   |   |-- SignUp.tsx
+|   |   |-- StreamerAnalytics.tsx
+|   |   |-- StreamerProfile.tsx
+|   |   |-- StreamerVerification.tsx
+|   |   |-- Streamers.tsx
+|   |   |-- TermsOfService.tsx
+|   |   |-- Tournaments.tsx
+|   |   `-- Unauthorized.tsx
+|   |-- providers
+|   |   |-- NotificationProvider.tsx
+|   |   `-- ThemeProvider.tsx
+|   |-- routes
+|   |   |-- auth
+|   |   |   |-- cancel.ts
+|   |   |   `-- logout.ts
+|   |   `-- index.tsx
+|   |-- test
+|   |   `-- vitest.setup.ts
+|   |-- types
+|   |   |-- discord.ts
+|   |   |-- idme.ts
+|   |   |-- index.ts
+|   |   |-- session.ts
+|   |   `-- streamer.ts
+|   |-- utils
+|   |   |-- permissions.ts
+|   |   `-- session.ts
+|   |-- App.css
+|   |-- App.tsx
+|   |-- index.css
+|   |-- main.tsx
+|   `-- vite-env.d.ts
+|-- Dockerfile.dev
+|-- Dockerfile.prod
+|-- Frontend Routing Refactor Plan.md
+|-- LICENSE
+|-- Project-README.md
+|-- README.md
+|-- SECURITY.md
+|-- TODO.md
+|-- WorkdFlow.md
+|-- bun.lockb
+|-- components.json
+|-- docker-compose.dev.yaml
+|-- docker-compose.prod.yaml
+|-- docker-compose.yaml
+|-- eslint.config.js
+|-- index.html
+|-- nginx.conf
+|-- nvm_install.sh
+|-- package-lock.json
+|-- package.json
+|-- postcss.config.js
+|-- prod-package.json
+|-- tailwind.config.ts
+|-- tree-snapshot.txt
+|-- tsconfig.app.json
+|-- tsconfig.json
+|-- tsconfig.node.json
+|-- vite.config.ts
+`-- vitest.config.ts
+
+34 directories, 212 files

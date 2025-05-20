@@ -1,18 +1,19 @@
+// PATCHED v0.0.6 src/utils/permissions.ts — Adds role-checking utility for session user
 
-// Role permissions mapping
-export const rolePermissions = {
-  admin: "admin",
-  moderator: "moderator",
-  user: "user"
-};
+import { SessionUser } from "@/types/session";
 
-// Check if a user has a specific role
-export const hasRole = (user: any, requiredRoleId: string): boolean => {
-  // Check if user has the role property
-  if (!user || !user.role) {
-    return false;
-  }
+/**
+ * Checks if the given session user has the specified role in the admin guild.
+ *
+ * @param user - The session user object
+ * @param roleId - The Discord role ID to check
+ * @returns true if the user has the role, false otherwise
+ */
+export function hasRole(user: SessionUser | null, roleId: string): boolean {
+  if (!user || !user.guilds || user.guilds.length === 0) return false;
 
-  // Check if the user's role matches the required role
-  return user.role === requiredRoleId;
-};
+  const adminGuildId = import.meta.env.VITE_ADMIN_SERVER_GUILD_ID;
+  const adminGuild = user.guilds.find(guild => guild.id === adminGuildId);
+
+  return adminGuild?.roles?.includes(roleId) ?? false;
+}

@@ -8,6 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+dev
 dist
 dist-ssr
 *.local
@@ -27,7 +28,14 @@ dist-ssr
 # Project
 frontend
 auth
-.env*
 .vscode
 docs.code-workspace
 frontend.code-workspace
+
+
+# Configuration files
+.env*
+.env
+.env.dev
+.env.prod
+.env.test

@@ -1,7 +1,25 @@
-
 import { z } from "zod";
 
-// Define the form schema with Zod
+//
+// ENUMS
+//
+export enum VerificationStatus {
+  PENDING = "pending",
+  VERIFIED = "verified",
+  REJECTED = "rejected"
+}
+
+export enum StreamingPlatform {
+  TWITCH = "twitch",
+  YOUTUBE = "youtube",
+  KICK = "kick",
+  X = "x",
+  FACEBOOK = "facebook"
+}
+
+//
+// ZOD SCHEMAS
+//
 export const streamerProfileSchema = z.object({
   displayName: z.string().min(3, { message: "Display name must be at least 3 characters" }).max(30),
   bio: z.string().min(10, { message: "Bio must be at least 10 characters" }).max(300),
@@ -9,7 +27,6 @@ export const streamerProfileSchema = z.object({
   youtubeChannelId: z.string().optional(),
   kickUsername: z.string().optional(),
   discordUsername: z.string().min(2, { message: "Discord username is required" }),
-  // Handle the profile image - can be a File object, string URL, or null
   profileImage: z.union([
     z.instanceof(File),
     z.string(),
@@ -17,16 +34,6 @@ export const streamerProfileSchema = z.object({
   ]).optional().nullable(),
 });
 
-export type StreamerProfileFormValues = z.infer<typeof streamerProfileSchema>;
-
-// Verification status for streamer profiles
-export enum VerificationStatus {
-  PENDING = "pending",
-  VERIFIED = "verified",
-  REJECTED = "rejected"
-}
-
-// Extended schema that includes verification data (for API/backend)
 export const streamerProfileWithVerificationSchema = streamerProfileSchema.extend({
   id: z.string(),
   createdAt: z.date(),
@@ -36,9 +43,15 @@ export const streamerProfileWithVerificationSchema = streamerProfileSchema.exten
   profileImageUrl: z.string().optional(),
 });
 
+//
+// TYPES
+//
+export type StreamerProfileFormValues = z.infer<typeof streamerProfileSchema>;
 export type StreamerProfileWithVerification = z.infer<typeof streamerProfileWithVerificationSchema>;
 
-// Mock data for streamers awaiting verification
+//
+// OPTIONAL MOCKS
+//
 export const mockPendingStreamers: StreamerProfileWithVerification[] = [
   {
     id: "streamer-1",
@@ -46,7 +59,7 @@ export const mockPendingStreamers: StreamerProfileWithVerification[] = [
     bio: "Professional FPS player with 5+ years experience in competitive gaming.",
     twitchUsername: "gamemaster64",
     discordUsername: "gamemaster64#1234",
-    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
     verificationStatus: VerificationStatus.PENDING,
     profileImageUrl: "https://i.pravatar.cc/300?img=12",
   },
@@ -56,7 +69,7 @@ export const mockPendingStreamers: StreamerProfileWithVerification[] = [
     bio: "RPG enthusiast and community builder. I stream story-rich games and help new players.",
     youtubeChannelId: "rpgqueen123",
     discordUsername: "rpgqueen#4567",
-    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
     verificationStatus: VerificationStatus.PENDING,
     profileImageUrl: "https://i.pravatar.cc/300?img=31",
   },
@@ -67,7 +80,7 @@ export const mockPendingStreamers: StreamerProfileWithVerification[] = [
     twitchUsername: "speedrunlegend",
     kickUsername: "speedrunlegend",
     discordUsername: "speedrun#9999",
-    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
     verificationStatus: VerificationStatus.PENDING,
     profileImageUrl: "https://i.pravatar.cc/300?img=42",
   },

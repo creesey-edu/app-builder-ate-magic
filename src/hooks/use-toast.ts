@@ -1,3 +1,7 @@
+// PATCHED v0.0.6 src/hooks/use-toast.ts — Adds debug logging to toast dispatch and creation flow
+
+// src/hooks/use-toast.ts
+
 import * as React from "react"
 
 import type {
@@ -90,8 +94,6 @@ export const reducer = (state: State, action: Action): State => {
     case "DISMISS_TOAST": {
       const { toastId } = action
 
-      // ! Side effects ! - This could be extracted into a dismissToast() action,
-      // but I'll keep it here for simplicity
       if (toastId) {
         addToRemoveQueue(toastId)
       } else {
@@ -131,6 +133,9 @@ const listeners: Array<(state: State) => void> = []
 let memoryState: State = { toasts: [] }
 
 function dispatch(action: Action) {
+  if (import.meta.env.VITE_DEBUG === "true") {
+    console.debug("Dispatching toast action:", action)
+  }
   memoryState = reducer(memoryState, action)
   listeners.forEach((listener) => {
     listener(memoryState)
@@ -141,6 +146,10 @@ type Toast = Omit<ToasterToast, "id">
 
 function toast({ ...props }: Toast) {
   const id = genId()
+
+  if (import.meta.env.VITE_DEBUG === "true") {
+    console.debug("Creating toast:", { id, ...props })
+  }
 
   const update = (props: ToasterToast) =>
     dispatch({

@@ -5,6 +5,15 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": [
+      "vite/client",
+      "vitest",
+      "@testing-library/jest-dom",
+      "react",
+      "node"
+    ],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],

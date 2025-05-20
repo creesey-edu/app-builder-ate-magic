@@ -1,4 +1,6 @@
+// PATCHED v0.0.6 src/components/ThemeToggle.tsx — Adds debug logging for theme selection
 
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,6 +14,12 @@ import { useTheme } from "@/providers/ThemeProvider";
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
+  useEffect(() => {
+    if (import.meta.env.VITE_DEBUG === "true") {
+      console.debug("[ThemeToggle] Current theme:", theme);
+    }
+  }, [theme]);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,15 +30,36 @@ export function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem
+          onClick={() => {
+            if (import.meta.env.VITE_DEBUG === "true") {
+              console.debug("[ThemeToggle] Switched to light theme");
+            }
+            setTheme("light");
+          }}
+        >
           <Sun className="mr-2 h-4 w-4" />
           <span>Light</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem
+          onClick={() => {
+            if (import.meta.env.VITE_DEBUG === "true") {
+              console.debug("[ThemeToggle] Switched to dark theme");
+            }
+            setTheme("dark");
+          }}
+        >
           <Moon className="mr-2 h-4 w-4" />
           <span>Dark</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem
+          onClick={() => {
+            if (import.meta.env.VITE_DEBUG === "true") {
+              console.debug("[ThemeToggle] Switched to system theme");
+            }
+            setTheme("system");
+          }}
+        >
           <Laptop className="mr-2 h-4 w-4" />
           <span>System</span>
         </DropdownMenuItem>

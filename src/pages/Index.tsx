@@ -1,40 +1,67 @@
+// PATCHED v0.0.6 src/pages/Index.tsx — full file with manual NavigationBar/Footer removed, layouts handle header/footer
+
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { GamepadIcon, UsersIcon, MessageSquareIcon, TrophyIcon, CodeIcon, DumbbellIcon, RadioIcon, WrenchIcon } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  GamepadIcon,
+  UsersIcon,
+  MessageSquareIcon,
+  TrophyIcon,
+  DumbbellIcon,
+  StarIcon,
+  WrenchIcon,
+} from "lucide-react";
 import { Link } from "react-router-dom";
-import { NavigationBar } from "@/components/NavigationBar";
-import { Footer } from "@/components/Footer";
-import { DiscordWidget } from "@/components/DiscordWidget";
+import { DiscordWidgetGroup } from "@/components/DiscordWidgetGroup";
 import { Badge } from "@/components/ui/badge";
 
-const Index = () => {
+// RootLayout now provides NavigationBar and Footer
+
+const Index: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <NavigationBar />
-      
       {/* Hero Section */}
       <section className="relative py-20 px-4 md:px-8 bg-gradient-to-br from-purple-900 via-indigo-800 to-blue-900 text-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-green-400">The Angry Gamer Show</span>
+                Welcome to{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-green-400">
+                  The Angry Gamer Show
+                </span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-200">
                 Join our thriving gaming community where players connect, share, and compete.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600" asChild>
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600"
+                  asChild
+                >
                   <Link to="/signup">Join Now</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-white text-white hover:bg-white/10"
+                >
                   Explore Games
                 </Button>
               </div>
             </div>
             <div className="relative hidden md:block">
               <div className="aspect-video bg-black/30 rounded-lg backdrop-blur-sm border border-white/10 shadow-2xl overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/30 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/30 to-transparent" />
                 <div className="w-full h-full flex items-center justify-center">
                   <GamepadIcon className="w-32 h-32 text-white/70" />
                 </div>
@@ -48,12 +75,13 @@ const Index = () => {
       <section className="py-16 px-4 md:px-8 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Join The Angry Gamer Show?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Why Join The Angry Gamer Show?
+            </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Our community offers everything gamers need to connect, compete, and share their passion.
             </p>
           </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card>
               <CardHeader>
@@ -69,7 +97,9 @@ const Index = () => {
                 </p>
               </CardContent>
               <CardFooter>
-                <Button variant="ghost" className="w-full">Find Players</Button>
+                <Button variant="ghost" className="w-full">
+                  Find Players
+                </Button>
               </CardFooter>
             </Card>
 
@@ -87,14 +117,16 @@ const Index = () => {
                 </p>
               </CardContent>
               <CardFooter>
-                <Button variant="ghost" className="w-full">View Tournaments</Button>
+                <Button variant="ghost" className="w-full">
+                  View Tournaments
+                </Button>
               </CardFooter>
             </Card>
 
             <Card>
               <CardHeader>
                 <MessageSquareIcon className="h-8 w-8 mb-2 text-green-600 dark:text-green-400" />
-                <CardTitle>Discuss & Share</CardTitle>
+                <CardTitle>Discuss &amp; Share</CardTitle>
                 <CardDescription>
                   Join conversations about your favorite games, strategies, and gaming news.
                 </CardDescription>
@@ -105,7 +137,9 @@ const Index = () => {
                 </p>
               </CardContent>
               <CardFooter>
-                <Button variant="ghost" className="w-full">Explore Forums</Button>
+                <Button variant="ghost" className="w-full">
+                  Explore Forums
+                </Button>
               </CardFooter>
             </Card>
           </div>
@@ -116,15 +150,14 @@ const Index = () => {
       <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Join Our Discord Community</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Join any of Our Discord Communities
+            </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Connect with other gamers in real-time. See who's online and join the conversation!
+              Connect with other gamers in real-time. See who&apos;s online and join the conversation!
             </p>
           </div>
-          
-          <div className="flex justify-center">
-            <DiscordWidget />
-          </div>
+          <DiscordWidgetGroup />
         </div>
       </section>
 
@@ -137,12 +170,11 @@ const Index = () => {
               Check out our organizations and find your perfect gaming home.
             </p>
           </div>
-          
+
           <div className="space-y-10">
-            {/* Gaming Organizations */}
             <div>
-              <h3 className="text-2xl font-bold mb-6 flex items-center">
-                <GamepadIcon className="mr-2 h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+              <h3 className="text-2xl font-bold mb-6 flex items-center gap-1">
+                <GamepadIcon className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
                 Gaming Organizations
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -157,10 +189,9 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Sports Clubs */}
             <div>
-              <h3 className="text-2xl font-bold mb-6 flex items-center">
-                <DumbbellIcon className="mr-2 h-6 w-6 text-green-600 dark:text-green-400" />
+              <h3 className="text-2xl font-bold mb-6 flex items-center gap-1">
+                <DumbbellIcon className="h-6 w-6 text-green-600 dark:text-green-400" />
                 Sports Clubs
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -183,16 +214,15 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Technology & Engineering */}
             <div>
-              <h3 className="text-2xl font-bold mb-6 flex items-center">
-                <WrenchIcon className="mr-2 h-6 w-6 text-amber-600 dark:text-amber-400" />
-                Technology & Engineering
+              <h3 className="text-2xl font-bold mb-6 flex items-center gap-1">
+                <WrenchIcon className="h-6 w-6 text-amber-600 dark:text-amber-400" />
+                Technology &amp; Engineering
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
                   <h3 className="text-xl font-semibold mb-2">The Angry Gamer Show Developers</h3>
-                  <Badge className="mb-3">Educational & Team Learning</Badge>
+                  <Badge className="mb-3">Educational &amp; Team Learning</Badge>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
                     Learning and developing skills in game development and programming.
                   </p>
@@ -209,10 +239,10 @@ const Index = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="text-center mt-12">
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Don't see what you're looking for? New organizations are always being added!
+              Don’t see what you’re looking for? New organizations are always being added!
             </p>
             <Button variant="outline">Contact Us to Create a New Organization</Button>
           </div>
@@ -222,7 +252,9 @@ const Index = () => {
       {/* Call to Action */}
       <section className="py-20 px-4 md:px-8 bg-gradient-to-r from-cyan-600 to-blue-700 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Level Up Your Gaming Experience?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Ready to Level Up Your Gaming Experience?
+          </h2>
           <p className="text-xl mb-8">
             Join thousands of gamers already on The Angry Gamer Show and take your gaming to the next level.
           </p>
@@ -231,8 +263,6 @@ const Index = () => {
           </Button>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };
