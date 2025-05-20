@@ -1,10 +1,3 @@
-/**
- * @file src/components/auth/ProtectedRoute.tsx
- * @version 0.0.7
- * @patch Added requireAuthenticated flag and guard, loosened children type to ReactNode.
- * @date 2025-05-07
- */
-
 
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";

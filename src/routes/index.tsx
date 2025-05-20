@@ -1,3 +1,4 @@
+
 /**
  * @file src/routes/index.tsx
  * @version 0.0.7
@@ -43,11 +44,14 @@ import Tournaments from "@/pages/Tournaments";
 
 // Auth & Admin
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import OwnerRoute from "@/components/auth/OwnerRoute";
 import Admin from "@/pages/Admin";
 import Debug from "@/pages/Debug";
 import DiscordCallback from "@/components/auth/DiscordCallback";
 import Unauthorized from "@/pages/Unauthorized";
 import NotFound from "@/pages/NotFound";
+import Events from "@/pages/Events";
+import Moderator from "@/pages/Moderator";
 
 // Role IDs from env
 const STREAMER_ROLE_ID = import.meta.env.VITE_STREAMER_ROLE_ID!;
@@ -82,6 +86,12 @@ export const router = createBrowserRouter([
       { path: "community-guidelines", element: <CommunityGuidelines /> },
       { path: "terms-of-service", element: <TermsOfService /> },
       { path: "privacy-policy", element: <PrivacyPolicy /> },
+      { path: "events", element: <Events /> },
+      { path: "moderator", element: (
+        <ProtectedRoute requireAuthenticated requireRoleId={VERIFIED_USER_ROLE_ID} fallbackPath="/unauthorized">
+          <Moderator />
+        </ProtectedRoute>
+      )},
       // Public Streamer Directory (no auth required)
       { path: "streamers", element: <Streamers /> },
       { path: "streamer/:streamerId", element: <StreamerProfile /> },
@@ -150,9 +160,9 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <ProtectedRoute requireAuthenticated requireAdmin fallbackPath="/unauthorized">
+      <OwnerRoute>
         <Admin />
-      </ProtectedRoute>
+      </OwnerRoute>
     ),
   },
   { path: "/debug", element: <Debug /> },
