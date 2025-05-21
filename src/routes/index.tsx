@@ -1,8 +1,9 @@
+
 /**
  * @file src/routes/index.tsx
- * @version 0.0.9
- * @patch Fixed Dashboard import path and component reference
- * @date 2025-05-20
+ * @version 0.0.10
+ * @patch Fixed Dashboard references and removed redundant dashboard import
+ * @date 2025-05-21
  */
 
 import React from "react";
@@ -35,7 +36,7 @@ import Streamers from "@/pages/Streamers";
 import StreamerProfile from "@/pages/StreamerProfile";
 
 // Dashboard pages (protected)
-import Dashboard from "@/pages/Dashboard"; // Fixed capitalization
+import Dashboard from "@/pages/Dashboard";
 import StreamerVerification from "@/pages/StreamerVerification";
 import StreamerAnalytics from "@/pages/StreamerAnalytics";
 import CommunityStore from "@/pages/CommunityStore";

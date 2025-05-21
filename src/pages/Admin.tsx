@@ -1,3 +1,4 @@
+
 // src/pages/Admin.tsx
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -68,71 +69,67 @@ const AdminPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="border-b">
-        <div className="container mx-auto py-4 px-4 flex items-center gap-4">
-          <Button variant="ghost" size="sm" onClick={() => navigate("/")} className="gap-1">
-            <ChevronLeft className="h-4 w-4" />
-            Back to Site
-          </Button>
-          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-        </div>
+    <div className="container mx-auto p-4">
+      <div className="mb-6 flex items-center gap-4">
+        <Button variant="ghost" size="sm" onClick={() => navigate("/")} className="gap-1">
+          <ChevronLeft className="h-4 w-4" />
+          Back to Site
+        </Button>
+        <h1 className="text-2xl font-bold">Admin Dashboard</h1>
       </div>
 
-      <div className="container mx-auto p-4">
-        <Tabs defaultValue="users" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="grid grid-cols-6 w-full max-w-5xl">
-            <TabsTrigger value="users" className="flex gap-2 items-center">
-              <Users className="h-4 w-4" />
-              <span className="hidden sm:inline">User Management</span>
-            </TabsTrigger>
-            <TabsTrigger value="content" className="flex gap-2 items-center">
-              <Shield className="h-4 w-4" />
-              <span className="hidden sm:inline">Content Moderation</span>
-            </TabsTrigger>
-            <TabsTrigger value="communities" className="flex gap-2 items-center">
-              <UsersRound className="h-4 w-4" />
-              <span className="hidden sm:inline">Communities</span>
-            </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex gap-2 items-center">
-              <BarChart className="h-4 w-4" />
-              <span className="hidden sm:inline">System Analytics</span>
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="flex gap-2 items-center">
-              <Settings className="h-4 w-4" />
-              <span className="hidden sm:inline">Site Settings</span>
-            </TabsTrigger>
-            <TabsTrigger value="notifications" className="flex gap-2 items-center">
-              <Bell className="h-4 w-4" />
-              <span className="hidden sm:inline">Notifications</span>
-            </TabsTrigger>
-          </TabsList>
+      <Tabs defaultValue="users" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+        <TabsList className="grid grid-cols-6 w-full max-w-5xl">
+          <TabsTrigger value="users" className="flex gap-2 items-center">
+            <Users className="h-4 w-4" />
+            <span className="hidden sm:inline">User Management</span>
+          </TabsTrigger>
+          <TabsTrigger value="content" className="flex gap-2 items-center">
+            <Shield className="h-4 w-4" />
+            <span className="hidden sm:inline">Content Moderation</span>
+          </TabsTrigger>
+          <TabsTrigger value="communities" className="flex gap-2 items-center">
+            <UsersRound className="h-4 w-4" />
+            <span className="hidden sm:inline">Communities</span>
+          </TabsTrigger>
+          <TabsTrigger value="analytics" className="flex gap-2 items-center">
+            <BarChart className="h-4 w-4" />
+            <span className="hidden sm:inline">System Analytics</span>
+          </TabsTrigger>
+          <TabsTrigger value="settings" className="flex gap-2 items-center">
+            <Settings className="h-4 w-4" />
+            <span className="hidden sm:inline">Site Settings</span>
+          </TabsTrigger>
+          <TabsTrigger value="notifications" className="flex gap-2 items-center">
+            <Bell className="h-4 w-4" />
+            <span className="hidden sm:inline">Notifications</span>
+          </TabsTrigger>
+        </TabsList>
 
-          <TabsContent value="users" className="space-y-4">
-            <UserManagement />
-          </TabsContent>
+        <TabsContent value="users" className="space-y-4">
+          <UserManagement />
+        </TabsContent>
 
-          <TabsContent value="content" className="space-y-4">
-            <ContentModeration />
-          </TabsContent>
+        <TabsContent value="content" className="space-y-4">
+          <ContentModeration />
+        </TabsContent>
 
-          <TabsContent value="communities" className="space-y-4">
-            <CommunityManagement />
-          </TabsContent>
+        <TabsContent value="communities" className="space-y-4">
+          <CommunityManagement />
+        </TabsContent>
 
-          <TabsContent value="analytics" className="space-y-4">
-            <SystemAnalytics />
-          </TabsContent>
+        <TabsContent value="analytics" className="space-y-4">
+          <SystemAnalytics />
+        </TabsContent>
 
-          <TabsContent value="settings" className="space-y-4">
-            <SiteSettings />
-          </TabsContent>
+        <TabsContent value="settings" className="space-y-4">
+          <SiteSettings />
+        </TabsContent>
 
-          <TabsContent value="notifications" className="space-y-4">
-            <NotificationManagement />
-          </TabsContent>
-        </Tabs>
-      </div>
+        <TabsContent value="notifications" className="space-y-4">
+          <NotificationManagement />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

@@ -1,8 +1,8 @@
 
 /**
  * @file src/pages/Dashboard.tsx
- * @version 0.0.2
- * @description Main dashboard page component - removed duplicate NavigationBar
+ * @version 0.0.3
+ * @description Main dashboard page component - removed Navigation and Footer
  * @date 2025-05-21
  */
 
