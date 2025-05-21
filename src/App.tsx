@@ -16,11 +16,13 @@ const queryClient = new QueryClient();
 
 // PATCHED v0.0.6 src/App.tsx — move providers into layouts and use only core providers
 const App = () => (
-  <ThemeProvider defaultTheme="system" storageKey="angry-gamer-theme">
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  </ThemeProvider>
+  <React.StrictMode>
+    <ThemeProvider defaultTheme="system" storageKey="angry-gamer-theme">
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </ThemeProvider>
+  </React.StrictMode>
 );
 
 export default App;
