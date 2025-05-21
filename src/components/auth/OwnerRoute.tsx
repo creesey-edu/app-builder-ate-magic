@@ -1,4 +1,3 @@
-// src/components/auth/OwnerRoute.tsx
 
 import React, { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
@@ -9,7 +8,7 @@ interface OwnerRouteProps {
 }
 
 const OwnerRoute: React.FC<OwnerRouteProps> = ({ children }) => {
-  const { user, isLoading, isAdmin, isAdminGuildOwner } = useSession();
+  const { user, isLoading, isAdminGuildOwner } = useSession();
 
   // Show loading state while session is being checked
   if (isLoading) {
