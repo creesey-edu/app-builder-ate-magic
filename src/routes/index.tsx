@@ -1,9 +1,9 @@
 
 /**
  * @file src/routes/index.tsx
- * @version 0.0.10
- * @patch Fixed Dashboard references and removed redundant dashboard import
- * @date 2025-05-21
+ * @version 0.0.11
+ * @patch Fixed dashboard streamers routing to use separate component
+ * @date 2025-05-25
  */
 
 import React from "react";
@@ -37,6 +37,7 @@ import StreamerProfile from "@/pages/StreamerProfile";
 
 // Dashboard pages (protected)
 import Dashboard from "@/pages/Dashboard";
+import DashboardStreamers from "@/pages/DashboardStreamers";
 import StreamerVerification from "@/pages/StreamerVerification";
 import StreamerAnalytics from "@/pages/StreamerAnalytics";
 import CommunityStore from "@/pages/CommunityStore";
@@ -106,22 +107,14 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Dashboard /> },
-      // Protected Streamer Management
+      // Protected Streamer Management - using separate dashboard component
       {
         path: "streamers",
-        element: (
-          <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_ROLE_ID}>
-            <Streamers />
-          </ProtectedRoute>
-        ),
+        element: <DashboardStreamers />
       },
       {
         path: "streamers/:streamerId",
-        element: (
-          <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_ROLE_ID}>
-            <StreamerProfile />
-          </ProtectedRoute>
-        ),
+        element: <StreamerProfile />
       },
       {
         path: "streamer-verification",
