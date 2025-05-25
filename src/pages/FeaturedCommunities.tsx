@@ -1,5 +1,4 @@
 
-import { PageLayout } from "@/components/PageLayout";
 import { FeaturedCommunity } from "@/components/communities/FeaturedCommunity";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -68,53 +67,52 @@ const FeaturedCommunitiesPage = () => {
   const navigate = useNavigate();
 
   return (
-    <PageLayout
-      title="Featured Communities"
-      description="Explore our handpicked collection of the most engaging gaming communities"
-    >
-      <div className="space-y-8">
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Star className="h-6 w-6 text-amber-500" />
-            <h1 className="text-3xl font-bold">Featured Communities</h1>
+    <div className="container mx-auto py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="space-y-8">
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Star className="h-6 w-6 text-amber-500" />
+              <h1 className="text-3xl font-bold">Featured Communities</h1>
+            </div>
+            
+            <div className="flex gap-2 w-full md:w-auto justify-end">
+              <Button 
+                variant="outline" 
+                onClick={() => navigate("/communities")}
+                className="flex items-center gap-2"
+              >
+                <Users className="h-4 w-4" />
+                All Communities
+              </Button>
+              <Button onClick={() => navigate("/community-store")}>
+                Create Community
+              </Button>
+            </div>
           </div>
           
-          <div className="flex gap-2 w-full md:w-auto justify-end">
-            <Button 
-              variant="outline" 
-              onClick={() => navigate("/communities")}
-              className="flex items-center gap-2"
-            >
-              <Users className="h-4 w-4" />
-              All Communities
-            </Button>
-            <Button onClick={() => navigate("/community-store")}>
-              Create Community
-            </Button>
+          <p className="text-lg text-muted-foreground">
+            Join our most active and engaging communities, hand-selected by our moderation team 
+            for their quality content, active discussions, and welcoming atmosphere.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {FEATURED_COMMUNITIES.map((community) => (
+              <div key={community.id} className="flex flex-col">
+                <FeaturedCommunity community={community} />
+                <div className="mt-4 px-4 space-y-2">
+                  <div className="flex justify-between text-sm text-muted-foreground">
+                    <span>Activity: {community.activityLevel}</span>
+                    <span>Founded: {community.foundedDate}</span>
+                  </div>
+                  <p className="text-sm">{community.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-        
-        <p className="text-lg text-muted-foreground">
-          Join our most active and engaging communities, hand-selected by our moderation team 
-          for their quality content, active discussions, and welcoming atmosphere.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {FEATURED_COMMUNITIES.map((community) => (
-            <div key={community.id} className="flex flex-col">
-              <FeaturedCommunity community={community} />
-              <div className="mt-4 px-4 space-y-2">
-                <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>Activity: {community.activityLevel}</span>
-                  <span>Founded: {community.foundedDate}</span>
-                </div>
-                <p className="text-sm">{community.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
-    </PageLayout>
+    </div>
   );
 };
 

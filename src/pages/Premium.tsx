@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import { PageLayout } from "@/components/PageLayout";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { SUBSCRIPTION_PLANS } from "@/data/subscriptionPlans";
@@ -44,22 +43,26 @@ const Premium = () => {
   };
 
   return (
-    <PageLayout 
-      title="Premium Membership" 
-      description="Unlock exclusive benefits with our premium membership"
-    >
-      <div className="prose prose-lg dark:prose-invert mb-8">
-        <p>Get access to exclusive content, special events, and premium features with our membership plans.</p>
-        <p className="text-primary font-medium">Become an official streamer for The Angry Gamer Show community!</p>
+    <div className="container mx-auto py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold mb-4">Premium Membership</h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          Unlock exclusive benefits with our premium membership
+        </p>
+        
+        <div className="prose prose-lg dark:prose-invert mb-8">
+          <p>Get access to exclusive content, special events, and premium features with our membership plans.</p>
+          <p className="text-primary font-medium">Become an official streamer for The Angry Gamer Show community!</p>
+        </div>
+        
+        <SubscriptionPlansSection 
+          isLoading={isLoading}
+          onSubscribe={handleSubscribe}
+        />
+        
+        <StreamerBenefitsSection onLearnMore={handleLearnMore} />
       </div>
-      
-      <SubscriptionPlansSection 
-        isLoading={isLoading}
-        onSubscribe={handleSubscribe}
-      />
-      
-      <StreamerBenefitsSection onLearnMore={handleLearnMore} />
-    </PageLayout>
+    </div>
   );
 };
 
