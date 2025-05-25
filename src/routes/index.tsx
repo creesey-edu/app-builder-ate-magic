@@ -1,8 +1,8 @@
 
 /**
  * @file src/routes/index.tsx
- * @version 0.0.11
- * @patch Fixed dashboard streamers routing to use separate component
+ * @version 0.0.12
+ * @patch Ensured all dashboard pages use DashboardLayout consistently
  * @date 2025-05-25
  */
 
@@ -107,46 +107,33 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Dashboard /> },
-      // Protected Streamer Management - using separate dashboard component
-      {
-        path: "streamers",
-        element: <DashboardStreamers />
-      },
-      {
-        path: "streamers/:streamerId",
-        element: <StreamerProfile />
-      },
-      {
-        path: "streamer-verification",
+      // All dashboard pages now properly use DashboardLayout
+      { path: "streamers", element: <DashboardStreamers /> },
+      { path: "streamers/:streamerId", element: <StreamerProfile /> },
+      { 
+        path: "streamer-verification", 
         element: (
           <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_VERIFICATION_ROLE_ID}>
             <StreamerVerification />
           </ProtectedRoute>
-        ),
+        )
       },
-      {
-        path: "streamer-analytics",
-        element: (
-          <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_ROLE_ID}>
-            <StreamerAnalytics />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "community-store",
+      { path: "streamer-analytics", element: <StreamerAnalytics /> },
+      { 
+        path: "community-store", 
         element: (
           <ProtectedRoute requireAuthenticated requireRoleId={VERIFIED_MEMBER_ROLE_ID}>
             <CommunityStore />
           </ProtectedRoute>
-        ),
+        )
       },
-      {
-        path: "tournaments",
+      { 
+        path: "tournaments", 
         element: (
           <ProtectedRoute requireAuthenticated requireRoleId={VERIFIED_USER_ROLE_ID}>
             <Tournaments />
           </ProtectedRoute>
-        ),
+        )
       },
     ],
   },
