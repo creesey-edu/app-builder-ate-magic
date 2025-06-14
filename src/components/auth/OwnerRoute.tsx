@@ -3,14 +3,17 @@ import React, { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useSession } from "@/hooks/useSession";
 
+/**
+ * Only allows users who are authenticated and have OWNER role (isOwner).
+ */
 interface OwnerRouteProps {
   children: ReactNode;
 }
 
 const OwnerRoute: React.FC<OwnerRouteProps> = ({ children }) => {
-  const { user, isLoading, isAdminGuildOwner } = useSession();
+  const { user, isLoading, isOwner, isAuthenticated } = useSession();
 
-  // Show loading state while session is being checked
+  // Loading
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-muted-foreground">
@@ -19,17 +22,16 @@ const OwnerRoute: React.FC<OwnerRouteProps> = ({ children }) => {
     );
   }
 
-  // Redirect to signin if not authenticated
-  if (!user) {
+  // Must be logged in
+  if (!isAuthenticated || !user) {
     return <Navigate to="/signin" replace />;
   }
 
-  // Redirect to unauthorized if not an owner
-  if (!isAdminGuildOwner) {
+  // Must be owner
+  if (!isOwner) {
     return <Navigate to="/unauthorized" replace />;
   }
 
-  // Render children if user is an owner
   return <>{children}</>;
 };
 

@@ -1,8 +1,9 @@
+
 /**
  * @file src/hooks/useSession.ts
- * @version 0.0.7
- * @patch Compute `isOwner` from guild roles rather than aliasing deprecated field
- * @date 2025-05-07
+ * @version 0.0.8
+ * @patch Reads all Discord role IDs from centralized envs, supports v1.1.5 contract
+ * @date 2025-06-14
  */
 
 import { useEffect, useState, useCallback } from "react";
@@ -13,7 +14,17 @@ import {
   ADMIN_SERVER_GUILD_ID,
   ADMIN_OWNER_ROLE_ID,
   ADMIN_ADMINISTRATOR_ROLE_ID,
+  ADMIN_MODERATOR_ROLE_ID,
   VERIFIED_USER_ROLE_ID,
+  VERIFIED_MEMBER_ROLE_ID,
+  GOVERNMENT_ROLE_ID,
+  MILITARY_ROLE_ID,
+  EDUCATION_ROLE_ID,
+  VERIFIED_GOVERNMENT_ROLE_ID,
+  VERIFIED_MILITARY_ROLE_ID,
+  VERIFIED_EDUCATION_ROLE_ID,
+  STREAMER_ROLE_ID,
+  STREAMER_VERIFICATION_ROLE_ID,
 } from "@/lib/auth/discord";
 
 export const useSession = () => {
@@ -67,22 +78,25 @@ export const useSession = () => {
     navigate("/login");
   }, [navigate]);
 
-  // super-admin if they own or administer the Admin Guild
+  // Find the user's membership in the Admin Guild, get all their roles
   const userGuild = user?.guilds?.find((g) => g.id === ADMIN_SERVER_GUILD_ID);
   const userRoles = userGuild?.roles ?? [];
 
-  const isAdmin = Boolean(
-    userRoles.some(
-      (r) => r === ADMIN_OWNER_ROLE_ID || r === ADMIN_ADMINISTRATOR_ROLE_ID
-    )
+  // Owner: Must have OWNER
+  const isOwner = userRoles.includes(ADMIN_OWNER_ROLE_ID);
+
+  // Admin: owner, administrator, or moderator
+  const isAdmin = userRoles.some(
+    (r) =>
+      r === ADMIN_OWNER_ROLE_ID ||
+      r === ADMIN_ADMINISTRATOR_ROLE_ID ||
+      r === ADMIN_MODERATOR_ROLE_ID
   );
 
-  // owner if they specifically have the OWNER role
-  const isOwner = Boolean(userRoles.find((r) => r === ADMIN_OWNER_ROLE_ID));
-
-  // compute verified status
+  // Verified: must have 'verified user' role
   const isVerified = userRoles.includes(VERIFIED_USER_ROLE_ID);
 
+  // Expose all these for use throughout app
   return {
     user,
     token,
@@ -94,7 +108,7 @@ export const useSession = () => {
     isOwner,
     isVerified,
 
-    // granular flags (legacy)
+    // granular legacy fields (for compatibility)
     isAdminGuildOwner: isOwner,
     verificationType: user?.verificationType ?? null,
     verificationStatus: user?.verificationStatus,
@@ -103,3 +117,4 @@ export const useSession = () => {
     logout,
   };
 };
+
