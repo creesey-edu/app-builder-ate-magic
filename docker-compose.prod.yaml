@@ -1,3 +1,4 @@
+
 services:
   frontend:
     container_name: tag-frontend-prod
@@ -5,7 +6,7 @@ services:
     restart: always
 
     build:
-      context: ./frontend
+      context: .
       dockerfile: Dockerfile.prod
 
     networks:
