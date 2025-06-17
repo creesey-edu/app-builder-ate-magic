@@ -1,3 +1,4 @@
+
 /*
  * -----------------------------------------------------------------------------
  * Project: TAGS
@@ -5,8 +6,8 @@
  * Phase: Production Build
  * File: vite.config.ts
  * Tags: ["vite", "react", "config", "build"]
- * Updated: 16 June 2025 16:10 (EST)
- * Version: v0.0.6
+ * Updated: 17 June 2025 12:00 (EST)
+ * Version: v0.0.7
  * Author: Chad Reesey
  * Email: contact@thenagrygamershow.com
  * Description: Vite configuration for TAGS WebApp frontend. Includes build
@@ -27,9 +28,14 @@ export default defineConfig(({ mode }) => {
 
   const plugins = [react()]
 
-  if (enableTagger && mode !== 'production') {
-    const { componentTagger } = require('lovable-tagger') // <--- ✅ dynamic require
-    plugins.push(componentTagger())
+  // Only add lovable-tagger in development mode and when available
+  if (enableTagger && mode === 'development') {
+    try {
+      const { componentTagger } = require('lovable-tagger')
+      plugins.push(componentTagger())
+    } catch (error) {
+      console.warn('lovable-tagger not available, continuing without it')
+    }
   }
 
   return {
@@ -42,6 +48,10 @@ export default defineConfig(({ mode }) => {
       alias: {
         '@': path.resolve(__dirname, './src'),
       },
+    },
+    define: {
+      // Ensure environment variables are properly defined
+      'process.env.NODE_ENV': JSON.stringify(mode),
     },
   }
 })
