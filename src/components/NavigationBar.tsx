@@ -11,12 +11,22 @@ import {
   NavigationMenuTrigger, 
   navigationMenuTriggerStyle 
 } from "@/components/ui/navigation-menu";
-import { GamepadIcon, Menu, Video, X, Star } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { GamepadIcon, Menu, Video, X, Star, User, Settings, LogOut, LayoutDashboard } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { NotificationBell } from "./NotificationBell";
+import { useSession } from "@/hooks/useSession";
 
 export const NavigationBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, isAuthenticated, logout } = useSession();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -125,16 +135,60 @@ export const NavigationBar = () => {
           </Button>
         </div>
 
-        {/* Theme toggle, notification bell, and auth buttons */}
+        {/* Theme toggle, notification bell, and auth buttons/user menu */}
         <div className="hidden md:flex items-center gap-4 ml-auto">
           <NotificationBell />
           <ThemeToggle />
-          <Button variant="ghost" asChild>
-            <Link to="/signin">Sign In</Link>
-          </Button>
-          <Button asChild>
-            <Link to="/signup">Sign Up</Link>
-          </Button>
+          
+          {isAuthenticated && user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={user.avatar} alt={user.username} />
+                    <AvatarFallback>
+                      {user.username?.charAt(0).toUpperCase() || <User className="h-4 w-4" />}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <div className="flex items-center justify-start gap-2 p-2">
+                  <div className="flex flex-col space-y-1 leading-none">
+                    <p className="font-medium">{user.username}</p>
+                    <p className="w-[200px] truncate text-sm text-muted-foreground">
+                      {user.email}
+                    </p>
+                  </div>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/dashboard" className="flex items-center">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled>
+                  <Settings className="mr-2 h-4 w-4" />
+                  Settings
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={logout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link to="/signin">Sign In</Link>
+              </Button>
+              <Button asChild>
+                <Link to="/signup">Sign Up</Link>
+              </Button>
+            </>
+          )}
         </div>
       </div>
 
@@ -168,14 +222,34 @@ export const NavigationBar = () => {
               <NotificationBell />
               <ThemeToggle />
             </div>
-            <div className="pt-2 flex flex-col space-y-2">
-              <Button variant="outline" className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
-                <Link to="/signin">Sign In</Link>
-              </Button>
-              <Button className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
-                <Link to="/signup">Sign Up</Link>
-              </Button>
-            </div>
+            
+            {isAuthenticated && user ? (
+              <div className="pt-2 flex flex-col space-y-2">
+                <div className="px-4 py-2 border-t">
+                  <p className="font-medium">{user.username}</p>
+                  <p className="text-sm text-muted-foreground">{user.email}</p>
+                </div>
+                <Button variant="outline" className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
+                  <Link to="/dashboard" className="flex items-center justify-center">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    Dashboard
+                  </Link>
+                </Button>
+                <Button variant="outline" className="w-full" onClick={() => { logout(); setMobileMenuOpen(false); }}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Log out
+                </Button>
+              </div>
+            ) : (
+              <div className="pt-2 flex flex-col space-y-2">
+                <Button variant="outline" className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
+                  <Link to="/signin">Sign In</Link>
+                </Button>
+                <Button className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
+                  <Link to="/signup">Sign Up</Link>
+                </Button>
+              </div>
+            )}
           </nav>
         </div>
       )}
