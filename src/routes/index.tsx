@@ -1,9 +1,9 @@
 
 /**
  * @file src/routes/index.tsx
- * @version 0.0.12
- * @patch Ensured all dashboard pages use DashboardLayout consistently
- * @date 2025-05-25
+ * @version 0.0.13
+ * @patch Added public tournaments route for all visitors
+ * @date 2025-06-17
  */
 
 import React from "react";
@@ -82,6 +82,7 @@ export const router = createBrowserRouter([
       { path: "premium", element: <Premium /> },
       { path: "communities", element: <Communities /> },
       { path: "featured-communities", element: <FeaturedCommunities /> },
+      { path: "tournaments", element: <Tournaments /> }, // Added public tournaments route
       { path: "help-center", element: <HelpCenter /> },
       { path: "safety-center", element: <SafetyCenter /> },
       { path: "community-guidelines", element: <CommunityGuidelines /> },
