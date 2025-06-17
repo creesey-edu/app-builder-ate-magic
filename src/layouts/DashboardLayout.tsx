@@ -1,9 +1,9 @@
 
 /**
  * @file src/layouts/DashboardLayout.tsx  
- * @version 0.0.8
- * @patch Enhanced structure with comprehensive navigation and sidebar
- * @date 2025-05-21
+ * @version 0.0.9
+ * @patch Fixed header styling to ensure proper background and contrast
+ * @date 2025-06-17
  */
 
 import React from "react";
@@ -68,21 +68,21 @@ const DashboardLayout: React.FC = () => {
         <Toaster />
         <Sonner />
         <div className="min-h-screen flex flex-col">
-          <header className="bg-primary text-white p-4 shadow-md">
-            <div className="container mx-auto flex justify-between items-center">
+          <header className="bg-slate-900 dark:bg-slate-800 text-white border-b border-slate-700 shadow-md">
+            <div className="container mx-auto flex justify-between items-center px-6 py-4">
               <div className="flex items-center space-x-2">
-                <Link to="/" className="flex items-center space-x-2 text-white">
+                <Link to="/" className="flex items-center space-x-2 text-white hover:text-slate-200 transition-colors">
                   <ChevronLeft className="h-5 w-5" />
-                  <span>Back to Site</span>
+                  <span className="text-sm font-medium">Back to Site</span>
                 </Link>
               </div>
-              <h1 className="text-2xl font-bold">Dashboard</h1>
+              <h1 className="text-2xl font-bold text-white">Dashboard</h1>
               <div className="flex items-center space-x-4">
-                <span className="text-sm">{user?.username}</span>
+                <span className="text-sm text-slate-200">{user?.username}</span>
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="bg-white/10 hover:bg-white/20 text-white border-white/20"
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 transition-all"
                   onClick={logout}
                 >
                   <LogOut className="h-4 w-4 mr-1" />
@@ -92,7 +92,7 @@ const DashboardLayout: React.FC = () => {
             </div>
           </header>
           <div className="flex flex-1">
-            <aside className="w-64 bg-muted/30 p-4 hidden md:block">
+            <aside className="w-64 bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 p-4 hidden md:block">
               <nav className="space-y-2">
                 {navItems.map((item) => (
                   <Link
@@ -100,8 +100,8 @@ const DashboardLayout: React.FC = () => {
                     to={item.path}
                     className={`flex items-center space-x-3 px-4 py-2 rounded-md transition-colors ${
                       location.pathname === item.path
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-muted"
+                        ? "bg-slate-900 text-white dark:bg-slate-700 dark:text-white"
+                        : "text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800"
                     }`}
                   >
                     {item.icon}
@@ -110,7 +110,7 @@ const DashboardLayout: React.FC = () => {
                 ))}
               </nav>
             </aside>
-            <main className="flex-1 p-6">
+            <main className="flex-1 p-6 bg-white dark:bg-slate-950">
               <Outlet />
             </main>
           </div>
