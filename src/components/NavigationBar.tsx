@@ -2,27 +2,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { 
-  NavigationMenu, 
-  NavigationMenuContent, 
-  NavigationMenuItem, 
-  NavigationMenuLink, 
-  NavigationMenuList, 
-  NavigationMenuTrigger, 
-  navigationMenuTriggerStyle 
-} from "@/components/ui/navigation-menu";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { GamepadIcon, Menu, Video, X, Star, User, Settings, LogOut, LayoutDashboard } from "lucide-react";
-import { ThemeToggle } from "./ThemeToggle";
-import { NotificationBell } from "./NotificationBell";
+import { GamepadIcon, Menu, X } from "lucide-react";
 import { useSession } from "@/hooks/useSession";
+import { DesktopNavigation } from "./navigation/DesktopNavigation";
+import { MobileNavigation } from "./navigation/MobileNavigation";
+import { UserMenu } from "./navigation/UserMenu";
+import { NavigationActions } from "./navigation/NavigationActions";
 
 export const NavigationBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -38,95 +23,7 @@ export const NavigationBar = () => {
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex flex-1">
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Games</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    {["Action", "Adventure", "RPG", "Strategy", "Simulation", "Sports"].map((category) => (
-                      <li key={category}>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            to="/games"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">{category}</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Explore {category.toLowerCase()} games and communities
-                            </p>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Communities</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/featured-communities"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium leading-none flex items-center gap-1">
-                            <Star className="h-3.5 w-3.5 text-amber-500" />
-                            Featured
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Check out our featured communities
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    {["New", "Popular", "Tournaments", "Events", "Discussions"].map((item) => (
-                      <li key={item}>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            to="/communities"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">{item}</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              {item === "New" ? "Discover newly created communities" :
-                               item === "Popular" ? "Join our most active communities" :
-                               item === "Tournaments" ? "Competitive gaming events" :
-                               item === "Events" ? "Upcoming community events" : 
-                               "Join community discussions"}
-                            </p>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to="/tournaments" className={navigationMenuTriggerStyle()}>
-                  Tournaments
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to="/news" className={navigationMenuTriggerStyle()}>
-                  News
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to="/streamers" className={navigationMenuTriggerStyle()}>
-                  <span className="flex items-center gap-1">
-                    <Video className="h-4 w-4" />
-                    Streamers
-                  </span>
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
+        <DesktopNavigation />
 
         {/* Mobile menu button */}
         <div className="flex md:hidden flex-1 justify-end">
@@ -135,124 +32,24 @@ export const NavigationBar = () => {
           </Button>
         </div>
 
-        {/* Theme toggle, notification bell, and auth buttons/user menu */}
+        {/* Desktop actions and user menu */}
         <div className="hidden md:flex items-center gap-4 ml-auto">
-          <NotificationBell />
-          <ThemeToggle />
-          
-          {isAuthenticated && user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={user.avatar} alt={user.username} />
-                    <AvatarFallback>
-                      {user.username?.charAt(0).toUpperCase() || <User className="h-4 w-4" />}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
-                <div className="flex items-center justify-start gap-2 p-2">
-                  <div className="flex flex-col space-y-1 leading-none">
-                    <p className="font-medium">{user.username}</p>
-                    <p className="w-[200px] truncate text-sm text-muted-foreground">
-                      {user.email}
-                    </p>
-                  </div>
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/dashboard" className="flex items-center">
-                    <LayoutDashboard className="mr-2 h-4 w-4" />
-                    Dashboard
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem disabled>
-                  <Settings className="mr-2 h-4 w-4" />
-                  Settings
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={logout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Log out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <>
-              <Button variant="ghost" asChild>
-                <Link to="/signin">Sign In</Link>
-              </Button>
-              <Button asChild>
-                <Link to="/signup">Sign Up</Link>
-              </Button>
-            </>
-          )}
+          <NavigationActions />
+          <UserMenu 
+            isAuthenticated={isAuthenticated}
+            user={user}
+            logout={logout}
+          />
         </div>
       </div>
 
-      {/* Mobile navigation */}
-      {mobileMenuOpen && (
-        <div className="md:hidden py-4 px-4 bg-background border-t">
-          <nav className="flex flex-col space-y-4">
-            <Link to="/games" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
-              Games
-            </Link>
-            <Link to="/communities" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
-              Communities
-            </Link>
-            <Link to="/featured-communities" className="px-4 py-2 text-sm font-medium flex items-center gap-1" onClick={() => setMobileMenuOpen(false)}>
-              <Star className="h-3.5 w-3.5 text-amber-500" />
-              Featured Communities
-            </Link>
-            <Link to="/tournaments" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
-              Tournaments
-            </Link>
-            <Link to="/news" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
-              News
-            </Link>
-            <Link to="/streamers" className="px-4 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
-              <span className="flex items-center gap-1">
-                <Video className="h-4 w-4" />
-                Streamers
-              </span>
-            </Link>
-            <div className="flex items-center justify-between px-4 py-2">
-              <NotificationBell />
-              <ThemeToggle />
-            </div>
-            
-            {isAuthenticated && user ? (
-              <div className="pt-2 flex flex-col space-y-2">
-                <div className="px-4 py-2 border-t">
-                  <p className="font-medium">{user.username}</p>
-                  <p className="text-sm text-muted-foreground">{user.email}</p>
-                </div>
-                <Button variant="outline" className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
-                  <Link to="/dashboard" className="flex items-center justify-center">
-                    <LayoutDashboard className="mr-2 h-4 w-4" />
-                    Dashboard
-                  </Link>
-                </Button>
-                <Button variant="outline" className="w-full" onClick={() => { logout(); setMobileMenuOpen(false); }}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Log out
-                </Button>
-              </div>
-            ) : (
-              <div className="pt-2 flex flex-col space-y-2">
-                <Button variant="outline" className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
-                  <Link to="/signin">Sign In</Link>
-                </Button>
-                <Button className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
-                  <Link to="/signup">Sign Up</Link>
-                </Button>
-              </div>
-            )}
-          </nav>
-        </div>
-      )}
+      <MobileNavigation 
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        isAuthenticated={isAuthenticated}
+        user={user}
+        logout={logout}
+      />
     </header>
   );
 }
