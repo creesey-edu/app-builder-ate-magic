@@ -1,5 +1,15 @@
-
-// PATCHED v0.0.7 src/components/auth/DiscordCallback.tsx — Adds debug logging for OAuth code handling
+// -----------------------------------------------------------------------------
+// Project: TAGS
+// Module: WebApp Frontend
+// Phase: Production Build
+// File: src/components/auth/DiscordCallback.tsx
+// Tags: ["discord", "oauth", "auth", "callback", "jwt"]
+// Updated: 16 June 2025 21:36 (EST)
+// Version: v0.0.7
+// Author: Chad Reesey
+// Email: contact@thenagrygamershow.com
+// Description: Handles Discord OAuth2 redirect, exchanges code for JWT via backend.
+// -----------------------------------------------------------------------------
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

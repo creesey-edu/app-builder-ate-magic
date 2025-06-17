@@ -1,27 +1,46 @@
+/*
+ * -----------------------------------------------------------------------------
+ * Project: TAGS
+ * Module: WebApp Frontend
+ * Phase: Production Build
+ * File: vite.config.ts
+ * Tags: ["vite", "react", "config", "build"]
+ * Updated: 16 June 2025 16:10 (EST)
+ * Version: v0.0.6
+ * Author: Chad Reesey
+ * Email: contact@thenagrygamershow.com
+ * Description: Vite configuration for TAGS WebApp frontend. Includes build
+ *              environment toggle for component tagging, resolved by mode.
+ * -----------------------------------------------------------------------------
+ */
 
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
-import { componentTagger } from "lovable-tagger";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // Use env-based toggle; falls back to originally enabled in development
+  const env = loadEnv(mode, process.cwd(), '')
+
   const enableTagger =
-    (process.env.VITE_ENABLE_TAGGER === "true") ||
-    (mode === "development" && process.env.VITE_ENABLE_TAGGER !== "false");
+    env.VITE_ENABLE_TAGGER === 'true' ||
+    (mode === 'development' && env.VITE_ENABLE_TAGGER !== 'false')
+
+  const plugins = [react()]
+
+  if (enableTagger && mode !== 'production') {
+    const { componentTagger } = require('lovable-tagger') // <--- ✅ dynamic require
+    plugins.push(componentTagger())
+  }
+
   return {
     server: {
-      host: "::",
+      host: '::',
       port: 8080,
     },
-    plugins: [
-      react(),
-      enableTagger && componentTagger(),
-    ].filter(Boolean),
+    plugins,
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "./src"),
+        '@': path.resolve(__dirname, './src'),
       },
     },
   }

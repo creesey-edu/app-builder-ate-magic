@@ -1,106 +1,128 @@
-// PATCHED v0.0.6 src/pages/Debug.tsx — Aligns with session and debug data display conventions
+// -----------------------------------------------------------------------------
+// Project: TAGS
+// Module: WebApp Frontend
+// Phase: Production Build
+// File: src/pages/Debug.tsx
+// Tags: ["debug", "session", "auth", "jwt", "api"]
+// Updated: 16 June 2025 20:36 (EST)
+// Version: v0.0.6
+// Author: Chad Reesey
+// Email: contact@thenagrygamershow.com
+// Description: Debug page to display session state and fetch server user info.
+// -----------------------------------------------------------------------------
 
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSession } from "@/hooks/useSession";
-import api from "@/lib/axios";
 
-const ROLE_NAMES: Record<string, string> = {
-  "1358962069369651210": "OWNER",
-  "1362657572301308055": "ADMINISTRATOR",
-  "1362164095134073044": "MODERATOR",
-  "1358962492193247323": "VERIFIED_USER",
-  "1362162321807507598": "VERIFIED_MEMBER",
-  "1358961935583940659": "GOVERNMENT",
-  "1358961996699009205": "MILITARY",
-  "1358962034301079624": "EDUCATION",
-  "1362653825210650815": "VERIFIED_GOVERNMENT",
-  "1362162595955609680": "VERIFIED_MILITARY",
-  "1362654034804084968": "VERIFIED_EDUCATION",
+type DebugUserPayload = {
+  id: string;
+  username: string;
+  email?: string;
+  avatar?: string;
+  isAdminGuildOwner?: boolean;
+  isAdminGuildAdministrator?: boolean;
+  isAdminGuildModerator?: boolean;
+  isAdminGuildVerifiedMember?: boolean;
+  isAdminGuildMember?: boolean;
+  isCommunityGuild?: boolean;
+  isCommunityGuildOwner?: boolean;
+  isCommunityGuildManager?: boolean;
+  isCommunityGuildAdministrator?: boolean;
+  isCommunityGuildModerator?: boolean;
+  isCommunityGuildVerifiedMember?: boolean;
+  isCommunityGuildMember?: boolean;
+  verificationType?: string | null;
+  verificationStatus?: string;
+  guilds?: Array<{
+    id: string;
+    name: string;
+    roles: string[];
+  }>;
+  [key: string]: unknown;
 };
 
-const ADMIN_GUILD_ID = import.meta.env.VITE_ADMIN_SERVER_GUILD_ID;
+export const Debug: React.FC = () => {
+  const { user, token, isAuthenticated } = useSession();
+  const [debugUser, setDebugUser] = useState<DebugUserPayload | null>(null);
+  const [debugUserLoading, setDebugUserLoading] = useState(false);
+  const [debugUserError, setDebugUserError] = useState<string | null>(null);
 
-const Debug = () => {
-  const [userInfo, setUserInfo] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
-  const { user, token, isAuthenticated, isAdmin, isVerified, verificationType } = useSession();
+  // Fetch server-side decoded user info
+  const fetchDebugUserInfo = useCallback(async () => {
+    setDebugUserLoading(true);
+    setDebugUserError(null);
 
-  useEffect(() => {
-    if (import.meta.env.VITE_DEBUG === "true") {
-      console.debug("[Debug Page] useSession():", {
-        user,
-        token,
-        isAuthenticated,
-        isAdmin,
-        isVerified,
-        verificationType,
-      });
+    if (!token) {
+      setDebugUserError("Missing session token.");
+      setDebugUserLoading(false);
+      return;
     }
 
-    const fetchDebugUser = async () => {
-      try {
-        const res = await api.get("/debug/user");
-        if (import.meta.env.VITE_DEBUG === "true") {
-          console.debug("[Debug Page] /debug/user response:", res.data);
-        }
-        setUserInfo(res.data.user);
-      } catch (err: any) {
-        console.error("Error fetching debug user:", err);
-        setError("Failed to fetch debug user info");
+    try {
+      const res = await fetch("/api/debug/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(
+          errorData?.error || "Failed to fetch debug user info"
+        );
       }
-    };
-    fetchDebugUser();
-  }, []);
+      const data = await res.json();
+      setDebugUser(data.user);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setDebugUserError(err.message || "Error fetching debug user info");
+      } else {
+        setDebugUserError("Error fetching debug user info");
+      }
+    }
+    setDebugUserLoading(false);
+  }, [token]);
+
+  useEffect(() => {
+    if (isAuthenticated && token) {
+      fetchDebugUserInfo();
+    }
+  }, [isAuthenticated, token, fetchDebugUserInfo]);
 
   return (
-    <div className="p-6 max-w-3xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold">Debug User Info</h1>
-
-      <section className="bg-muted p-4 rounded-md text-sm space-y-2">
-        <p><strong>Authenticated:</strong> {isAuthenticated ? "✅ Yes" : "❌ No"}</p>
-        <p><strong>Admin:</strong> {isAdmin ? "✅ Yes" : "❌ No"}</p>
-        <p><strong>Verified:</strong> {isVerified ? "✅ Yes" : "❌ No"}</p>
-        <p><strong>Verification Type:</strong> {verificationType || "None"}</p>
-      </section>
-
-      {user && (
-        <section>
-          <h2 className="text-lg font-semibold mt-4">Session Hook Payload</h2>
-          <pre className="bg-background p-4 rounded-md text-sm overflow-x-auto">
-            {JSON.stringify(user, null, 2)}
-          </pre>
-
-          <h3 className="text-lg font-semibold mt-4">Visible Guilds (Filtered)</h3>
-          <div className="space-y-4">
-            {user.guilds?.map((guild: any) => (
-              <div key={guild.id} className="bg-muted p-3 rounded-md">
-                <strong>{guild.name}</strong> ({guild.id}){" "}
-                {guild.id === ADMIN_GUILD_ID && (
-                  <span className="text-orange-500 font-semibold">(Admin Guild)</span>
-                )}
-                <br />
-                <span className="text-xs">
-                  Roles: {guild.roles.length > 0
-                    ? guild.roles.map((r: string) => ROLE_NAMES[r] || r).join(", ")
-                    : "None"}
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
+    <div className="prose dark:prose-invert max-w-2xl mx-auto mt-8 p-4 rounded-xl bg-neutral-900 shadow-lg">
+      <h1>Debug User Info</h1>
+      <ul>
+        <li>
+          <b>Authenticated:</b> {isAuthenticated ? "✅ Yes" : "❌ No"}
+        </li>
+        <li>
+          <b>Admin:</b>{" "}
+          {user?.isAdminGuildOwner || user?.isAdminGuildAdministrator
+            ? "✅ Yes"
+            : "❌ No"}
+        </li>
+        <li>
+          <b>Verified:</b> {user?.isAdminGuildVerifiedMember ? "✅ Yes" : "❌ No"}
+        </li>
+        <li>
+          <b>Verification Type:</b>{" "}
+          {user?.verificationType ? user.verificationType : "None"}
+        </li>
+      </ul>
+      <h2>Session Hook Payload</h2>
+      <pre>
+        {JSON.stringify(user, null, 2)}
+      </pre>
+      <h2>/api/debug/user Payload</h2>
+      {debugUserLoading ? (
+        <div>Loading user info from backend...</div>
+      ) : debugUserError ? (
+        <div className="text-red-500">Failed to fetch debug user info: {debugUserError}</div>
+      ) : (
+        <pre>
+          {debugUser ? JSON.stringify(debugUser, null, 2) : "No server user info"}
+        </pre>
       )}
-
-      <section>
-        <h2 className="text-lg font-semibold mt-4">/api/debug/user Payload</h2>
-        {error && <p className="text-red-500">{error}</p>}
-        {userInfo ? (
-          <pre className="bg-muted p-4 rounded-md text-sm overflow-x-auto">
-            {JSON.stringify(userInfo, null, 2)}
-          </pre>
-        ) : (
-          <p className="text-muted-foreground">Loading user info from backend...</p>
-        )}
-      </section>
     </div>
   );
 };

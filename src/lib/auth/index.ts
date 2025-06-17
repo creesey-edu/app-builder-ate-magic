@@ -1,68 +1,75 @@
+// -----------------------------------------------------------------------------
+// Project: TAGS
+// Module: WebApp Frontend
+// Phase: Production Build
+// File: src/lib/auth/index.ts
+// Tags: ["discord", "oauth", "auth", "jwt", "session"]
+// Updated: 16 June 2025 22:12 (EST)
+// Version: v0.0.7
+// Author: Chad Reesey
+// Email: contact@thenagrygamershow.com
+// Description: Centralized Discord auth utilities, handles OAuth exchange
+//              and JWT session storage for frontend.
+// -----------------------------------------------------------------------------
 
-// src/lib/auth/index.ts
-export * from "./discord"; // ✅ must match the actual filename
+export * from "./discord"; // ✅ Adjust path/filename as needed
 
-// Create auth utility functions
+const AUTH_API_BASE_URL = import.meta.env.VITE_AUTH_API_BASE_URL;
+
+/**
+ * Exchanges the Discord OAuth code for a real JWT and user info from backend.
+ * Stores both in localStorage, redirects as needed.
+ */
 export const handleDiscordCallback = async (code: string) => {
   try {
-    console.log("Processing Discord auth callback with code:", code);
-    
-    // In a real implementation, you would send this code to your backend
-    // For now, we'll simulate a successful authentication
-    const mockUser = {
-      id: "discord123456789",
-      username: "TestUser",
-      isAdminGuildOwner: false,
-      isAdminGuildAdministrator: false,
-      isAdminGuildModerator: false,
-      isAdminGuildVerifiedMember: true,
-      isAdminGuildMember: true,
-      isCommunityGuild: false,
-      isCommunityGuildOwner: false,
-      isCommunityGuildManager: false,
-      isCommunityGuildAdministrator: false,
-      isCommunityGuildModerator: false,
-      isCommunityGuildVerifiedMember: false,
-      isCommunityGuildMember: false,
-      email: "user@example.com",
-      avatar: "https://example.com/avatar.png",
-      verificationType: null,
-      verificationStatus: "pending",
-      guilds: [
-        {
-          id: import.meta.env.VITE_ADMIN_SERVER_GUILD_ID || "997603496637513928",
-          name: "Angry Gamer Admin Server",
-          roles: [import.meta.env.VITE_VERIFIED_USER_ROLE_ID || "1150725589123456789"]
-        }
-      ]
-    };
-    
-    // Store user in localStorage
-    localStorage.setItem("user", JSON.stringify(mockUser));
-    localStorage.setItem("auth_token", "mock_token_for_development");
-    
-    return mockUser;
+    const verificationType = localStorage.getItem("verificationType");
+    const res = await fetch(`${AUTH_API_BASE_URL}/api/discord/exchange`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code, verificationType }),
+    });
+    if (!res.ok) throw new Error("Failed to exchange Discord code for session.");
+
+    const data = await res.json();
+
+    // Store JWT and user payload in localStorage
+    if (data.token && data.user) {
+      localStorage.setItem("auth_token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+    } else {
+      throw new Error("Backend did not return a valid session.");
+    }
+
+    if (verificationType) {
+      localStorage.removeItem("verificationType");
+    }
+
+    return data.user;
   } catch (error) {
     console.error("Error handling Discord callback:", error);
     return null;
   }
 };
 
+/**
+ * Initiates the Discord OAuth flow for login/verification.
+ */
 export const initiateDiscordAuth = (verificationType?: string) => {
-  // Store the current URL to redirect back after authentication
   localStorage.setItem("authRedirect", window.location.pathname);
   if (verificationType) {
     localStorage.setItem("verificationType", verificationType);
   }
-  
   // Get Discord auth URL from our utility
   const authUrl = buildDiscordAuthUrl();
-  
-  // Redirect to Discord's OAuth page
   window.location.href = authUrl;
 };
 
-export const buildDiscordAuthUrl = (redirectUri: string = `${window.location.origin}/auth/discord/callback`) => {
+/**
+ * Utility to build the Discord OAuth2 authorization URL.
+ */
+export const buildDiscordAuthUrl = (
+  redirectUri: string = `${window.location.origin}/auth/discord/callback`
+) => {
   const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID;
   return `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(
     redirectUri
