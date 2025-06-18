@@ -1,8 +1,24 @@
 {
   "name": "tag-webapp",
   "private": true,
-  "version": "0.0.5",
+  "version": "1.0.1",
   "type": "module",
+  "description": "A web application for managing tags and related functionalities.",
+  "keywords": [
+    "webapp",
+    "tags",
+    "management",
+    "react",
+    "vite"
+  ],
+  "author": "Chad A. Reesey",
+  "email": "developer@thenagrygamershow.com",
+  "homepage": "https://thenagrygamershow.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creesey-edu/app-builder-ate-magic"
+  },
   "scripts": {
     "dev": "vite --mode dev",
     "build": "vite build",
