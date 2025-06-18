@@ -1,66 +1,23 @@
 
 /**
  * @file src/layouts/DashboardLayout.tsx  
- * @version 0.0.9
- * @patch Fixed header styling to ensure proper background and contrast
- * @date 2025-06-17
+ * @version 0.0.10
+ * @patch Refactored into smaller components for better maintainability
+ * @date 2025-06-18
  */
 
 import React from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { NotificationProvider } from "@/providers/NotificationProvider";
 import { useSession } from "@/hooks/useSession";
-import { Button } from "@/components/ui/button";
-import { 
-  LayoutDashboard, 
-  Video, 
-  CheckCircle, 
-  BarChart2, 
-  Store, 
-  Trophy, 
-  ChevronLeft,
-  LogOut
-} from "lucide-react";
+import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
+import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
 
 const DashboardLayout: React.FC = () => {
-  const location = useLocation();
   const { user, logout } = useSession();
-
-  const navItems = [
-    { 
-      name: "Dashboard", 
-      path: "/dashboard", 
-      icon: <LayoutDashboard className="h-5 w-5" /> 
-    },
-    { 
-      name: "Streamers", 
-      path: "/dashboard/streamers", 
-      icon: <Video className="h-5 w-5" /> 
-    },
-    { 
-      name: "Verification", 
-      path: "/dashboard/streamer-verification", 
-      icon: <CheckCircle className="h-5 w-5" /> 
-    },
-    { 
-      name: "Analytics", 
-      path: "/dashboard/streamer-analytics", 
-      icon: <BarChart2 className="h-5 w-5" /> 
-    },
-    { 
-      name: "Community Store", 
-      path: "/dashboard/community-store", 
-      icon: <Store className="h-5 w-5" /> 
-    },
-    { 
-      name: "Tournaments", 
-      path: "/dashboard/tournaments", 
-      icon: <Trophy className="h-5 w-5" /> 
-    }
-  ];
 
   return (
     <NotificationProvider>
@@ -68,48 +25,9 @@ const DashboardLayout: React.FC = () => {
         <Toaster />
         <Sonner />
         <div className="min-h-screen flex flex-col">
-          <header className="bg-slate-900 dark:bg-slate-800 text-white border-b border-slate-700 shadow-md">
-            <div className="container mx-auto flex justify-between items-center px-6 py-4">
-              <div className="flex items-center space-x-2">
-                <Link to="/" className="flex items-center space-x-2 text-white hover:text-slate-200 transition-colors">
-                  <ChevronLeft className="h-5 w-5" />
-                  <span className="text-sm font-medium">Back to Site</span>
-                </Link>
-              </div>
-              <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-              <div className="flex items-center space-x-4">
-                <span className="text-sm text-slate-200">{user?.username}</span>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 transition-all"
-                  onClick={logout}
-                >
-                  <LogOut className="h-4 w-4 mr-1" />
-                  Logout
-                </Button>
-              </div>
-            </div>
-          </header>
+          <DashboardHeader username={user?.username} onLogout={logout} />
           <div className="flex flex-1">
-            <aside className="w-64 bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 p-4 hidden md:block">
-              <nav className="space-y-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`flex items-center space-x-3 px-4 py-2 rounded-md transition-colors ${
-                      location.pathname === item.path
-                        ? "bg-slate-900 text-white dark:bg-slate-700 dark:text-white"
-                        : "text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800"
-                    }`}
-                  >
-                    {item.icon}
-                    <span>{item.name}</span>
-                  </Link>
-                ))}
-              </nav>
-            </aside>
+            <DashboardSidebar />
             <main className="flex-1 p-6 bg-white dark:bg-slate-950">
               <Outlet />
             </main>
