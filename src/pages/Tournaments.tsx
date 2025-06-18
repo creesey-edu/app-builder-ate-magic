@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
@@ -22,6 +21,21 @@ import {
 import { TournamentCard } from "@/components/tournaments/TournamentCard";
 import { FeaturedTournaments } from "@/components/tournaments/FeaturedTournaments";
 import { getUpcomingTournaments } from "@/data/mockTournaments";
+
+/**
+ * @metadata
+ * {
+ *   "project": "TAGS",
+ *   "module": "Tournaments Page",
+ *   "phase": "Tournament System",
+ *   "tags": ["page", "tournaments", "gaming", "competition"],
+ *   "version": "v1.0.2",
+ *   "author": "Chad A. Reesey",
+ *   "email": "developer@thenagrygamershow.com",
+ *   "updated": "2025-06-18",
+ *   "description": "Tournament listing and discovery page with filtering and search functionality"
+ * }
+ */
 
 const Tournaments = () => {
   const [searchQuery, setSearchQuery] = useState("");

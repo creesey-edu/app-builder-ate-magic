@@ -1,3 +1,17 @@
+/**
+ * @metadata
+ * {
+ *   "project": "TAGS",
+ *   "module": "Dashboard Main Page",
+ *   "phase": "Dashboard System",
+ *   "tags": ["page", "dashboard", "authentication", "user-management"],
+ *   "version": "v1.0.2",
+ *   "author": "Chad A. Reesey",
+ *   "email": "developer@thenagrygamershow.com",
+ *   "updated": "2025-06-18",
+ *   "description": "Main dashboard page displaying user information and access controls"
+ * }
+ */
 
 /**
  * @file src/pages/Dashboard.tsx

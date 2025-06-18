@@ -1,3 +1,17 @@
+/**
+ * @metadata
+ * {
+ *   "project": "TAGS",
+ *   "module": "Dashboard Layout",
+ *   "phase": "Dashboard Infrastructure",
+ *   "tags": ["layout", "dashboard", "routing", "providers"],
+ *   "version": "v1.0.2",
+ *   "author": "Chad A. Reesey",
+ *   "email": "developer@thenagrygamershow.com",
+ *   "updated": "2025-06-18",
+ *   "description": "Main dashboard layout component with navigation, sidebar, and content area"
+ * }
+ */
 
 /**
  * @file src/layouts/DashboardLayout.tsx  
