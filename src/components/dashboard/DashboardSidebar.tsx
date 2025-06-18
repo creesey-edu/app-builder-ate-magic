@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
@@ -9,6 +8,21 @@ import {
   Store, 
   Trophy
 } from "lucide-react";
+
+/**
+ * @metadata
+ * {
+ *   "project": "TAGS",
+ *   "module": "Dashboard Sidebar",
+ *   "phase": "Dashboard Components",
+ *   "tags": ["component", "sidebar", "navigation", "menu"],
+ *   "version": "v1.0.2",
+ *   "author": "Chad A. Reesey",
+ *   "email": "developer@thenagrygamershow.com",
+ *   "updated": "2025-06-18",
+ *   "description": "Dashboard sidebar navigation component with menu items"
+ * }
+ */
 
 const navItems = [
   { 

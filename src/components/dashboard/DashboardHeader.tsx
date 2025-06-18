@@ -1,3 +1,17 @@
+/**
+ * @metadata
+ * {
+ *   "project": "TAGS",
+ *   "module": "Dashboard Header",
+ *   "phase": "Dashboard Components",
+ *   "tags": ["component", "header", "navigation", "authentication"],
+ *   "version": "v1.0.2",
+ *   "author": "Chad A. Reesey",
+ *   "email": "developer@thenagrygamershow.com",
+ *   "updated": "2025-06-18",
+ *   "description": "Dashboard header component with navigation and user controls"
+ * }
+ */
 
 import React from "react";
 import { Link } from "react-router-dom";
