@@ -20,7 +20,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { UserProvider } from "@/context/UserProvider";
 import { SessionProvider } from "@/providers/SessionProvider";
-import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import { AdminRoute } from "@/components/auth/AdminRoute";
 import { ModeratorRoute } from "@/components/auth/ModeratorRoute";
 import OwnerRoute from "@/components/auth/OwnerRoute";
@@ -92,7 +92,7 @@ function App() {
                   <Route 
                     path="/dashboard" 
                     element={
-                      <ProtectedRoute>
+                      <ProtectedRoute requireAuthenticated={true}>
                         <DashboardLayout />
                       </ProtectedRoute>
                     }
