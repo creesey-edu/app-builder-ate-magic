@@ -1,4 +1,19 @@
 
+/**
+ * @metadata
+ * {
+ *   "project": "TAGS",
+ *   "module": "News Page",
+ *   "phase": "Content Pages",
+ *   "tags": ["page", "news", "gaming", "content"],
+ *   "version": "v1.0.2",
+ *   "author": "Chad A. Reesey",
+ *   "email": "developer@thenagrygamershow.com",
+ *   "updated": "2025-06-19",
+ *   "description": "Gaming news and updates page"
+ * }
+ */
+
 const News = () => {
   return (
     <div className="container mx-auto py-12 px-4">

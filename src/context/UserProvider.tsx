@@ -1,3 +1,19 @@
+
+/**
+ * @metadata
+ * {
+ *   "project": "TAGS",
+ *   "module": "User Provider",
+ *   "phase": "State Management",
+ *   "tags": ["provider", "user", "context", "authentication"],
+ *   "version": "v1.0.2",
+ *   "author": "Chad A. Reesey",
+ *   "email": "developer@thenagrygamershow.com",
+ *   "updated": "2025-06-19",
+ *   "description": "React provider component for user state management"
+ * }
+ */
+
 // PATCHED v0.0.6 src/context/UserProvider.tsx — Separated UserProvider component for Fast Refresh compatibility
 
 import { useState, useEffect, ReactNode } from "react";

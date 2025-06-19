@@ -1,4 +1,19 @@
 
+/**
+ * @metadata
+ * {
+ *   "project": "TAGS",
+ *   "module": "Dashboard Streamers Page",
+ *   "phase": "Dashboard System",
+ *   "tags": ["page", "dashboard", "streamers", "management"],
+ *   "version": "v1.0.2",
+ *   "author": "Chad A. Reesey",
+ *   "email": "developer@thenagrygamershow.com",
+ *   "updated": "2025-06-19",
+ *   "description": "Dashboard page for managing and viewing streamer profiles"
+ * }
+ */
+
 import { StreamersTab } from "@/components/streamers/StreamersTab";
 
 const DashboardStreamers = () => {

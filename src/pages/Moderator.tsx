@@ -1,4 +1,19 @@
 
+/**
+ * @metadata
+ * {
+ *   "project": "TAGS",
+ *   "module": "Moderator Page",
+ *   "phase": "Access Control",
+ *   "tags": ["page", "moderator", "access-control", "role-based"],
+ *   "version": "v1.0.2",
+ *   "author": "Chad A. Reesey",
+ *   "email": "developer@thenagrygamershow.com",
+ *   "updated": "2025-06-19",
+ *   "description": "Moderator-only access page with role-based permissions"
+ * }
+ */
+
 // src/pages/Moderator.tsx
 
 const ModeratorPage = () => {
