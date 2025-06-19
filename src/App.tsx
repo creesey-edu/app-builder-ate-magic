@@ -63,8 +63,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="system" storageKey="tags-ui-theme">
         <SessionProvider>
-          <UserProvider>
-            <Router>
+          <Router>
+            <UserProvider>
               <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
                 <Routes>
                   {/* Public routes with RootLayout */}
@@ -139,8 +139,8 @@ function App() {
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
-            </Router>
-          </UserProvider>
+            </UserProvider>
+          </Router>
         </SessionProvider>
       </ThemeProvider>
     </QueryClientProvider>
