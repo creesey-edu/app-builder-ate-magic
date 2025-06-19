@@ -43,7 +43,7 @@ const CommunityStore = lazy(() => import("@/pages/CommunityStore"));
 const Premium = lazy(() => import("@/pages/Premium"));
 const Press = lazy(() => import("@/pages/Press"));
 const Careers = lazy(() => import("@/pages/Careers"));
-const SignIn = lazy(() => import("@/pages/auth/SignIn"));
+const SignIn = lazy(() => import("@/pages/SignIn"));
 const DiscordCallback = lazy(() => import("@/pages/auth/DiscordCallback"));
 const Admin = lazy(() => import("@/pages/Admin"));
 const Moderator = lazy(() => import("@/pages/Moderator"));
