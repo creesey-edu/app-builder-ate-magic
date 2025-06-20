@@ -2,6 +2,7 @@
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useSession } from "@/hooks/useSession";
+import { Permission, hasPermission, hasAnyPermission } from "@/lib/permissions";
 import {
   ADMIN_SERVER_GUILD_ID,
   ADMIN_OWNER_ROLE_ID,
@@ -19,11 +20,13 @@ interface ProtectedRouteProps {
   requireAdmin?: boolean;
   requireVerified?: boolean;
   requireRoleId?: string;
+  requirePermission?: Permission;
+  requireAnyPermissions?: Permission[];
   fallbackPath?: string;
 }
 
 /**
- * Guards routes based on Discord roles (uses new env mappings).
+ * Enhanced route guard with role and permission-based access control.
  */
 const ProtectedRoute = ({
   requireAuthenticated = false,
@@ -31,6 +34,8 @@ const ProtectedRoute = ({
   requireAdmin = false,
   requireVerified = false,
   requireRoleId,
+  requirePermission,
+  requireAnyPermissions,
   fallbackPath = "/unauthorized",
 }: ProtectedRouteProps) => {
   const { user, isAuthenticated, isLoading, isAdmin, isVerified } = useSession();
@@ -53,7 +58,7 @@ const ProtectedRoute = ({
     return <Navigate to="/signin" replace />;
   }
 
-  // Use new flags for admin and verified
+  // Check admin requirement
   if (requireAdmin && !isAdmin) {
     if (import.meta.env.VITE_DEBUG === "true") {
       console.debug("[ProtectedRoute] Admin required (missing role).");
@@ -61,6 +66,7 @@ const ProtectedRoute = ({
     return <Navigate to={fallbackPath} replace />;
   }
 
+  // Check verified requirement
   if (requireVerified && !isVerified) {
     if (import.meta.env.VITE_DEBUG === "true") {
       console.debug("[ProtectedRoute] Verified required (missing role).");
@@ -68,7 +74,7 @@ const ProtectedRoute = ({
     return <Navigate to={fallbackPath} replace />;
   }
 
-  // Optional: Also allow string roleId check, for custom role-based routes
+  // Check specific role requirement
   if (requireRoleId) {
     const userGuild = user.guilds?.find((g) => g.id === ADMIN_SERVER_GUILD_ID);
     const userRoles = userGuild?.roles ?? [];
@@ -78,6 +84,22 @@ const ProtectedRoute = ({
       }
       return <Navigate to={fallbackPath} replace />;
     }
+  }
+
+  // Check specific permission requirement
+  if (requirePermission && !hasPermission(user, requirePermission)) {
+    if (import.meta.env.VITE_DEBUG === "true") {
+      console.debug("[ProtectedRoute] Required permission missing:", requirePermission);
+    }
+    return <Navigate to={fallbackPath} replace />;
+  }
+
+  // Check any permissions requirement
+  if (requireAnyPermissions && !hasAnyPermission(user, requireAnyPermissions)) {
+    if (import.meta.env.VITE_DEBUG === "true") {
+      console.debug("[ProtectedRoute] None of required permissions found:", requireAnyPermissions);
+    }
+    return <Navigate to={fallbackPath} replace />;
   }
 
   return <>{children}</>;
