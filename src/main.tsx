@@ -1,3 +1,4 @@
+
 /**
  * @metadata
  * {
@@ -5,19 +6,12 @@
  *   "module": "Application Entry Point",
  *   "phase": "Core Infrastructure",
  *   "tags": ["entry-point", "react", "root", "bootstrap"],
- *   "version": "v1.0.2",
+ *   "version": "v1.0.3",
  *   "author": "Chad A. Reesey",
  *   "email": "developer@thenagrygamershow.com",
- *   "updated": "2025-06-18",
+ *   "updated": "2025-07-19",
  *   "description": "Main application entry point with React root rendering and error handling"
  * }
- */
-
-/**
- * @file src/main.tsx
- * @version 0.0.8
- * @patch Updated for latest Lovable compatibility
- * @date 2025-06-17
  */
 
 import React from "react";
@@ -39,8 +33,5 @@ if (!container) {
 
 const root = createRoot(container);
 
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// Temporarily remove StrictMode to avoid double renders during development
+root.render(<App />);

@@ -1,15 +1,16 @@
 
 /**
  * @file src/routes/index.tsx
- * @version 0.0.13
- * @patch Added public tournaments route for all visitors
- * @date 2025-06-17
+ * @version 0.0.14
+ * @patch Fixed routing structure and component imports
+ * @date 2025-07-19
  */
 
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "@/layouts/RootLayout";
 import DashboardLayout from "@/layouts/DashboardLayout";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 // Pages
 import Index from "@/pages/Index";
@@ -45,6 +46,8 @@ import Tournaments from "@/pages/Tournaments";
 
 // Auth & Admin
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import { AdminRoute } from "@/components/auth/AdminRoute";
+import { ModeratorRoute } from "@/components/auth/ModeratorRoute";
 import OwnerRoute from "@/components/auth/OwnerRoute";
 import Admin from "@/pages/Admin";
 import Debug from "@/pages/Debug";
@@ -64,9 +67,11 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <ProtectedRoute requireAuthenticated={false}>
-        <RootLayout />
-      </ProtectedRoute>
+      <ErrorBoundary>
+        <ProtectedRoute requireAuthenticated={false}>
+          <RootLayout />
+        </ProtectedRoute>
+      </ErrorBoundary>
     ),
     children: [
       { index: true, element: <Index /> },
@@ -82,7 +87,7 @@ export const router = createBrowserRouter([
       { path: "premium", element: <Premium /> },
       { path: "communities", element: <Communities /> },
       { path: "featured-communities", element: <FeaturedCommunities /> },
-      { path: "tournaments", element: <Tournaments /> }, // Added public tournaments route
+      { path: "tournaments", element: <Tournaments /> },
       { path: "help-center", element: <HelpCenter /> },
       { path: "safety-center", element: <SafetyCenter /> },
       { path: "community-guidelines", element: <CommunityGuidelines /> },
@@ -90,9 +95,9 @@ export const router = createBrowserRouter([
       { path: "privacy-policy", element: <PrivacyPolicy /> },
       { path: "events", element: <Events /> },
       { path: "moderator", element: (
-        <ProtectedRoute requireAuthenticated requireRoleId={VERIFIED_USER_ROLE_ID} fallbackPath="/unauthorized">
+        <ModeratorRoute>
           <Moderator />
-        </ProtectedRoute>
+        </ModeratorRoute>
       )},
       // Public Streamer Directory (no auth required)
       { path: "streamers", element: <Streamers /> },
@@ -102,13 +107,14 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_ROLE_ID}>
-        <DashboardLayout />
-      </ProtectedRoute>
+      <ErrorBoundary>
+        <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_ROLE_ID}>
+          <DashboardLayout />
+        </ProtectedRoute>
+      </ErrorBoundary>
     ),
     children: [
       { index: true, element: <Dashboard /> },
-      // All dashboard pages now properly use DashboardLayout
       { path: "streamers", element: <DashboardStreamers /> },
       { path: "streamers/:streamerId", element: <StreamerProfile /> },
       { 
@@ -141,9 +147,11 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <OwnerRoute>
-        <Admin />
-      </OwnerRoute>
+      <ErrorBoundary>
+        <AdminRoute>
+          <Admin />
+        </AdminRoute>
+      </ErrorBoundary>
     ),
   },
   { path: "/debug", element: <Debug /> },
