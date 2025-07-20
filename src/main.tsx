@@ -33,5 +33,8 @@ if (!container) {
 
 const root = createRoot(container);
 
-// Temporarily remove StrictMode to avoid double renders during development
-root.render(<App />);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
