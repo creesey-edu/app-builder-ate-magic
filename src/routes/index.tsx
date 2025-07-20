@@ -48,8 +48,8 @@ import Tournaments from "@/pages/Tournaments";
 
 // Auth & Admin
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import { AdminRoute } from "@/components/auth/AdminRoute";
-import { ModeratorRoute } from "@/components/auth/ModeratorRoute";
+import AdminRoute from "@/components/auth/AdminRoute";
+import ModeratorRoute from "@/components/auth/ModeratorRoute";
 import OwnerRoute from "@/components/auth/OwnerRoute";
 import Admin from "@/pages/Admin";
 import Debug from "@/pages/Debug";
