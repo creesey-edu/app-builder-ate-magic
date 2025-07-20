@@ -146,7 +146,6 @@ export const router = createBrowserRouter([
       </OwnerRoute>
     ),
   },
-  { path: "/debug", element: <Debug /> },
   { path: "/auth/discord/callback", element: <DiscordCallback /> },
   { path: "/unauthorized", element: <Unauthorized /> },
   { path: "*", element: <NotFound /> },

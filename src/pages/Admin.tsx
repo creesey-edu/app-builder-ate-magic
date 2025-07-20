@@ -13,6 +13,7 @@ import {
   Bell,
   AlertTriangle,
   UsersRound,
+  Bug,
 } from "lucide-react";
 import UserManagement from "@/components/admin/UserManagement";
 import ContentModeration from "@/components/admin/ContentModeration";
@@ -20,6 +21,7 @@ import SystemAnalytics from "@/components/admin/SystemAnalytics";
 import SiteSettings from "@/components/admin/SiteSettings";
 import NotificationManagement from "@/components/admin/NotificationManagement";
 import CommunityManagement from "@/components/admin/CommunityManagement";
+import Debug from "@/pages/Debug";
 import { useSession } from "@/hooks/useSession";
 import { toast } from "@/hooks/use-toast";
 
@@ -79,7 +81,7 @@ const AdminPage = () => {
       </div>
 
       <Tabs defaultValue="users" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid grid-cols-6 w-full max-w-5xl">
+        <TabsList className="grid grid-cols-7 w-full max-w-6xl">
           <TabsTrigger value="users" className="flex gap-2 items-center">
             <Users className="h-4 w-4" />
             <span className="hidden sm:inline">User Management</span>
@@ -103,6 +105,10 @@ const AdminPage = () => {
           <TabsTrigger value="notifications" className="flex gap-2 items-center">
             <Bell className="h-4 w-4" />
             <span className="hidden sm:inline">Notifications</span>
+          </TabsTrigger>
+          <TabsTrigger value="debug" className="flex gap-2 items-center">
+            <Bug className="h-4 w-4" />
+            <span className="hidden sm:inline">Debug</span>
           </TabsTrigger>
         </TabsList>
 
@@ -128,6 +134,10 @@ const AdminPage = () => {
 
         <TabsContent value="notifications" className="space-y-4">
           <NotificationManagement />
+        </TabsContent>
+
+        <TabsContent value="debug" className="space-y-4">
+          <Debug />
         </TabsContent>
       </Tabs>
     </div>
