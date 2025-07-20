@@ -17,8 +17,6 @@
 import { RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-import { UserProvider } from "@/context/UserProvider";
-import { SessionProvider } from "@/providers/SessionProvider";
 import { router } from "@/routes/index";
 
 const queryClient = new QueryClient({
@@ -34,11 +32,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="system" storageKey="tags-ui-theme">
-        <SessionProvider>
-          <UserProvider>
-            <RouterProvider router={router} />
-          </UserProvider>
-        </SessionProvider>
+        <RouterProvider router={router} />
       </ThemeProvider>
     </QueryClientProvider>
   );

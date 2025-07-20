@@ -11,6 +11,8 @@ import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "@/layouts/RootLayout";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { SessionProvider } from "@/providers/SessionProvider";
+import { UserProvider } from "@/context/UserProvider";
 
 // Pages
 import Index from "@/pages/Index";
@@ -68,9 +70,13 @@ export const router = createBrowserRouter([
     path: "/",
     element: (
       <ErrorBoundary>
-        <ProtectedRoute requireAuthenticated={false}>
-          <RootLayout />
-        </ProtectedRoute>
+        <SessionProvider>
+          <UserProvider>
+            <ProtectedRoute requireAuthenticated={false}>
+              <RootLayout />
+            </ProtectedRoute>
+          </UserProvider>
+        </SessionProvider>
       </ErrorBoundary>
     ),
     children: [
@@ -108,9 +114,13 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: (
       <ErrorBoundary>
-        <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_ROLE_ID}>
-          <DashboardLayout />
-        </ProtectedRoute>
+        <SessionProvider>
+          <UserProvider>
+            <ProtectedRoute requireAuthenticated requireRoleId={STREAMER_ROLE_ID}>
+              <DashboardLayout />
+            </ProtectedRoute>
+          </UserProvider>
+        </SessionProvider>
       </ErrorBoundary>
     ),
     children: [
@@ -148,9 +158,13 @@ export const router = createBrowserRouter([
     path: "/admin",
     element: (
       <ErrorBoundary>
-        <AdminRoute>
-          <Admin />
-        </AdminRoute>
+        <SessionProvider>
+          <UserProvider>
+            <AdminRoute>
+              <Admin />
+            </AdminRoute>
+          </UserProvider>
+        </SessionProvider>
       </ErrorBoundary>
     ),
   },
