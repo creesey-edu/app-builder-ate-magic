@@ -48,9 +48,8 @@ import Tournaments from "@/pages/Tournaments";
 
 // Auth & Admin
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import AdminRoute from "@/components/auth/AdminRoute";
-import ModeratorRoute from "@/components/auth/ModeratorRoute";
 import OwnerRoute from "@/components/auth/OwnerRoute";
+import { ADMIN_MODERATOR_ROLE_ID } from "@/lib/auth/discord";
 import Admin from "@/pages/Admin";
 import Debug from "@/pages/Debug";
 import DiscordCallback from "@/pages/auth/DiscordCallback";
@@ -101,9 +100,9 @@ export const router = createBrowserRouter([
       { path: "privacy-policy", element: <PrivacyPolicy /> },
       { path: "events", element: <Events /> },
       { path: "moderator", element: (
-        <ModeratorRoute>
+        <ProtectedRoute requireAuthenticated requireRoleId={ADMIN_MODERATOR_ROLE_ID}>
           <Moderator />
-        </ModeratorRoute>
+        </ProtectedRoute>
       )},
       // Public Streamer Directory (no auth required)
       { path: "streamers", element: <Streamers /> },
@@ -160,9 +159,9 @@ export const router = createBrowserRouter([
       <ErrorBoundary>
         <SessionProvider>
           <UserProvider>
-            <AdminRoute>
+            <ProtectedRoute requireAuthenticated requireAdmin>
               <Admin />
-            </AdminRoute>
+            </ProtectedRoute>
           </UserProvider>
         </SessionProvider>
       </ErrorBoundary>
