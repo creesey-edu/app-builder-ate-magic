@@ -6,8 +6,10 @@ import {
   CheckCircle, 
   BarChart2, 
   Store, 
-  Trophy
+  Trophy,
+  Bug
 } from "lucide-react";
+import { useSession } from "@/hooks/useSession";
 
 /**
  * @metadata
@@ -24,41 +26,48 @@ import {
  * }
  */
 
-const navItems = [
-  { 
-    name: "Dashboard", 
-    path: "/dashboard", 
-    icon: <LayoutDashboard className="h-5 w-5" /> 
-  },
-  { 
-    name: "Streamers", 
-    path: "/dashboard/streamers", 
-    icon: <Video className="h-5 w-5" /> 
-  },
-  { 
-    name: "Verification", 
-    path: "/dashboard/streamer-verification", 
-    icon: <CheckCircle className="h-5 w-5" /> 
-  },
-  { 
-    name: "Analytics", 
-    path: "/dashboard/streamer-analytics", 
-    icon: <BarChart2 className="h-5 w-5" /> 
-  },
-  { 
-    name: "Community Store", 
-    path: "/dashboard/community-store", 
-    icon: <Store className="h-5 w-5" /> 
-  },
-  { 
-    name: "Tournaments", 
-    path: "/dashboard/tournaments", 
-    icon: <Trophy className="h-5 w-5" /> 
-  }
-];
-
 export const DashboardSidebar: React.FC = () => {
   const location = useLocation();
+  const { isAdmin } = useSession();
+
+  // Create dynamic nav items based on user permissions
+  const navItems = [
+    { 
+      name: "Dashboard", 
+      path: "/dashboard", 
+      icon: <LayoutDashboard className="h-5 w-5" /> 
+    },
+    { 
+      name: "Streamers", 
+      path: "/dashboard/streamers", 
+      icon: <Video className="h-5 w-5" /> 
+    },
+    { 
+      name: "Verification", 
+      path: "/dashboard/streamer-verification", 
+      icon: <CheckCircle className="h-5 w-5" /> 
+    },
+    { 
+      name: "Analytics", 
+      path: "/dashboard/streamer-analytics", 
+      icon: <BarChart2 className="h-5 w-5" /> 
+    },
+    { 
+      name: "Community Store", 
+      path: "/dashboard/community-store", 
+      icon: <Store className="h-5 w-5" /> 
+    },
+    { 
+      name: "Tournaments", 
+      path: "/dashboard/tournaments", 
+      icon: <Trophy className="h-5 w-5" /> 
+    },
+    ...(isAdmin ? [{ 
+      name: "Debug", 
+      path: "/dashboard/debug", 
+      icon: <Bug className="h-5 w-5" /> 
+    }] : [])
+  ];
 
   return (
     <aside className="w-64 bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 p-4 hidden md:block">

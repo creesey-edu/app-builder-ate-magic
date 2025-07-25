@@ -151,6 +151,14 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      { 
+        path: "debug", 
+        element: (
+          <ProtectedRoute requireAuthenticated requireAdmin>
+            <Debug />
+          </ProtectedRoute>
+        )
+      },
     ],
   },
   {
