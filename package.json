@@ -79,9 +79,6 @@
     "vaul": "^0.9.3",
     "zod": "^3.23.8"
   },
-  "optionalDependencies": {
-    "lovable-tagger": "^1.1.8"
-  },
   "devDependencies": {
     "@eslint/js": "^8.57.0",
     "@radix-ui/react-dialog": "^1.1.6",

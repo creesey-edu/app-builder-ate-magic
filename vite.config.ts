@@ -18,6 +18,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import fs from 'fs'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -31,25 +32,25 @@ export default defineConfig(({ mode }) => {
   // Only add lovable-tagger in development mode and when available
   if (enableTagger && mode === 'development') {
     try {
-      // Check if lovable-tagger is available before requiring
-      const tagger = (() => {
+      // Check if lovable-tagger module exists in node_modules
+      const taggerPath = path.join(process.cwd(), 'node_modules', 'lovable-tagger')
+      
+      if (fs.existsSync(taggerPath)) {
         try {
           // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require('lovable-tagger')
-        } catch {
-          return null
+          const { componentTagger } = require('lovable-tagger')
+          plugins.push(componentTagger())
+          console.log('✓ lovable-tagger enabled')
+        } catch (loadError: unknown) {
+          const errorMessage = loadError instanceof Error ? loadError.message : String(loadError)
+          console.log('ℹ lovable-tagger found but failed to load:', errorMessage)
         }
-      })()
-      
-      if (tagger?.componentTagger) {
-        plugins.push(tagger.componentTagger())
-        console.log('✓ lovable-tagger enabled')
       } else {
-        console.log('ℹ lovable-tagger not available, continuing without it')
+        console.log('ℹ lovable-tagger not installed, continuing without it')
       }
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : String(error)
-      console.warn('Warning: Could not load lovable-tagger:', errorMessage)
+      console.log('ℹ lovable-tagger check failed:', errorMessage)
     }
   }
 
